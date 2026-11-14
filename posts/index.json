@@ -1,5 +1,12 @@
 [
  {
+  "slug": "memento-vivere",
+  "title": "Memento Vivere",
+  "summary": "What Mexico taught an Austrian about death, time and a good life.",
+  "date": "2026-11-14",
+  "draft": false
+ },
+ {
   "slug": "austria-meets-mexico",
   "title": "Austria meets Mexico",
   "summary": "How a love story turned into a company.",
@@ -10,13 +17,6 @@
   "slug": "co-founder-not-ceo",
   "title": "Co-founder, not CEO",
   "summary": "On handing over the title and keeping the work I love.",
-  "date": "",
-  "draft": true
- },
- {
-  "slug": "memento-vivere",
-  "title": "Memento Vivere",
-  "summary": "What Mexico taught an Austrian about death, time and a good life.",
   "date": "",
   "draft": true
  },

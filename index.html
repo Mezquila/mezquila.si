@@ -8,6 +8,8 @@
 <meta property="og:title" content="Mezquila">
 <meta property="og:description" content="The desk of HP Eder, El Padre. Co-founder of Padre Azul Tequila. Memento Vivere: remember you must live.">
 <meta property="og:type" content="website">
+<meta property="og:image" content="https://mezquila.github.io/mezquila.si/og.png">
+<meta name="twitter:card" content="summary_large_image">
 <link rel="icon" type="image/webp" href="ramon.webp">
 <style>body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,600;1,6..72,400&family=Source+Sans+3:wght@400;600;700&display=swap">
@@ -69,7 +71,9 @@ a { color: var(--accent); }
 .bar .name { font-weight: 700; margin-right: 10px; letter-spacing: 0.01em; }
 .bar button { padding: 6px 9px; border-radius: 6px; }
 .bar button:hover { background: var(--accent-soft); }
-.bar .clock { margin-left: auto; color: var(--muted); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.bar .langs { margin-left: auto; display: flex; }
+.bar .langs button[aria-pressed="true"] { background: var(--accent-soft); font-weight: 700; }
+.bar .clock { margin-left: 6px; color: var(--muted); font-variant-numeric: tabular-nums; white-space: nowrap; }
 
 /* Desk */
 .desk {
@@ -79,7 +83,7 @@ a { color: var(--accent); }
   padding-left: max(16px, env(safe-area-inset-left, 0px));
   padding-right: max(16px, env(safe-area-inset-right, 0px));
 }
-.icons { display: grid; grid-template-columns: 96px; gap: 14px; justify-content: start; }
+.icons { display: grid; grid-template-columns: 96px 96px; gap: 14px 6px; justify-content: start; }
 .icon { display: flex; flex-direction: column; align-items: center; gap: 6px; padding: 6px 4px; border-radius: 10px; width: 96px; }
 .icon:hover { background: rgba(255, 255, 255, 0.16); }
 .icon .tile {
@@ -89,6 +93,7 @@ a { color: var(--accent); }
 .icon svg { width: 30px; height: 30px; }
 .icon .glyph { fill: var(--icon-ink); }
 .icon .stroke { fill: none; stroke: var(--icon-ink); stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
+.icon .hole { fill: var(--icon-face); }
 .icon .label { color: var(--on-wall); font-size: 13.5px; font-weight: 600; text-shadow: 0 1px 3px var(--wall-shadow), 0 0 10px var(--wall-shadow); text-align: center; }
 
 .widgets { display: flex; flex-direction: column; gap: 12px; min-width: 0; }
@@ -152,6 +157,15 @@ a { color: var(--accent); }
 .qlist blockquote { margin: 0; padding-left: 14px; border-left: 2px solid var(--accent); font-family: var(--serif); font-style: italic; font-size: 20px; line-height: 1.35; }
 .qlist cite { display: block; font-family: var(--sans); font-style: normal; font-size: 13px; color: var(--muted); margin-top: 4px; }
 
+.content ol, .content ul.list { margin: 0 0 12px; padding-left: 22px; font-size: 16.5px; line-height: 1.6; max-width: 62ch; }
+.content li + li { margin-top: 4px; }
+.btn-small { padding: 4px 12px; border-radius: 99px; background: var(--accent-soft); font-size: 13px; font-weight: 600; }
+.btn-small:hover { background: var(--accent); color: var(--win); }
+.content .ramon-big { float: right; width: 120px; max-width: 30%; height: auto; margin: 0 0 10px 18px; border-radius: 50%; background: #e6ecf1; }
+.news p { margin: 0 0 10px; font-size: 14.5px; }
+.news a { display: inline-block; padding: 6px 14px; border-radius: 99px; background: var(--accent); color: var(--win); font-weight: 600; font-size: 14px; text-decoration: none; }
+.meet { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 8px; font-size: 14.5px; }
+.meet .d { display: block; font-size: 12px; color: var(--muted); font-variant-numeric: tabular-nums; }
 .posts button, .essays h3 button { font: inherit; color: var(--accent); text-align: left; padding: 0; }
 .posts button:hover, .essays h3 button:hover { text-decoration: underline; }
 #win-post { width: min(680px, calc(100vw - 32px)); }
@@ -165,7 +179,11 @@ a { color: var(--accent); }
 .post hr { border: 0; border-top: 1px solid var(--line); margin: 18px 0; }
 @media (max-width: 760px) {
   .desk { grid-template-columns: minmax(0, 1fr); gap: 18px; padding-block: 58px 28px; }
-  .icons { grid-template-columns: repeat(3, minmax(0, 1fr)); justify-items: center; gap: 8px; }
+  .icons { grid-template-columns: repeat(4, minmax(0, 1fr)); justify-items: center; gap: 6px 2px; }
+  .icon { width: 100%; max-width: 96px; }
+  .icon .label { font-size: 12px; line-height: 1.2; }
+  .bar { font-size: 13px; }
+  .bar button { padding: 6px 6px; }
   .bar .hide-s { display: none; }
   .window { left: 16px !important; right: 16px; top: 56px !important; width: auto; max-height: calc(100vh - 80px); }
   .titlebar { cursor: default; }
@@ -184,10 +202,11 @@ a { color: var(--accent); }
 
 <header class="bar">
   <span class="name">Mezquila</span>
-  <button type="button" data-open="about">About</button>
-  <button type="button" id="btn-wall">Wallpaper</button>
+  <button type="button" data-open="about" class="hide-s" data-t="about">About</button>
+  <button type="button" id="btn-wall" data-t="wall">Wallpaper</button>
   <button type="button" id="btn-widgets" class="hide-s">Hide widgets</button>
-  <button type="button" id="btn-closeall" class="hide-s">Close windows</button>
+  <button type="button" id="btn-closeall" class="hide-s" data-t="closeall">Close windows</button>
+  <span class="langs" role="group" aria-label="Language"><button type="button" data-lang-btn="en" aria-pressed="true">EN</button><button type="button" data-lang-btn="de" aria-pressed="false">DE</button><button type="button" data-lang-btn="es" aria-pressed="false">ES</button></span>
   <span class="clock" id="clock">Vienna --:--</span>
 </header>
 
@@ -195,11 +214,11 @@ a { color: var(--accent); }
   <nav class="icons" aria-label="Desk">
     <button class="icon" type="button" data-open="about">
       <span class="tile"><svg viewBox="0 0 32 32"><circle class="glyph" cx="16" cy="11" r="6"/><path class="glyph" d="M4 29c0-7 5-11 12-11s12 4 12 11z"/></svg></span>
-      <span class="label">About me</span>
+      <span class="label" data-t="about">About me</span>
     </button>
     <button class="icon" type="button" data-open="essays">
       <span class="tile"><svg viewBox="0 0 32 32"><path class="stroke" d="M7 4h13l5 5v19H7z"/><path class="stroke" d="M11 14h10M11 19h10M11 24h6"/></svg></span>
-      <span class="label">Essays</span>
+      <span class="label" data-t="essays">Essays</span>
     </button>
     <button class="icon" type="button" data-open="padre">
       <span class="tile"><svg viewBox="0 0 32 32"><circle class="glyph" cx="16" cy="5.5" r="3.5"/><rect class="glyph" x="13.5" y="9" width="5" height="4"/><path class="glyph" d="M10 16c0-2 2-3 6-3s6 1 6 3v12a2 2 0 0 1-2 2h-8a2 2 0 0 1-2-2z"/></svg></span>
@@ -207,15 +226,23 @@ a { color: var(--accent); }
     </button>
     <button class="icon" type="button" data-open="brain">
       <span class="tile"><svg viewBox="0 0 32 32"><circle class="glyph" cx="8" cy="9" r="3.2"/><circle class="glyph" cx="24" cy="8" r="3.2"/><circle class="glyph" cx="16" cy="18" r="4"/><circle class="glyph" cx="7" cy="25" r="2.8"/><circle class="glyph" cx="25" cy="25" r="2.8"/><path class="stroke" d="M8 9l8 9 8-10M16 18l-9 7M16 18l9 7"/></svg></span>
-      <span class="label">Second brain</span>
+      <span class="label" data-t="brain">Second brain</span>
     </button>
     <button class="icon" type="button" data-open="quotes">
       <span class="tile"><svg viewBox="0 0 32 32"><path class="glyph" d="M5 18c0-6 3-10 8-11l1 3c-3 1-4 3-4 5h4v8H5zM18 18c0-6 3-10 8-11l1 3c-3 1-4 3-4 5h4v8h-9z"/></svg></span>
-      <span class="label">Quotes</span>
+      <span class="label" data-t="quotes">Quotes</span>
     </button>
     <button class="icon" type="button" data-open="now">
       <span class="tile"><svg viewBox="0 0 32 32"><circle class="stroke" cx="16" cy="16" r="11"/><path class="glyph" d="M21 11l-3 7-7 3 3-7z"/></svg></span>
-      <span class="label">Now</span>
+      <span class="label" data-t="now">Now</span>
+    </button>
+    <button class="icon" type="button" data-open="ritual">
+      <span class="tile"><svg viewBox="0 0 32 32"><circle class="glyph" cx="16" cy="13" r="9.5"/><rect class="glyph" x="10.5" y="19" width="11" height="9" rx="2.5"/><circle class="hole" cx="12.4" cy="13.5" r="2.6"/><circle class="hole" cx="19.6" cy="13.5" r="2.6"/><rect class="hole" x="13.4" y="23" width="1.4" height="5"/><rect class="hole" x="17.2" y="23" width="1.4" height="5"/></svg></span>
+      <span class="label" data-t="ritual">Skull ritual</span>
+    </button>
+    <button class="icon" type="button" data-open="press">
+      <span class="tile"><svg viewBox="0 0 32 32"><rect class="glyph" x="12" y="4" width="8" height="14" rx="4"/><path class="stroke" d="M8 15a8 8 0 0 0 16 0M16 23v5M11 28h10"/></svg></span>
+      <span class="label" data-t="press">Press &amp; speaking</span>
     </button>
   </nav>
 
@@ -225,7 +252,7 @@ a { color: var(--accent); }
         <img class="mono" src="ramon.webp" width="240" height="240" alt="Ramon, the Padre Azul icon logo">
         <div>
           <p class="who">Hans-Peter Eder</p>
-          <p>El Padre. Co-Founder of Padre Azul. Born in Salzburg's Alps in Rauris, Austria. Making Tequila in Jalisco. Memento Vivere: remember you must live.</p>
+          <p data-t="bio">El Padre. Co-Founder of Padre Azul. Born in Salzburg's Alps in Rauris, Austria. Making Tequila in Jalisco. Memento Vivere: remember you must live.</p>
         </div>
       </div>
       <div class="social">
@@ -237,7 +264,7 @@ a { color: var(--accent); }
     </section>
 
     <section class="widget">
-      <div class="w-head"><h2>Writing</h2><button class="more" type="button" data-open="essays">all essays</button><button class="fold" type="button" aria-label="Fold Writing" aria-expanded="true">−</button></div>
+      <div class="w-head"><h2 data-t="w-writing">Writing</h2><button class="more" type="button" data-open="essays" data-t="allessays">all essays</button><button class="fold" type="button" aria-label="Fold Writing" aria-expanded="true">−</button></div>
       <div class="w-body">
         <ul class="posts" id="post-list">
           <li><span class="t">Memento Vivere</span><span class="tag">draft</span></li>
@@ -249,29 +276,42 @@ a { color: var(--accent); }
     </section>
 
     <section class="widget">
-      <div class="w-head"><h2>Padre Azul</h2><button class="more" type="button" data-open="padre">open →</button><button class="fold" type="button" aria-label="Fold Padre Azul" aria-expanded="true">−</button></div>
+      <div class="w-head"><h2>Padre Azul</h2><button class="more" type="button" data-open="padre" data-t="open">open →</button><button class="fold" type="button" aria-label="Fold Padre Azul" aria-expanded="true">−</button></div>
       <div class="w-body brand">
         <img src="bottle.webp" width="326" height="900" alt="Padre Azul Tequila Joven bottle with the black skull stopper and Memento Vivere on the shoulder">
         <div>
-          <p>The tequila that came out of a love story. Founded in 2014, made in Jalisco, sold from Wattens, Austria.</p>
+          <p data-t="brandp">The tequila that came out of a love story. Founded in 2014, made in Jalisco, sold from Wattens, Austria.</p>
           <a href="https://www.padreazul.com" target="_blank" rel="noopener">padreazul.com</a>
         </div>
       </div>
     </section>
 
     <section class="widget">
-      <div class="w-head"><h2>Now</h2><button class="more" type="button" data-open="now">more</button><button class="fold" type="button" aria-label="Fold Now" aria-expanded="true">−</button></div>
+      <div class="w-head"><h2 data-t="now">Now</h2><button class="more" type="button" data-open="now" data-t="more">more</button><button class="fold" type="button" aria-label="Fold Now" aria-expanded="true">−</button></div>
       <div class="w-body">
         <ul class="now">
-          <li>Back in Austria after a week in Mexico City.</li>
-          <li>Writing the first essays for this desk.</li>
-          <li>Teaching the team to work with the second brain.</li>
+          <li data-t="n1">Back in Austria after a week in Mexico City.</li>
+          <li data-t="n2">Writing the first essays for this desk.</li>
+          <li data-t="n3">Teaching the team to work with the second brain.</li>
         </ul>
       </div>
     </section>
 
+    <section class="widget news" id="w-news" hidden>
+      <div class="w-head"><h2 data-t="w-news">The letter</h2></div>
+      <div class="w-body">
+        <p data-t="newsp">A letter from El Padre, once a month.</p>
+        <a id="news-link" href="#" target="_blank" rel="noopener" data-t="subscribe">Subscribe</a>
+      </div>
+    </section>
+
+    <section class="widget" id="w-meet" hidden>
+      <div class="w-head"><h2 data-t="w-meet">Where to meet me</h2></div>
+      <div class="w-body"><ul class="meet" id="meet-list"></ul></div>
+    </section>
+
     <section class="widget quote">
-      <div class="w-head"><h2>Quote</h2><button class="more" type="button" id="next-quote" aria-label="Next quote">↻</button><button class="fold" type="button" aria-label="Fold Quote" aria-expanded="true">−</button></div>
+      <div class="w-head"><h2 data-t="w-quote">Quote</h2><button class="more" type="button" id="next-quote" aria-label="Next quote">↻</button><button class="fold" type="button" aria-label="Fold Quote" aria-expanded="true">−</button></div>
       <div class="w-body">
         <blockquote id="q-text">Remember you must live.</blockquote>
         <cite id="q-src">Memento Vivere</cite>
@@ -281,8 +321,8 @@ a { color: var(--accent); }
 </main>
 
 <section class="window" id="win-about" hidden aria-labelledby="t-about">
-  <div class="titlebar"><button class="close" type="button" aria-label="Close">×</button><span class="title" id="t-about">About me</span></div>
-  <div class="content">
+  <div class="titlebar"><button class="close" type="button" aria-label="Close">×</button><span class="title" id="t-about" data-t="about">About me</span></div>
+  <div class="content" data-tb="about">
     <h1>Hola, I'm HP.</h1>
     <p class="hand">Some people call me El Padre. Online I go by Mezquila.</p>
     <p>I was born in Rauris, in Salzburg's Alps. At a German university I met Adriana, who comes from Jalisco, and fell in love twice: with her, and with the way her country lives.</p>
@@ -294,9 +334,9 @@ a { color: var(--accent); }
 </section>
 
 <section class="window" id="win-essays" hidden aria-labelledby="t-essays">
-  <div class="titlebar"><button class="close" type="button" aria-label="Close">×</button><span class="title" id="t-essays">Essays</span></div>
+  <div class="titlebar"><button class="close" type="button" aria-label="Close">×</button><span class="title" id="t-essays" data-t="essays">Essays</span></div>
   <div class="content">
-    <h1>Essays</h1>
+    <h1 data-t="essays">Essays</h1>
     <ul class="essays" id="essay-list">
       <li><div class="row"><h3>Memento Vivere</h3><span class="tag">draft</span></div><p>What Mexico taught an Austrian about death, time and a good life.</p></li>
       <li><div class="row"><h3>Two hundred hands</h3><span class="tag">draft</span></div><p>Why a bottle made by people beats one made by a machine.</p></li>
@@ -304,13 +344,13 @@ a { color: var(--accent); }
       <li><div class="row"><h3>Running a tequila brand from a second brain</h3><span class="tag">draft</span></div><p>Every meeting, every market and every decision in one vault, and what changed when the whole team could ask it questions.</p></li>
       <li><div class="row"><h3>Co-founder, not CEO</h3><span class="tag">draft</span></div><p>On handing over the title and keeping the work I love.</p></li>
     </ul>
-    <p class="note" id="essay-note">Nothing is published yet. These are the pieces on the desk right now.</p>
+    <p class="note" id="essay-note" data-t="enote">Nothing is published yet. These are the pieces on the desk right now.</p>
   </div>
 </section>
 
 <section class="window" id="win-padre" hidden aria-labelledby="t-padre">
   <div class="titlebar"><button class="close" type="button" aria-label="Close">×</button><span class="title" id="t-padre">Padre Azul</span></div>
-  <div class="content">
+  <div class="content" data-tb="padre">
     <img class="bottle" src="bottle.webp" width="326" height="900" alt="Padre Azul Tequila Joven bottle with the black skull stopper and Memento Vivere on the shoulder">
     <h1>Padre Azul</h1>
     <p class="hand">Austria meets Mexico.</p>
@@ -328,8 +368,8 @@ a { color: var(--accent); }
 </section>
 
 <section class="window" id="win-brain" hidden aria-labelledby="t-brain">
-  <div class="titlebar"><button class="close" type="button" aria-label="Close">×</button><span class="title" id="t-brain">Second brain</span></div>
-  <div class="content">
+  <div class="titlebar"><button class="close" type="button" aria-label="Close">×</button><span class="title" id="t-brain" data-t="brain">Second brain</span></div>
+  <div class="content" data-tb="brain">
     <h1>My second brain</h1>
     <p>I run my working life out of one Obsidian vault with Claude sitting on top of it.</p>
     <p>Every morning at 09:07 Vienna time, yesterday's meeting transcripts land in a folder called <em>raw</em>. One command turns them into wiki pages about the people, the markets and the decisions, and files the originals where they belong.</p>
@@ -339,8 +379,8 @@ a { color: var(--accent); }
 </section>
 
 <section class="window" id="win-quotes" hidden aria-labelledby="t-quotes">
-  <div class="titlebar"><button class="close" type="button" aria-label="Close">×</button><span class="title" id="t-quotes">Quotes</span></div>
-  <div class="content">
+  <div class="titlebar"><button class="close" type="button" aria-label="Close">×</button><span class="title" id="t-quotes" data-t="quotes">Quotes</span></div>
+  <div class="content" data-tb="quotes">
     <h1>Lines I live by</h1>
     <div class="qlist">
       <blockquote>Remember you must live.<cite>Memento Vivere</cite></blockquote>
@@ -351,8 +391,8 @@ a { color: var(--accent); }
 </section>
 
 <section class="window" id="win-now" hidden aria-labelledby="t-now">
-  <div class="titlebar"><button class="close" type="button" aria-label="Close">×</button><span class="title" id="t-now">Now</span></div>
-  <div class="content">
+  <div class="titlebar"><button class="close" type="button" aria-label="Close">×</button><span class="title" id="t-now" data-t="now">Now</span></div>
+  <div class="content" data-tb="now">
     <h1>What I'm doing now</h1>
     <p class="hand">November 2026, Austria</p>
     <p>I'm just back from a week in Mexico City.</p>
@@ -361,6 +401,169 @@ a { color: var(--accent); }
     <p class="note">A now page says what has my attention at the moment. I update it when that changes.</p>
   </div>
 </section>
+
+<section class="window" id="win-ritual" hidden aria-labelledby="t-ritual">
+  <div class="titlebar"><button class="close" type="button" aria-label="Close">×</button><span class="title" id="t-ritual" data-t="ritual">Skull ritual</span></div>
+  <div class="content" data-tb="ritual">
+<img class="ramon-big" src="ramon.webp" width="240" height="240" alt="Ramon">
+<h1>The skull ritual</h1>
+<p class="hand">Face it, then live.</p>
+<ol><li>Open the bottle. The skull on top is called Ramon.</li><li>Let him remind you what this moment is worth.</li><li>Pour.</li><li>When you finish your glass, hand Ramon to the person next to you. It is a promise of eternal friendship. You can't give it back.</li></ol>
+<p>Ramon reminds us that time is a scarce resource, and that we should spend it with friends and family.</p>
+  </div>
+</section>
+
+<section class="window" id="win-press" hidden aria-labelledby="t-press">
+  <div class="titlebar"><button class="close" type="button" aria-label="Close">×</button><span class="title" id="t-press" data-t="press">Press &amp; speaking</span></div>
+  <div class="content" data-tb="press">
+<h1>Press &amp; speaking</h1>
+<p>For journalists, podcast hosts and event organisers.</p>
+<h2>Short bio</h2>
+<p id="bio-short">Hans-Peter (HP) Eder is the co-founder of Padre Azul, the tequila born in 2014 from an Austrian-Mexican love story. Born in Rauris in Salzburg's Alps, he makes tequila in Jalisco and is known as El Padre. He writes and speaks about Memento Vivere: remember you must live.</p>
+<p><button class="btn-small" type="button" data-copy="bio-short">Copy bio</button></p>
+<h2>What I speak about</h2>
+<ul class="list"><li>Memento Vivere: why a skull sits on top of a luxury bottle.</li><li>Austria meets Mexico: building one brand across two cultures.</li><li>Running a company from a second brain: AI and shared knowledge in a small team.</li></ul>
+<h2>Images</h2>
+<p><a href="bottle.webp" target="_blank" rel="noopener">Padre Azul Tequila Joven, bottle</a><br><a href="ramon.webp" target="_blank" rel="noopener">Ramon, the icon</a><br>More images on request.</p>
+<h2>Contact</h2>
+<p>For interviews and speaking requests, message me on <a href="https://www.linkedin.com/in/hpeder/" target="_blank" rel="noopener">LinkedIn</a>.</p>
+  </div>
+</section>
+
+<template data-lang="de" data-for="about">
+<h1>Hola, ich bin HP.</h1>
+<p class="hand">Manche nennen mich El Padre. Online heiße ich Mezquila.</p>
+<p>Ich bin in Rauris geboren, in den Salzburger Alpen. An einer deutschen Universität habe ich Adriana kennengelernt, die aus Jalisco stammt, und mich zweimal verliebt: in sie und in die Art, wie ihr Land lebt.</p>
+<p>2014 wurde aus dieser Liebesgeschichte ein Tequila. Padre Azul ist bis heute das, womit ich die meisten meiner Tage verbringe. Ich bin Mitgründer, nicht CEO. So bleibe ich nah an den Bars, den Menschen und den Geschichten.</p>
+<p>Mexiko hat mich etwas gelehrt, das Europa vergessen hatte: Der Tod ist nicht der Feind eines guten Lebens. Ihn zu vergessen ist es. Die alten Meister sagten memento mori. Wir haben es umgedreht. Memento Vivere: Denk daran, du lebst jetzt.</p>
+<p>Auf diesem Schreibtisch liegt, woran ich schreibe, was ich baue und worüber ich nachdenke. Klick dich durch.</p>
+<p class="note">Du findest mich auf <a href="https://www.instagram.com/mezquila/" target="_blank" rel="noopener">Instagram</a>, <a href="https://www.linkedin.com/in/hpeder/" target="_blank" rel="noopener">LinkedIn</a>, <a href="https://x.com/HPEder888" target="_blank" rel="noopener">X</a> und <a href="https://www.facebook.com/profile.php?id=100091928179963" target="_blank" rel="noopener">Facebook</a>.</p>
+</template>
+<template data-lang="de" data-for="padre">
+<img class="bottle" src="bottle.webp" width="326" height="900" alt="Padre Azul Tequila Joven">
+<h1>Padre Azul</h1>
+<p class="hand">Österreich trifft Mexiko.</p>
+<p>Padre Azul ist ein Tequila aus Jalisco, entstanden 2014 aus der Verbindung einer österreichischen und einer mexikanischen Familie. Jede Flasche geht durch zweihundert Hände, bevor sie in deinen ankommt.</p>
+<p>Der Totenkopf obenauf heißt Ramon. Er ist das Gesicht und der Sprecher der Marke, und er sitzt dort aus gutem Grund: Er erinnert dich daran, dass Zeit knapp ist. Teile sie gut.</p>
+<p>Zur Familie gehört auch Padrecito, der Jüngere und Verspieltere.</p>
+<h2>Das Padre-Manifest in Kürze</h2>
+<p>Man fragt mich, warum auf unserer Flasche ein Totenkopf sitzt. Ich finde die bessere Frage: Warum tut jede andere Flasche dieser Branche so, als würdest du ewig leben?</p>
+<p>Mexiko hat mich gelehrt, dass der Tod nicht der Feind eines guten Lebens ist. Ihn zu vergessen ist es. Die alten Meister sagten memento mori, bedenke, dass du sterben musst. Wir haben es umgedreht. Memento Vivere: Denk daran, du lebst jetzt.</p>
+<p>Der Totenkopf ist deshalb ein Handschlag. Du stellst dich ihm, du schenkst ein, und du reichst ihn der Person gegenüber. Das ist das Ritual.</p>
+<p>Eine Agave braucht acht bis zehn Jahre, um zu reifen, und unser Añejo ruht achtzehn Monate im Eichenfass. Zeit ist die teuerste Zutat, die wir verwenden, und das Teuerste, was du je ausgeben wirst. Gib sie gut aus, mit Menschen, die zählen.</p>
+<p class="hand">Denk daran: du lebst jetzt.</p>
+<p><a href="https://www.padreazul.com" target="_blank" rel="noopener">padreazul.com besuchen</a></p>
+</template>
+<template data-lang="de" data-for="brain">
+<h1>Mein zweites Gehirn</h1>
+<p>Mein Arbeitsleben läuft über einen einzigen Obsidian-Vault, mit Claude obendrauf.</p>
+<p>Jeden Morgen um 09:07 Wiener Zeit landen die Meeting-Transkripte vom Vortag in einem Ordner namens <em>raw</em>. Ein Befehl macht daraus Wiki-Seiten über die Menschen, die Märkte und die Entscheidungen und legt die Originale dort ab, wo sie hingehören.</p>
+<p>Eine Seite heißt <em>hot</em>. Dort steht, was gerade aktiv ist, und sie ist das Erste, was ich jeden Tag lese.</p>
+<p>Den Aufbau, die Skills und die Fehler teile ich hier nach und nach.</p>
+</template>
+<template data-lang="de" data-for="quotes">
+<h1>Sätze, nach denen ich lebe</h1>
+<div class="qlist">
+<blockquote>Denk daran: du lebst jetzt.<cite>Memento Vivere</cite></blockquote>
+<blockquote>Der Tod ist nicht der Feind eines guten Lebens. Ihn zu vergessen ist es.<cite>Was Mexiko mich gelehrt hat</cite></blockquote>
+<blockquote>Nothing added beyond agave and time.<cite>Padrecito</cite></blockquote>
+</div>
+</template>
+<template data-lang="de" data-for="now">
+<h1>Was ich gerade mache</h1>
+<p class="hand">November 2026, Österreich</p>
+<p>Ich bin gerade von einer Woche in Mexiko-Stadt zurück.</p>
+<p>Ich schreibe die ersten Essays für diesen Schreibtisch, damit im Ordner Essays nicht mehr überall Entwurf steht.</p>
+<p>In der Firma bringe ich dem Team bei, das zweite Gehirn so zu nutzen wie ich, damit das Wissen des Unternehmens nicht länger nur in meinem Kopf lebt.</p>
+<p class="note">Eine Now-Seite zeigt, was gerade meine Aufmerksamkeit hat. Ich aktualisiere sie, wenn sich das ändert.</p>
+</template>
+<template data-lang="de" data-for="press">
+<h1>Presse &amp; Vorträge</h1>
+<p>Für Redaktionen, Podcasts und Veranstalter.</p>
+<h2>Kurzbiografie</h2>
+<p id="bio-short">Hans-Peter (HP) Eder ist Mitgründer von Padre Azul, dem Tequila, der 2014 aus einer österreichisch-mexikanischen Liebesgeschichte entstand. Geboren in Rauris in den Salzburger Alpen, macht er Tequila in Jalisco und ist als El Padre bekannt. Er schreibt und spricht über Memento Vivere: Denk daran, du lebst jetzt.</p>
+<p><button class="btn-small" type="button" data-copy="bio-short">Bio kopieren</button></p>
+<h2>Worüber ich spreche</h2>
+<ul class="list"><li>Memento Vivere: warum auf einer Luxusflasche ein Totenkopf sitzt.</li><li>Österreich trifft Mexiko: eine Marke zwischen zwei Kulturen aufbauen.</li><li>Ein Unternehmen aus einem zweiten Gehirn führen: KI und geteiltes Wissen in einem kleinen Team.</li></ul>
+<h2>Bilder</h2>
+<p><a href="bottle.webp" target="_blank" rel="noopener">Padre Azul Tequila Joven, Flasche</a><br><a href="ramon.webp" target="_blank" rel="noopener">Ramon, das Icon</a><br>Weitere Bilder auf Anfrage.</p>
+<h2>Kontakt</h2>
+<p>Für Interviews und Vortragsanfragen schreib mir auf <a href="https://www.linkedin.com/in/hpeder/" target="_blank" rel="noopener">LinkedIn</a>.</p>
+</template>
+<template data-lang="de" data-for="ritual">
+<img class="ramon-big" src="ramon.webp" width="240" height="240" alt="Ramon">
+<h1>Das Skull-Ritual</h1>
+<p class="hand">Stell dich ihm, dann lebe.</p>
+<ol><li>Öffne die Flasche. Der Totenkopf obenauf heißt Ramon.</li><li>Lass dich von ihm daran erinnern, was dieser Moment wert ist.</li><li>Schenk ein.</li><li>Wenn dein Glas leer ist, gib Ramon der Person neben dir. Das ist ein Versprechen ewiger Freundschaft. Zurückgeben geht nicht.</li></ol>
+<p>Ramon erinnert uns daran, dass Zeit ein knappes Gut ist und dass wir sie mit Freunden und Familie verbringen sollten.</p>
+</template>
+<template data-lang="es" data-for="about">
+<h1>Hola, soy HP.</h1>
+<p class="hand">Algunos me llaman El Padre. En internet soy Mezquila.</p>
+<p>Nací en Rauris, en los Alpes de Salzburgo. En una universidad alemana conocí a Adriana, que es de Jalisco, y me enamoré dos veces: de ella y de la forma en que vive su país.</p>
+<p>En 2014 esa historia de amor se convirtió en un tequila. Padre Azul sigue siendo a lo que dedico la mayor parte de mis días. Soy cofundador, no CEO, y eso me permite estar cerca de los bares, de la gente y de las historias.</p>
+<p>México me enseñó algo que Europa había olvidado: la muerte no es enemiga de una buena vida; olvidarla sí lo es. Los antiguos maestros decían memento mori. Nosotros le dimos la vuelta. Memento Vivere: recuerda, vive ahora.</p>
+<p>En este escritorio guardo lo que escribo, lo que construyo y lo que pienso. Explora.</p>
+<p class="note">Encuéntrame en <a href="https://www.instagram.com/mezquila/" target="_blank" rel="noopener">Instagram</a>, <a href="https://www.linkedin.com/in/hpeder/" target="_blank" rel="noopener">LinkedIn</a>, <a href="https://x.com/HPEder888" target="_blank" rel="noopener">X</a> y <a href="https://www.facebook.com/profile.php?id=100091928179963" target="_blank" rel="noopener">Facebook</a>.</p>
+</template>
+<template data-lang="es" data-for="padre">
+<img class="bottle" src="bottle.webp" width="326" height="900" alt="Padre Azul Tequila Joven">
+<h1>Padre Azul</h1>
+<p class="hand">Austria se encuentra con México.</p>
+<p>Padre Azul es un tequila de Jalisco, nacido en 2014 de la unión entre una familia austriaca y una mexicana. Cada botella pasa por doscientas manos antes de llegar a las tuyas.</p>
+<p>La calavera de arriba se llama Ramon. Es el rostro y el portavoz de la marca, y está ahí por una razón: te recuerda que el tiempo es corto, así que compártelo bien.</p>
+<p>La familia también incluye a Padrecito, el más joven y juguetón.</p>
+<h2>El Manifiesto Padre, en breve</h2>
+<p>Me preguntan por qué hay una calavera en nuestra botella. Creo que la mejor pregunta es por qué todas las demás botellas de esta industria fingen que vas a vivir para siempre.</p>
+<p>México me enseñó que la muerte no es enemiga de una buena vida; olvidarla sí lo es. Los antiguos maestros decían memento mori, recuerda que morirás. Nosotros le dimos la vuelta. Memento Vivere: recuerda, vive ahora.</p>
+<p>Por eso la calavera es un apretón de manos. La enfrentas, sirves y se la pasas a la persona que tienes enfrente. Ese es el ritual.</p>
+<p>Un agave necesita de ocho a diez años para madurar, y nuestro Añejo reposa dieciocho meses en roble. El tiempo es el ingrediente más caro que usamos y lo más caro que vas a gastar en tu vida. Gástalo bien, con la gente que importa.</p>
+<p class="hand">Recuerda: vive ahora.</p>
+<p><a href="https://www.padreazul.com" target="_blank" rel="noopener">Visita padreazul.com</a></p>
+</template>
+<template data-lang="es" data-for="brain">
+<h1>Mi segundo cerebro</h1>
+<p>Llevo mi vida de trabajo desde una sola bóveda de Obsidian, con Claude encima.</p>
+<p>Cada mañana a las 09:07, hora de Viena, las transcripciones de las reuniones del día anterior llegan a una carpeta llamada <em>raw</em>. Un comando las convierte en páginas wiki sobre las personas, los mercados y las decisiones, y archiva los originales donde corresponde.</p>
+<p>Una página se llama <em>hot</em>. Contiene lo que está activo ahora mismo y es lo primero que leo cada día.</p>
+<p>Iré compartiendo aquí la configuración, las skills y los errores.</p>
+</template>
+<template data-lang="es" data-for="quotes">
+<h1>Frases que me guían</h1>
+<div class="qlist">
+<blockquote>Recuerda: vive ahora.<cite>Memento Vivere</cite></blockquote>
+<blockquote>La muerte no es enemiga de una buena vida. Olvidarla sí lo es.<cite>Lo que México me enseñó</cite></blockquote>
+<blockquote>Nothing added beyond agave and time.<cite>Padrecito</cite></blockquote>
+</div>
+</template>
+<template data-lang="es" data-for="now">
+<h1>En qué ando ahora</h1>
+<p class="hand">Noviembre de 2026, Austria</p>
+<p>Acabo de volver de una semana en Ciudad de México.</p>
+<p>Estoy escribiendo los primeros ensayos para este escritorio, para que la carpeta Ensayos deje de decir borrador.</p>
+<p>En el trabajo le enseño al equipo a usar el segundo cerebro como yo, para que el conocimiento de la empresa deje de vivir en mi cabeza.</p>
+<p class="note">Una página «now» cuenta qué tiene mi atención en este momento. La actualizo cuando eso cambia.</p>
+</template>
+<template data-lang="es" data-for="press">
+<h1>Prensa y charlas</h1>
+<p>Para periodistas, podcasts y organizadores de eventos.</p>
+<h2>Biografía breve</h2>
+<p id="bio-short">Hans-Peter (HP) Eder es cofundador de Padre Azul, el tequila que nació en 2014 de una historia de amor entre Austria y México. Nacido en Rauris, en los Alpes de Salzburgo, hace tequila en Jalisco y lo conocen como El Padre. Escribe y habla sobre Memento Vivere: recuerda, vive ahora.</p>
+<p><button class="btn-small" type="button" data-copy="bio-short">Copiar bio</button></p>
+<h2>De qué hablo</h2>
+<ul class="list"><li>Memento Vivere: por qué hay una calavera sobre una botella de lujo.</li><li>Austria se encuentra con México: construir una marca entre dos culturas.</li><li>Dirigir una empresa desde un segundo cerebro: IA y conocimiento compartido en un equipo pequeño.</li></ul>
+<h2>Imágenes</h2>
+<p><a href="bottle.webp" target="_blank" rel="noopener">Padre Azul Tequila Joven, botella</a><br><a href="ramon.webp" target="_blank" rel="noopener">Ramon, el icono</a><br>Más imágenes a petición.</p>
+<h2>Contacto</h2>
+<p>Para entrevistas y charlas, escríbeme por <a href="https://www.linkedin.com/in/hpeder/" target="_blank" rel="noopener">LinkedIn</a>.</p>
+</template>
+<template data-lang="es" data-for="ritual">
+<img class="ramon-big" src="ramon.webp" width="240" height="240" alt="Ramon">
+<h1>El ritual de la calavera</h1>
+<p class="hand">Enfréntala, luego vive.</p>
+<ol><li>Abre la botella. La calavera de arriba se llama Ramon.</li><li>Deja que te recuerde cuánto vale este momento.</li><li>Sirve.</li><li>Cuando termines tu copa, entrégale a Ramon a la persona que tienes al lado. Es una promesa de amistad eterna. No se puede devolver.</li></ol>
+<p>Ramon nos recuerda que el tiempo es un recurso escaso y que hay que pasarlo con amigos y familia.</p>
+</template>
 
 <section class="window" id="win-post" hidden aria-labelledby="t-post">
   <div class="titlebar"><button class="close" type="button" aria-label="Close">×</button><span class="title" id="t-post">Essay</span></div>
@@ -371,6 +574,28 @@ a { color: var(--accent); }
 (function () {
   var $ = function (s, r) { return (r || document).querySelector(s); };
   var $$ = function (s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)); };
+  /* ---------- Languages ---------- */
+  var lang = 'en', LOCALE = { en: 'en-GB', de: 'de-AT', es: 'es-MX' };
+  var STR = {
+    de: { about: 'Über mich', wall: 'Hintergrund', closeall: 'Fenster schließen', essays: 'Essays', brain: 'Zweites Gehirn', quotes: 'Zitate', now: 'Jetzt',
+      ritual: 'Skull-Ritual', press: 'Presse & Vorträge', 'w-writing': 'Texte', allessays: 'alle Essays', open: 'öffnen →', more: 'mehr', 'w-quote': 'Zitat',
+      bio: 'El Padre. Mitgründer von Padre Azul. Geboren in Rauris in den Salzburger Alpen. Macht Tequila in Jalisco. Memento Vivere: Denk daran, du lebst jetzt.',
+      brandp: 'Der Tequila, der aus einer Liebesgeschichte entstand. Gegründet 2014, gemacht in Jalisco, vertrieben aus Wattens in Tirol.',
+      n1: 'Zurück in Österreich nach einer Woche in Mexiko-Stadt.', n2: 'Ich schreibe die ersten Essays für diesen Schreibtisch.', n3: 'Ich bringe dem Team bei, mit dem zweiten Gehirn zu arbeiten.',
+      enote: 'Noch ist nichts veröffentlicht. Das sind die Texte, die gerade auf dem Schreibtisch liegen.',
+      'w-news': 'Der Brief', newsp: 'Ein Brief von El Padre, einmal im Monat.', subscribe: 'Abonnieren', 'w-meet': 'Wo du mich triffst',
+      draft: 'Entwurf', city: 'Wien', hide: 'Widgets ausblenden', show: 'Widgets einblenden', loading: 'Lädt …', loaderr: 'Dieser Essay konnte nicht geladen werden. Bitte versuch es gleich noch einmal.', copied: 'Kopiert' },
+    es: { about: 'Sobre mí', wall: 'Fondo', closeall: 'Cerrar ventanas', essays: 'Ensayos', brain: 'Segundo cerebro', quotes: 'Frases', now: 'Ahora',
+      ritual: 'Ritual de la calavera', press: 'Prensa y charlas', 'w-writing': 'Escritos', allessays: 'todos', open: 'abrir →', more: 'más', 'w-quote': 'Frase',
+      bio: 'El Padre. Cofundador de Padre Azul. Nacido en Rauris, en los Alpes de Salzburgo. Hace tequila en Jalisco. Memento Vivere: recuerda, vive ahora.',
+      brandp: 'El tequila que nació de una historia de amor. Fundado en 2014, hecho en Jalisco, vendido desde Wattens, Austria.',
+      n1: 'De vuelta en Austria tras una semana en Ciudad de México.', n2: 'Escribiendo los primeros ensayos para este escritorio.', n3: 'Enseñando al equipo a trabajar con el segundo cerebro.',
+      enote: 'Todavía no hay nada publicado. Estos son los textos que están ahora sobre el escritorio.',
+      'w-news': 'La carta', newsp: 'Una carta de El Padre, una vez al mes.', subscribe: 'Suscribirme', 'w-meet': 'Dónde encontrarme',
+      draft: 'borrador', city: 'Viena', hide: 'Ocultar widgets', show: 'Mostrar widgets', loading: 'Cargando…', loaderr: 'No se pudo cargar este ensayo. Inténtalo de nuevo en un momento.', copied: 'Copiado' }
+  };
+  function T(key, en) { return (STR[lang] && STR[lang][key]) || en; }
+
   function store(k, v) { try { if (v === undefined) return localStorage.getItem(k); localStorage.setItem(k, v); } catch (e) { return null; } }
 
   /* ---------- Wallpaper: a painted agave field ---------- */
@@ -493,7 +718,7 @@ a { color: var(--accent); }
 
   /* ---------- Clock (Vienna time) ---------- */
   function tick() {
-    try { $('#clock').textContent = 'Vienna ' + new Intl.DateTimeFormat('en-GB', { timeZone: 'Europe/Vienna', hour: '2-digit', minute: '2-digit' }).format(new Date()); }
+    try { $('#clock').textContent = T('city', 'Vienna') + ' ' + new Intl.DateTimeFormat('en-GB', { timeZone: 'Europe/Vienna', hour: '2-digit', minute: '2-digit' }).format(new Date()); }
     catch (e) { $('#clock').textContent = ''; }
   }
   tick(); setInterval(tick, 20000);
@@ -504,8 +729,8 @@ a { color: var(--accent); }
   function open(id) {
     var win = $('#win-' + id); if (!win) return;
     if (win.hidden) {
-      var free = Math.max(0, window.innerWidth - 340 - 110 - 560);
-      win.style.left = (120 + free / 2 + (opened % 5) * 26) + 'px';
+      var free = Math.max(0, window.innerWidth - 340 - 226 - 560);
+      win.style.left = (226 + free / 2 + (opened % 5) * 26) + 'px';
       win.style.top = (72 + (opened % 5) * 26) + 'px';
       opened++; win.hidden = false;
     }
@@ -565,7 +790,7 @@ a { color: var(--accent); }
   /*MD-END*/
   var posts = [];
   function niceDate(d, short) {
-    try { return new Date(d + 'T12:00:00').toLocaleDateString('en-GB', short ? { day: 'numeric', month: 'short' } : { day: 'numeric', month: 'long', year: 'numeric' }); }
+    try { return new Date(d + 'T12:00:00').toLocaleDateString(LOCALE[lang] || 'en-GB', short ? { day: 'numeric', month: 'short' } : { day: 'numeric', month: 'long', year: 'numeric' }); }
     catch (e) { return d; }
   }
   function el(tag, cls, text) { var n = document.createElement(tag); if (cls) n.className = cls; if (text != null) n.textContent = text; return n; }
@@ -576,12 +801,12 @@ a { color: var(--accent); }
   function renderLists() {
     var w = $('#post-list'), e = $('#essay-list'); w.textContent = ''; e.textContent = '';
     posts.slice(0, 5).forEach(function (p) {
-      var li = el('li'); li.appendChild(titleNode(p, 't')); li.appendChild(el('span', 'tag', p.draft ? 'draft' : niceDate(p.date, true))); w.appendChild(li);
+      var li = el('li'); li.appendChild(titleNode(p, 't')); li.appendChild(el('span', 'tag', p.draft ? T('draft', 'draft') : niceDate(p.date, true))); w.appendChild(li);
     });
     posts.forEach(function (p) {
       var li = el('li'), row = el('div', 'row'), h = el('h3');
       if (p.draft) h.textContent = p.title; else { var b = el('button', '', p.title); b.type = 'button'; b.setAttribute('data-post', p.slug); h.appendChild(b); }
-      row.appendChild(h); row.appendChild(el('span', 'tag', p.draft ? 'draft' : niceDate(p.date)));
+      row.appendChild(h); row.appendChild(el('span', 'tag', p.draft ? T('draft', 'draft') : niceDate(p.date)));
       li.appendChild(row); if (p.summary) li.appendChild(el('p', '', p.summary)); e.appendChild(li);
     });
     $('#essay-note').hidden = posts.some(function (p) { return !p.draft; });
@@ -591,12 +816,12 @@ a { color: var(--accent); }
   function openPost(slug) {
     var p = findPost(slug); if (!p) return;
     var head = '<h1>' + esc(p.title) + '</h1><p class="meta">' + esc(niceDate(p.date)) + '</p>', body = $('#post-body');
-    $('#t-post').textContent = p.title; body.innerHTML = head + '<p>Loading…</p>'; body.scrollTop = 0;
+    $('#t-post').textContent = p.title; body.innerHTML = head + '<p>' + T('loading', 'Loading…') + '</p>'; body.scrollTop = 0;
     open('post'); setHash(slug);
     fetch('posts/' + slug + '.md', { cache: 'no-cache' })
       .then(function (r) { if (!r.ok) throw new Error(r.status); return r.text(); })
       .then(function (t) { body.innerHTML = head + md(t); })
-      .catch(function () { body.innerHTML = head + '<p>This essay could not be loaded. Please try again in a moment.</p>'; });
+      .catch(function () { body.innerHTML = head + '<p>' + T('loaderr', 'This essay could not be loaded. Please try again in a moment.') + '</p>'; });
   }
   document.addEventListener('click', function (e) { var b = e.target.closest('[data-post]'); if (b) openPost(b.getAttribute('data-post')); });
   $('#win-post .close').addEventListener('click', function () { setHash(''); });
@@ -614,16 +839,59 @@ a { color: var(--accent); }
     });
   });
   $('#btn-widgets').addEventListener('click', function () {
-    var w = $('#widgets'); w.hidden = !w.hidden; this.textContent = w.hidden ? 'Show widgets' : 'Hide widgets';
+    var w = $('#widgets'); w.hidden = !w.hidden; widgetsLabel();
   });
-  var quotes = [
-    ['Remember you must live.', 'Memento Vivere'],
-    ['Death is not the enemy of a good life. Forgetting death is.', 'What Mexico taught me'],
-    ['Nothing added beyond agave and time.', 'Padrecito']
-  ], qi = 0;
-  $('#next-quote').addEventListener('click', function () {
-    qi = (qi + 1) % quotes.length; $('#q-text').textContent = quotes[qi][0]; $('#q-src').textContent = quotes[qi][1];
+  function widgetsLabel() { $('#btn-widgets').textContent = $('#widgets').hidden ? T('show', 'Show widgets') : T('hide', 'Hide widgets'); }
+  var QUOTES = {
+    en: [['Remember you must live.', 'Memento Vivere'], ['Death is not the enemy of a good life. Forgetting death is.', 'What Mexico taught me'], ['Nothing added beyond agave and time.', 'Padrecito']],
+    de: [['Denk daran: du lebst jetzt.', 'Memento Vivere'], ['Der Tod ist nicht der Feind eines guten Lebens. Ihn zu vergessen ist es.', 'Was Mexiko mich gelehrt hat'], ['Nothing added beyond agave and time.', 'Padrecito']],
+    es: [['Recuerda: vive ahora.', 'Memento Vivere'], ['La muerte no es enemiga de una buena vida. Olvidarla sí lo es.', 'Lo que México me enseñó'], ['Nothing added beyond agave and time.', 'Padrecito']]
+  }, qi = 0;
+  function showQuote() { var q = (QUOTES[lang] || QUOTES.en)[qi]; $('#q-text').textContent = q[0]; $('#q-src').textContent = q[1]; }
+  $('#next-quote').addEventListener('click', function () { qi = (qi + 1) % QUOTES.en.length; showQuote(); });
+
+  /* ---------- Newsletter: paste the sign-up page address here to show the widget ---------- */
+  var NEWSLETTER_URL = '';
+  if (NEWSLETTER_URL) { $('#news-link').href = NEWSLETTER_URL; $('#w-news').hidden = false; }
+
+  /* ---------- Where to meet me: upcoming entries from events.json ---------- */
+  var events = [];
+  function renderEvents() {
+    var today = new Date().toISOString().slice(0, 10), list = $('#meet-list'); list.textContent = '';
+    var next = events.filter(function (e) { return e && e.date >= today && e.title; }).sort(function (a, b) { return a.date < b.date ? -1 : 1; }).slice(0, 5);
+    next.forEach(function (e) {
+      var li = el('li'); li.appendChild(el('span', 'd', niceDate(e.date) + (e.place ? ' · ' + e.place : '')));
+      if (e.url && /^https?:\/\//i.test(e.url)) { var a = el('a', '', e.title); a.href = e.url; a.target = '_blank'; a.rel = 'noopener'; li.appendChild(a); } else li.appendChild(el('span', '', e.title));
+      list.appendChild(li);
+    });
+    $('#w-meet').hidden = !next.length;
+  }
+  fetch('events.json', { cache: 'no-cache' }).then(function (r) { return r.ok ? r.json() : []; }).then(function (l) { events = Array.isArray(l) ? l : []; renderEvents(); }).catch(function () {});
+
+  /* ---------- Copy buttons ---------- */
+  document.addEventListener('click', function (e) {
+    var b = e.target.closest('[data-copy]'); if (!b) return;
+    var src = document.getElementById(b.getAttribute('data-copy')); if (!src) return;
+    var done = function () { var old = b.textContent; b.textContent = T('copied', 'Copied'); setTimeout(function () { b.textContent = old; }, 1500); };
+    var select = function () { var r = document.createRange(); r.selectNodeContents(src); var sel = getSelection(); sel.removeAllRanges(); sel.addRange(r); };
+    try { navigator.clipboard.writeText(src.textContent).then(done, select); } catch (err) { select(); }
   });
+
+  /* ---------- Apply a language ---------- */
+  function applyLang(l) {
+    lang = (l === 'de' || l === 'es') ? l : 'en'; document.documentElement.lang = lang;
+    $$('[data-t]').forEach(function (n) { if (n._en == null) n._en = n.textContent; n.textContent = T(n.getAttribute('data-t'), n._en); });
+    $$('[data-tb]').forEach(function (n) {
+      if (n._en == null) n._en = n.innerHTML;
+      var t = lang === 'en' ? null : document.querySelector('template[data-lang="' + lang + '"][data-for="' + n.getAttribute('data-tb') + '"]');
+      n.innerHTML = t ? t.innerHTML : n._en;
+    });
+    $$('[data-lang-btn]').forEach(function (b) { b.setAttribute('aria-pressed', String(b.getAttribute('data-lang-btn') === lang)); });
+    widgetsLabel(); showQuote(); tick(); renderEvents(); if (posts.length) renderLists();
+  }
+  $$('[data-lang-btn]').forEach(function (b) { b.addEventListener('click', function () { applyLang(b.getAttribute('data-lang-btn')); store('mezquila-lang', lang); }); });
+  var firstLang = store('mezquila-lang') || (navigator.language || 'en').slice(0, 2).toLowerCase();
+  if (firstLang === 'de' || firstLang === 'es') applyLang(firstLang);
 })();
 </script>
 </body>

@@ -32,6 +32,15 @@ Personal homepage of HP Eder. One page, no build step for the page itself.
 
 A draft shows as a title with a "draft" tag and cannot be opened. Supported Markdown: headings, bold, italic, links, lists, quotes, images and dividers. Put images in the repository and link them by file name.
 
+## Other things you can change
+
+- **Events ("Where to meet me"):** add entries to `events.json`, for example
+  `[{"date": "2026-12-05", "title": "Bar Convent talk", "place": "Berlin", "url": "https://example.com"}]`.
+  Past dates hide themselves; the widget only shows when something is upcoming.
+- **Newsletter:** in `index.html`, set `NEWSLETTER_URL` to the address of the sign-up page. The widget appears once it is set.
+- **Languages:** English text is written directly in the page. German and Spanish live in the `STR` list in the script (short labels) and in the `<template data-lang="de|es">` blocks (whole windows). Change all three when you change a text.
+- **Share image:** `og.png` is the picture shown when the link is posted on LinkedIn or WhatsApp.
+
 ## Domain
 
 The custom domain mezquila.si is not connected yet. Add a `CNAME` file containing `mezquila.si` once its DNS points to GitHub Pages.
