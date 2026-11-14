@@ -1,0 +1,546 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Mezquila</title>
+<meta name="description" content="The desk of HP Eder, El Padre. Co-founder of Padre Azul Tequila. Memento Vivere: remember you must live.">
+<meta property="og:title" content="Mezquila">
+<meta property="og:description" content="The desk of HP Eder, El Padre. Co-founder of Padre Azul Tequila. Memento Vivere: remember you must live.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://mezquila.si/">
+<link rel="icon" type="image/webp" href="ramon.webp">
+<style>body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,600;1,6..72,400&family=Source+Sans+3:wght@400;600;700&display=swap">
+<style>
+/* Layout: a desk. Painted agave-field wallpaper, menu bar on top, app icons on the left that open windows, a column of paper widgets on the right. */
+:root {
+  --bg: #3a5673;
+  --card: rgba(246, 249, 251, 0.88);
+  --win: #fafcfd;
+  --bar: rgba(244, 248, 251, 0.74);
+  --ink: #1b2a3a;
+  --muted: #536476;
+  --accent: #1a5ea6;
+  --accent-soft: rgba(26, 94, 166, 0.12);
+  --line: rgba(27, 42, 58, 0.14);
+  --on-wall: #ffffff;
+  --wall-shadow: rgba(6, 16, 28, 0.75);
+  --icon-face: #f4f8fb;
+  --icon-ink: #1a4f8a;
+  --shadow: 0 8px 24px rgba(6, 16, 28, 0.22);
+  --hand: "Caveat", "Bradley Hand", cursive;
+  --serif: "Newsreader", Georgia, "Times New Roman", serif;
+  --sans: "Source Sans 3", "Helvetica Neue", Arial, sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0d1622; --card: rgba(17, 26, 37, 0.84); --win: #131d29; --bar: rgba(12, 19, 28, 0.72);
+    --ink: #e7eef4; --muted: #a2b2c1; --accent: #86bbf0; --accent-soft: rgba(134, 187, 240, 0.14);
+    --line: rgba(231, 238, 244, 0.16); --icon-face: #1b2a3b; --icon-ink: #9cc8f3;
+    --shadow: 0 8px 24px rgba(0, 0, 0, 0.5); color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0d1622; --card: rgba(17, 26, 37, 0.84); --win: #131d29; --bar: rgba(12, 19, 28, 0.72);
+  --ink: #e7eef4; --muted: #a2b2c1; --accent: #86bbf0; --accent-soft: rgba(134, 187, 240, 0.14);
+  --line: rgba(231, 238, 244, 0.16); --icon-face: #1b2a3b; --icon-ink: #9cc8f3;
+  --shadow: 0 8px 24px rgba(0, 0, 0, 0.5); color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+html, body { min-height: 100%; }
+body { background: var(--bg); color: var(--ink); font-family: var(--sans); font-size: 16px; line-height: 1.5; }
+#wall { position: fixed; inset: 0; width: 100%; height: 100%; z-index: 0; display: block; }
+button { font: inherit; color: inherit; background: none; border: 0; cursor: pointer; }
+a { color: var(--accent); }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 4px; }
+
+/* Menu bar */
+.bar {
+  position: fixed; inset: 0 0 auto 0; z-index: 50;
+  display: flex; align-items: center; gap: 4px;
+  padding-top: env(safe-area-inset-top, 0px);
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  min-height: 40px;
+  background: var(--bar); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+  border-bottom: 1px solid var(--line); font-size: 14px;
+}
+.bar .name { font-weight: 700; margin-right: 10px; letter-spacing: 0.01em; }
+.bar button { padding: 6px 9px; border-radius: 6px; }
+.bar button:hover { background: var(--accent-soft); }
+.bar .clock { margin-left: auto; color: var(--muted); font-variant-numeric: tabular-nums; white-space: nowrap; }
+
+/* Desk */
+.desk {
+  position: relative; z-index: 1;
+  display: grid; grid-template-columns: minmax(0, 1fr) 320px; gap: 24px; align-items: start;
+  padding-block: 64px 40px;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+.icons { display: grid; grid-template-columns: 96px; gap: 14px; justify-content: start; }
+.icon { display: flex; flex-direction: column; align-items: center; gap: 6px; padding: 6px 4px; border-radius: 10px; width: 96px; }
+.icon:hover { background: rgba(255, 255, 255, 0.16); }
+.icon .tile {
+  width: 56px; height: 56px; border-radius: 14px; background: var(--icon-face);
+  display: grid; place-items: center; box-shadow: 0 4px 12px rgba(6, 16, 28, 0.35);
+}
+.icon svg { width: 30px; height: 30px; }
+.icon .glyph { fill: var(--icon-ink); }
+.icon .stroke { fill: none; stroke: var(--icon-ink); stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
+.icon .label { color: var(--on-wall); font-size: 13.5px; font-weight: 600; text-shadow: 0 1px 3px var(--wall-shadow), 0 0 10px var(--wall-shadow); text-align: center; }
+
+.widgets { display: flex; flex-direction: column; gap: 12px; min-width: 0; }
+.widget { background: var(--card); border-radius: 16px; box-shadow: var(--shadow); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); padding: 14px 16px 16px; }
+.w-head { display: flex; align-items: center; gap: 8px; }
+.w-head h2 { margin: 0; font-size: 11.5px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); font-weight: 700; }
+.w-head .more { margin-left: auto; font-size: 13px; color: var(--accent); padding: 2px 4px; }
+.w-head .fold { width: 24px; height: 24px; border-radius: 6px; color: var(--muted); line-height: 1; }
+.w-head .more + .fold { margin-left: 0; }
+.w-head .fold:only-of-type { margin-left: auto; }
+.w-head .fold:hover, .w-head .more:hover { background: var(--accent-soft); }
+.w-body { margin-top: 10px; }
+.widget.folded .w-body { display: none; }
+
+.me { display: flex; gap: 12px; align-items: flex-start; }
+.me .mono { flex: none; width: 60px; height: 60px; border-radius: 50%; background: #e6ecf1; object-fit: cover; box-shadow: 0 2px 8px rgba(6, 16, 28, 0.3); }
+.me p { margin: 0; font-family: var(--hand); font-size: 21px; line-height: 1.22; color: var(--ink); }
+.social { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--line); }
+.social a { display: inline-flex; align-items: center; gap: 6px; padding: 5px 10px; border-radius: 99px; background: var(--accent-soft); color: var(--ink); font-size: 13.5px; font-weight: 600; text-decoration: none; }
+.social a:hover { background: var(--accent); color: var(--win); }
+.social svg { width: 16px; height: 16px; flex: none; }
+.who { font-weight: 700; font-size: 15px; margin: 0 0 8px; }
+
+.posts { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 9px; }
+.posts li { display: flex; gap: 8px; align-items: baseline; justify-content: space-between; }
+.posts .t { font-family: var(--serif); font-size: 16.5px; line-height: 1.3; min-width: 0; }
+.tag { flex: none; font-size: 10.5px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); border: 1px solid var(--line); border-radius: 99px; padding: 1px 7px; }
+
+.brand { display: flex; gap: 14px; align-items: center; }
+.brand img { flex: none; width: 72px; height: auto; filter: drop-shadow(0 4px 8px rgba(6, 16, 28, 0.35)); }
+.content .bottle { float: right; width: 150px; max-width: 38%; height: auto; margin: 0 0 12px 20px; filter: drop-shadow(0 8px 14px rgba(6, 16, 28, 0.35)); }
+.brand p { margin: 0 0 6px; font-size: 14.5px; }
+.now { margin: 0; padding-left: 18px; font-size: 14.5px; display: flex; flex-direction: column; gap: 5px; }
+.quote blockquote { margin: 0; font-family: var(--serif); font-style: italic; font-size: 19px; line-height: 1.3; text-wrap: balance; }
+.quote cite { display: block; margin-top: 6px; font-style: normal; font-size: 13px; color: var(--muted); }
+
+/* Windows */
+.window {
+  position: fixed; z-index: 20; left: 140px; top: 90px;
+  width: min(560px, calc(100vw - 32px)); max-height: min(620px, calc(100vh - 120px));
+  display: flex; flex-direction: column;
+  background: var(--win); border: 1px solid var(--line); border-radius: 12px; box-shadow: 0 18px 50px rgba(6, 16, 28, 0.45); overflow: hidden;
+}
+.titlebar { display: flex; align-items: center; gap: 8px; padding: 8px 10px; border-bottom: 1px solid var(--line); cursor: grab; user-select: none; touch-action: none; }
+.titlebar .close { width: 26px; height: 26px; border-radius: 50%; background: var(--accent-soft); color: var(--ink); font-size: 16px; line-height: 1; }
+.titlebar .close:hover { background: var(--accent); color: var(--win); }
+.titlebar .title { flex: 1; text-align: center; font-size: 13.5px; font-weight: 600; color: var(--muted); padding-right: 26px; }
+.content { padding: 22px 26px 28px; overflow-y: auto; }
+.content h1 { font-family: var(--serif); font-weight: 600; font-size: 30px; line-height: 1.15; margin: 0 0 12px; text-wrap: balance; }
+.content h2 { clear: both; font-family: var(--serif); font-weight: 600; font-size: 21px; line-height: 1.2; margin: 22px 0 10px; padding-top: 16px; border-top: 1px solid var(--line); }
+.content p { margin: 0 0 12px; font-size: 16.5px; line-height: 1.6; max-width: 62ch; }
+.content .hand { font-family: var(--hand); font-size: 24px; line-height: 1.2; color: var(--accent); }
+.content .note { font-size: 14px; color: var(--muted); border-top: 1px solid var(--line); padding-top: 12px; margin-top: 18px; }
+.essays { list-style: none; margin: 0; padding: 0; }
+.essays li { padding: 13px 0; border-bottom: 1px solid var(--line); }
+.essays li:last-child { border-bottom: 0; }
+.essays .row { display: flex; gap: 10px; align-items: baseline; justify-content: space-between; }
+.essays h3 { margin: 0; font-family: var(--serif); font-weight: 600; font-size: 19px; line-height: 1.25; }
+.essays p { margin: 4px 0 0; font-size: 15px; color: var(--muted); }
+.qlist { display: flex; flex-direction: column; gap: 18px; }
+.qlist blockquote { margin: 0; padding-left: 14px; border-left: 2px solid var(--accent); font-family: var(--serif); font-style: italic; font-size: 20px; line-height: 1.35; }
+.qlist cite { display: block; font-family: var(--sans); font-style: normal; font-size: 13px; color: var(--muted); margin-top: 4px; }
+
+@media (max-width: 760px) {
+  .desk { grid-template-columns: minmax(0, 1fr); gap: 18px; padding-block: 58px 28px; }
+  .icons { grid-template-columns: repeat(3, minmax(0, 1fr)); justify-items: center; gap: 8px; }
+  .bar .hide-s { display: none; }
+  .window { left: 16px !important; right: 16px; top: 56px !important; width: auto; max-height: calc(100vh - 80px); }
+  .titlebar { cursor: default; }
+  .content { padding: 18px 18px 24px; }
+  .content h1 { font-size: 26px; }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .window:not([hidden]) { animation: pop 0.16s ease-out; }
+  @keyframes pop { from { transform: scale(0.97); opacity: 0.6; } to { transform: none; opacity: 1; } }
+}
+</style>
+
+</head>
+<body>
+<canvas id="wall" aria-hidden="true"></canvas>
+
+<header class="bar">
+  <span class="name">Mezquila</span>
+  <button type="button" data-open="about">About</button>
+  <button type="button" id="btn-wall">Wallpaper</button>
+  <button type="button" id="btn-widgets" class="hide-s">Hide widgets</button>
+  <button type="button" id="btn-closeall" class="hide-s">Close windows</button>
+  <span class="clock" id="clock">Vienna --:--</span>
+</header>
+
+<main class="desk">
+  <nav class="icons" aria-label="Desk">
+    <button class="icon" type="button" data-open="about">
+      <span class="tile"><svg viewBox="0 0 32 32"><circle class="glyph" cx="16" cy="11" r="6"/><path class="glyph" d="M4 29c0-7 5-11 12-11s12 4 12 11z"/></svg></span>
+      <span class="label">About me</span>
+    </button>
+    <button class="icon" type="button" data-open="essays">
+      <span class="tile"><svg viewBox="0 0 32 32"><path class="stroke" d="M7 4h13l5 5v19H7z"/><path class="stroke" d="M11 14h10M11 19h10M11 24h6"/></svg></span>
+      <span class="label">Essays</span>
+    </button>
+    <button class="icon" type="button" data-open="padre">
+      <span class="tile"><svg viewBox="0 0 32 32"><circle class="glyph" cx="16" cy="5.5" r="3.5"/><rect class="glyph" x="13.5" y="9" width="5" height="4"/><path class="glyph" d="M10 16c0-2 2-3 6-3s6 1 6 3v12a2 2 0 0 1-2 2h-8a2 2 0 0 1-2-2z"/></svg></span>
+      <span class="label">Padre Azul</span>
+    </button>
+    <button class="icon" type="button" data-open="brain">
+      <span class="tile"><svg viewBox="0 0 32 32"><circle class="glyph" cx="8" cy="9" r="3.2"/><circle class="glyph" cx="24" cy="8" r="3.2"/><circle class="glyph" cx="16" cy="18" r="4"/><circle class="glyph" cx="7" cy="25" r="2.8"/><circle class="glyph" cx="25" cy="25" r="2.8"/><path class="stroke" d="M8 9l8 9 8-10M16 18l-9 7M16 18l9 7"/></svg></span>
+      <span class="label">Second brain</span>
+    </button>
+    <button class="icon" type="button" data-open="quotes">
+      <span class="tile"><svg viewBox="0 0 32 32"><path class="glyph" d="M5 18c0-6 3-10 8-11l1 3c-3 1-4 3-4 5h4v8H5zM18 18c0-6 3-10 8-11l1 3c-3 1-4 3-4 5h4v8h-9z"/></svg></span>
+      <span class="label">Quotes</span>
+    </button>
+    <button class="icon" type="button" data-open="now">
+      <span class="tile"><svg viewBox="0 0 32 32"><circle class="stroke" cx="16" cy="16" r="11"/><path class="glyph" d="M21 11l-3 7-7 3 3-7z"/></svg></span>
+      <span class="label">Now</span>
+    </button>
+  </nav>
+
+  <aside class="widgets" id="widgets">
+    <section class="widget">
+      <div class="me">
+        <img class="mono" src="ramon.webp" width="240" height="240" alt="Ramon, the Padre Azul icon logo">
+        <div>
+          <p class="who">Hans-Peter Eder</p>
+          <p>El Padre. Co-Founder of Padre Azul. Born in Salzburg's Alps in Rauris, Austria. Making Tequila in Jalisco. Memento Vivere: remember you must live.</p>
+        </div>
+      </div>
+      <div class="social">
+        <a href="https://www.instagram.com/mezquila/" target="_blank" rel="noopener" aria-label="Instagram: @mezquila" title="Instagram"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="5" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="3.6" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="16.6" cy="7.4" r="1.2" fill="currentColor"/></svg><span>Instagram</span></a>
+        <a href="https://www.linkedin.com/in/hpeder/" target="_blank" rel="noopener" aria-label="LinkedIn: HP Eder" title="LinkedIn"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="6.5" cy="6.5" r="1.9" fill="currentColor"/><rect x="5" y="10" width="3" height="9" fill="currentColor"/><path d="M11 10h2.9v1.4c.6-1 1.7-1.7 3.2-1.7 2.5 0 3.4 1.6 3.4 4.2V19h-3v-4.6c0-1.2-.4-2-1.5-2s-2 .8-2 2.1V19h-3z" fill="currentColor"/></svg><span>LinkedIn</span></a>
+        <a href="https://x.com/HPEder888" target="_blank" rel="noopener" aria-label="X: @HPEder888" title="X"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4.5l14 15M19 4.5l-14 15" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg><span>X</span></a>
+        <a href="https://www.facebook.com/profile.php?id=100091928179963" target="_blank" rel="noopener" aria-label="Facebook: HP Eder" title="Facebook"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M13.5 21v-7.5h2.6l.4-3h-3V8.6c0-.9.3-1.5 1.6-1.5h1.5V4.4c-.3 0-1.2-.1-2.2-.1-2.2 0-3.7 1.300-3.700 3.800v2.400H8v3h2.700V21z" fill="currentColor"/></svg><span>Facebook</span></a>
+      </div>
+    </section>
+
+    <section class="widget">
+      <div class="w-head"><h2>Writing</h2><button class="more" type="button" data-open="essays">all essays</button><button class="fold" type="button" aria-label="Fold Writing" aria-expanded="true">−</button></div>
+      <div class="w-body">
+        <ul class="posts">
+          <li><span class="t">Memento Vivere</span><span class="tag">draft</span></li>
+          <li><span class="t">Two hundred hands</span><span class="tag">draft</span></li>
+          <li><span class="t">Austria meets Mexico</span><span class="tag">draft</span></li>
+          <li><span class="t">Running a tequila brand from a second brain</span><span class="tag">draft</span></li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="widget">
+      <div class="w-head"><h2>Padre Azul</h2><button class="more" type="button" data-open="padre">open →</button><button class="fold" type="button" aria-label="Fold Padre Azul" aria-expanded="true">−</button></div>
+      <div class="w-body brand">
+        <img src="bottle.webp" width="326" height="900" alt="Padre Azul Tequila Joven bottle with the black skull stopper and Memento Vivere on the shoulder">
+        <div>
+          <p>The tequila that came out of a love story. Founded in 2014, made in Jalisco, sold from Wattens, Austria.</p>
+          <a href="https://www.padreazul.com" target="_blank" rel="noopener">padreazul.com</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="widget">
+      <div class="w-head"><h2>Now</h2><button class="more" type="button" data-open="now">more</button><button class="fold" type="button" aria-label="Fold Now" aria-expanded="true">−</button></div>
+      <div class="w-body">
+        <ul class="now">
+          <li>Back in Austria after a week in Mexico City.</li>
+          <li>Writing the first essays for this desk.</li>
+          <li>Teaching the team to work with the second brain.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="widget quote">
+      <div class="w-head"><h2>Quote</h2><button class="more" type="button" id="next-quote" aria-label="Next quote">↻</button><button class="fold" type="button" aria-label="Fold Quote" aria-expanded="true">−</button></div>
+      <div class="w-body">
+        <blockquote id="q-text">Remember you must live.</blockquote>
+        <cite id="q-src">Memento Vivere</cite>
+      </div>
+    </section>
+  </aside>
+</main>
+
+<section class="window" id="win-about" hidden aria-labelledby="t-about">
+  <div class="titlebar"><button class="close" type="button" aria-label="Close">×</button><span class="title" id="t-about">About me</span></div>
+  <div class="content">
+    <h1>Hola, I'm HP.</h1>
+    <p class="hand">Some people call me El Padre. Online I go by Mezquila.</p>
+    <p>I was born in Rauris, in Salzburg's Alps. At a German university I met Adriana, who comes from Jalisco, and fell in love twice: with her, and with the way her country lives.</p>
+    <p>In 2014 that love story became a tequila. Padre Azul is still what I spend most of my days on. I'm the co-founder, not the CEO, which means I get to stay close to the bars, the people and the stories.</p>
+    <p>Mexico taught me something Europe had forgotten: death is not the enemy of a good life, forgetting death is. The old masters said memento mori. We turned it around. Memento Vivere, remember you must live.</p>
+    <p>This desk is where I keep what I'm writing, what I'm building and what I'm thinking about. Click around.</p>
+    <p class="note">Find me on <a href="https://www.instagram.com/mezquila/" target="_blank" rel="noopener">Instagram</a>, <a href="https://www.linkedin.com/in/hpeder/" target="_blank" rel="noopener">LinkedIn</a>, <a href="https://x.com/HPEder888" target="_blank" rel="noopener">X</a> and <a href="https://www.facebook.com/profile.php?id=100091928179963" target="_blank" rel="noopener">Facebook</a>.</p>
+  </div>
+</section>
+
+<section class="window" id="win-essays" hidden aria-labelledby="t-essays">
+  <div class="titlebar"><button class="close" type="button" aria-label="Close">×</button><span class="title" id="t-essays">Essays</span></div>
+  <div class="content">
+    <h1>Essays</h1>
+    <ul class="essays">
+      <li><div class="row"><h3>Memento Vivere</h3><span class="tag">draft</span></div><p>What Mexico taught an Austrian about death, time and a good life.</p></li>
+      <li><div class="row"><h3>Two hundred hands</h3><span class="tag">draft</span></div><p>Why a bottle made by people beats one made by a machine.</p></li>
+      <li><div class="row"><h3>Austria meets Mexico</h3><span class="tag">draft</span></div><p>How a love story turned into a company.</p></li>
+      <li><div class="row"><h3>Running a tequila brand from a second brain</h3><span class="tag">draft</span></div><p>Every meeting, every market and every decision in one vault, and what changed when the whole team could ask it questions.</p></li>
+      <li><div class="row"><h3>Co-founder, not CEO</h3><span class="tag">draft</span></div><p>On handing over the title and keeping the work I love.</p></li>
+    </ul>
+    <p class="note">Nothing is published yet. These are the pieces on the desk right now.</p>
+  </div>
+</section>
+
+<section class="window" id="win-padre" hidden aria-labelledby="t-padre">
+  <div class="titlebar"><button class="close" type="button" aria-label="Close">×</button><span class="title" id="t-padre">Padre Azul</span></div>
+  <div class="content">
+    <img class="bottle" src="bottle.webp" width="326" height="900" alt="Padre Azul Tequila Joven bottle with the black skull stopper and Memento Vivere on the shoulder">
+    <h1>Padre Azul</h1>
+    <p class="hand">Austria meets Mexico.</p>
+    <p>Padre Azul is a tequila from Jalisco, born in 2014 from the connection between an Austrian and a Mexican family. Every bottle passes through two hundred hands before it reaches yours.</p>
+    <p>The skull on top is called Ramon. He is the face and the spokesperson of the brand, and he is there for a reason: he reminds you that time is short, so share it well.</p>
+    <p>The family also includes Padrecito, the younger and more playful one.</p>
+    <h2>The Padre Manifesto, in short</h2>
+    <p>People ask me why there is a skull on our bottle. I think the better question is why every other bottle in this industry pretends you will live forever.</p>
+    <p>Mexico taught me that death is not the enemy of a good life. Forgetting death is. The old masters said memento mori, remember you must die. We turned it around. Memento Vivere: remember you must live.</p>
+    <p>So the skull is a handshake. You face it, you pour, and you pass it to the person across the table. That is the ritual.</p>
+    <p>An agave needs eight to ten years to mature, and our Añejo rests eighteen months in oak. Time is the most expensive ingredient we use, and the most expensive thing you will ever spend. Spend it well, with people who matter.</p>
+    <p class="hand">Remember you must live.</p>
+    <p><a href="https://www.padreazul.com" target="_blank" rel="noopener">Visit padreazul.com</a></p>
+  </div>
+</section>
+
+<section class="window" id="win-brain" hidden aria-labelledby="t-brain">
+  <div class="titlebar"><button class="close" type="button" aria-label="Close">×</button><span class="title" id="t-brain">Second brain</span></div>
+  <div class="content">
+    <h1>My second brain</h1>
+    <p>I run my working life out of one Obsidian vault with Claude sitting on top of it.</p>
+    <p>Every morning at 09:07 Vienna time, yesterday's meeting transcripts land in a folder called <em>raw</em>. One command turns them into wiki pages about the people, the markets and the decisions, and files the originals where they belong.</p>
+    <p>One page is called <em>hot</em>. It holds what is active right now, and it is the first thing I read each day.</p>
+    <p>I'll share the setup, the skills and the mistakes here as I go.</p>
+  </div>
+</section>
+
+<section class="window" id="win-quotes" hidden aria-labelledby="t-quotes">
+  <div class="titlebar"><button class="close" type="button" aria-label="Close">×</button><span class="title" id="t-quotes">Quotes</span></div>
+  <div class="content">
+    <h1>Lines I live by</h1>
+    <div class="qlist">
+      <blockquote>Remember you must live.<cite>Memento Vivere</cite></blockquote>
+      <blockquote>Death is not the enemy of a good life. Forgetting death is.<cite>What Mexico taught me</cite></blockquote>
+      <blockquote>Nothing added beyond agave and time.<cite>Padrecito</cite></blockquote>
+    </div>
+  </div>
+</section>
+
+<section class="window" id="win-now" hidden aria-labelledby="t-now">
+  <div class="titlebar"><button class="close" type="button" aria-label="Close">×</button><span class="title" id="t-now">Now</span></div>
+  <div class="content">
+    <h1>What I'm doing now</h1>
+    <p class="hand">November 2026, Austria</p>
+    <p>I'm just back from a week in Mexico City.</p>
+    <p>I'm writing the first essays for this desk, so the Essays folder stops saying draft.</p>
+    <p>At work I'm teaching the team to use the second brain the way I do, so that the knowledge of the company stops living in my head.</p>
+    <p class="note">A now page says what has my attention at the moment. I update it when that changes.</p>
+  </div>
+</section>
+
+<script>
+(function () {
+  var $ = function (s, r) { return (r || document).querySelector(s); };
+  var $$ = function (s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)); };
+  function store(k, v) { try { if (v === undefined) return localStorage.getItem(k); localStorage.setItem(k, v); } catch (e) { return null; } }
+
+  /* ---------- Wallpaper: a painted agave field ---------- */
+  var scenes = {
+    rauris:  { sky: ['#2f6fb0', '#6fa5d3', '#b9d6e6', '#eaf1ee'], orb: '#fffbe8', glow: 'rgba(255,248,215,0.55)', orbY: 0.17,
+               rock: ['#8497ad', '#5f748c'], snow: '#f7fafc', chapel: '#f3efe6', roof: '#6b3f2c',
+               hills: ['#6a9a68', '#4f8660', '#3d7358'], field: ['#4a8272', '#1f4746'], leaf: ['#74b0ac', '#4c8f94', '#34707c'], stars: 0 },
+    dusk:   { sky: ['#243a63', '#8a5a7c', '#e89a6a', '#f6cf9a'], orb: '#fff1cf', glow: 'rgba(255,214,150,0.55)', orbY: 0.47,
+               hills: ['#6d6f93', '#4c5f80', '#33506a'], field: ['#3f6a66', '#17313a'], leaf: ['#5f9aa0', '#3e7884', '#2b5c6c'], stars: 0 },
+    morning: { sky: ['#3f73a8', '#7fa9c9', '#c7dbe0', '#f0e3c8'], orb: '#fffbe8', glow: 'rgba(255,246,210,0.6)', orbY: 0.30,
+               hills: ['#7f9fb5', '#5f879b', '#467283'], field: ['#4f8478', '#234a4a'], leaf: ['#74b0ac', '#4c8f94', '#34707c'], stars: 0 },
+    night:   { sky: ['#060b17', '#0d1830', '#1a2c4c', '#2b4365'], orb: '#eef3ff', glow: 'rgba(190,210,255,0.35)', orbY: 0.22,
+               hills: ['#1c2c48', '#16233a', '#101b2d'], field: ['#16303a', '#080f17'], leaf: ['#3c6f80', '#285565', '#1b3f4f'], stars: 140 }
+  };
+  var order = ['rauris', 'dusk', 'morning', 'night'];
+  var darkPref = document.documentElement.getAttribute('data-theme') === 'dark' ||
+    (document.documentElement.getAttribute('data-theme') !== 'light' && window.matchMedia && matchMedia('(prefers-color-scheme: dark)').matches);
+  var scene = store('mezquila-wall-2');
+  if (!scenes[scene]) scene = 'rauris';
+
+  /* Rauris: snow-capped Hohe Tauern peaks behind the agave field */
+  function alps(c, w, h, p, rand) {
+    [[0.60, 0.40, p.rock[0], 6], [0.62, 0.27, p.rock[1], 8]].forEach(function (L) {
+      var base = h * L[0], H = h * L[1], n = L[3], pts = [];
+      for (var k = 0; k <= 2 * n; k++) {
+        var x = (k / (2 * n)) * w * 1.2 - w * 0.1 + (rand() - 0.5) * w * 0.04;
+        var y = base - (k % 2 ? H * (0.6 + rand() * 0.4) : H * (0.12 + rand() * 0.2));
+        if (k) { var q = pts[pts.length - 1]; pts.push([(q[0] + x) / 2 + (rand() - 0.5) * 14, (q[1] + y) / 2 + (rand() - 0.5) * H * 0.1]); }
+        pts.push([x, y]);
+      }
+      c.fillStyle = L[2]; c.beginPath(); c.moveTo(pts[0][0], h);
+      pts.forEach(function (q) { c.lineTo(q[0], q[1]); });
+      c.lineTo(pts[pts.length - 1][0], h); c.closePath(); c.fill();
+      c.save(); c.clip();
+      var line = base - H * 0.5; c.fillStyle = p.snow; c.beginPath(); c.moveTo(-10, 0);
+      for (var sx = -10, up = 0; sx <= w + 30; sx += 22, up = 1 - up) c.lineTo(sx, line + (up ? -1 : 1) * H * (0.03 + rand() * 0.06));
+      c.lineTo(w + 30, 0); c.closePath(); c.fill(); c.restore();
+    });
+  }
+  /* A small alpine chapel on the meadow, looking down on the agaves */
+  function chapel(c, w, h, p) {
+    var u = Math.max(5, Math.min(w, h) * 0.011), x = w * 0.2, y = h * 0.672;
+    c.fillStyle = p.chapel; c.fillRect(x, y - u * 2.4, u * 4, u * 2.4); c.fillRect(x - u * 1.5, y - u * 4.6, u * 1.5, u * 4.6);
+    c.fillStyle = p.roof;
+    c.beginPath(); c.moveTo(x - u * 0.3, y - u * 2.4); c.lineTo(x + u * 2, y - u * 4.2); c.lineTo(x + u * 4.3, y - u * 2.4); c.closePath(); c.fill();
+    c.beginPath(); c.moveTo(x - u * 1.8, y - u * 4.6); c.lineTo(x - u * 0.75, y - u * 8.2); c.lineTo(x + u * 0.3, y - u * 4.6); c.closePath(); c.fill();
+  }
+
+  function rng(seed) { return function () { seed |= 0; seed = seed + 0x6D2B79F5 | 0; var t = Math.imul(seed ^ seed >>> 15, 1 | seed); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; }; }
+
+  function agave(c, x, y, s, cols, rand) {
+    var n = 7;
+    for (var i = -n; i <= n; i++) {
+      var a = -Math.PI / 2 + i * 0.19 + (rand() - 0.5) * 0.08;
+      var len = s * (1 - Math.abs(i) * 0.055) * (0.9 + rand() * 0.2);
+      var tx = x + Math.cos(a) * len, ty = y + Math.sin(a) * len;
+      var px = -Math.sin(a) * s * 0.1, py = Math.cos(a) * s * 0.1;
+      var mx = x + Math.cos(a) * len * 0.45, my = y + Math.sin(a) * len * 0.45;
+      c.fillStyle = cols[(i + n) % cols.length];
+      c.beginPath();
+      c.moveTo(x - px * 0.6, y - py * 0.6);
+      c.quadraticCurveTo(mx - px * 1.5, my - py * 1.5, tx, ty);
+      c.quadraticCurveTo(mx + px * 1.5, my + py * 1.5, x + px * 0.6, y + py * 0.6);
+      c.closePath(); c.fill();
+    }
+  }
+
+  function paint() {
+    var cv = $('#wall'), p = scenes[scene];
+    var w = window.innerWidth, h = window.innerHeight, dpr = Math.min(window.devicePixelRatio || 1, 2);
+    cv.width = Math.round(w * dpr); cv.height = Math.round(h * dpr);
+    var c = cv.getContext('2d'); c.setTransform(dpr, 0, 0, dpr, 0, 0);
+    var rand = rng(2014);
+
+    var g = c.createLinearGradient(0, 0, 0, h * 0.7);
+    p.sky.forEach(function (col, i) { g.addColorStop(i / (p.sky.length - 1), col); });
+    c.fillStyle = g; c.fillRect(0, 0, w, h);
+
+    for (var s = 0; s < p.stars; s++) {
+      c.fillStyle = 'rgba(255,255,255,' + (0.3 + rand() * 0.6) + ')';
+      c.beginPath(); c.arc(rand() * w, rand() * h * 0.55, rand() * 1.2 + 0.3, 0, 7); c.fill();
+    }
+
+    var ox = w * 0.36, oy = h * p.orbY, or = Math.max(26, Math.min(w, h) * 0.055);
+    var gl = c.createRadialGradient(ox, oy, or * 0.6, ox, oy, or * 5);
+    gl.addColorStop(0, p.glow); gl.addColorStop(1, 'rgba(255,255,255,0)');
+    c.fillStyle = gl; c.fillRect(0, 0, w, h);
+    c.fillStyle = p.orb; c.beginPath(); c.arc(ox, oy, or, 0, 7); c.fill();
+    if (p.rock) alps(c, w, h, p, rand);
+
+    p.hills.forEach(function (col, i) {
+      var base = h * (0.52 + i * 0.065), amp = h * (0.07 - i * 0.015), ph = i * 2.1 + 0.7;
+      c.fillStyle = col; c.beginPath(); c.moveTo(0, h);
+      for (var x = 0; x <= w + 8; x += 8) {
+        var t = x / Math.max(w, 600);
+        c.lineTo(x, base - amp * (Math.sin(t * 3.1 + ph) * 0.6 + Math.sin(t * 7.3 + ph * 2) * 0.25 + Math.sin(t * 13 + ph) * 0.12));
+      }
+      c.lineTo(w, h); c.closePath(); c.fill();
+    });
+
+    var fy = h * 0.68, fg = c.createLinearGradient(0, fy, 0, h);
+    fg.addColorStop(0, p.field[0]); fg.addColorStop(1, p.field[1]);
+    c.fillStyle = fg; c.fillRect(0, fy, w, h - fy);
+    if (p.chapel) chapel(c, w, h, p);
+
+    var rows = 8;
+    for (var r = 0; r < rows; r++) {
+      var t = r / (rows - 1), y = h * (0.705 + 0.33 * Math.pow(t, 1.6));
+      var size = 9 + t * t * Math.min(w, 1400) * 0.075 + t * 14, gap = size * 1.75;
+      for (var x = -gap + (r % 2) * gap * 0.5; x < w + gap; x += gap) {
+        agave(c, x + (rand() - 0.5) * gap * 0.25, y, size, p.leaf, rand);
+      }
+    }
+  }
+  paint();
+  var rt; window.addEventListener('resize', function () { clearTimeout(rt); rt = setTimeout(paint, 120); });
+  $('#btn-wall').addEventListener('click', function () {
+    scene = order[(order.indexOf(scene) + 1) % order.length]; store('mezquila-wall-2', scene); paint();
+  });
+
+  /* ---------- Clock (Vienna time) ---------- */
+  function tick() {
+    try { $('#clock').textContent = 'Vienna ' + new Intl.DateTimeFormat('en-GB', { timeZone: 'Europe/Vienna', hour: '2-digit', minute: '2-digit' }).format(new Date()); }
+    catch (e) { $('#clock').textContent = ''; }
+  }
+  tick(); setInterval(tick, 20000);
+
+  /* ---------- Windows ---------- */
+  var z = 20, opened = 0;
+  function front(win) { win.style.zIndex = ++z; }
+  function open(id) {
+    var win = $('#win-' + id); if (!win) return;
+    if (win.hidden) {
+      var free = Math.max(0, window.innerWidth - 340 - 110 - 560);
+      win.style.left = (120 + free / 2 + (opened % 5) * 26) + 'px';
+      win.style.top = (72 + (opened % 5) * 26) + 'px';
+      opened++; win.hidden = false;
+    }
+    front(win); $('.close', win).focus({ preventScroll: true });
+  }
+  $$('[data-open]').forEach(function (b) { b.addEventListener('click', function () { open(b.getAttribute('data-open')); }); });
+  $$('.window').forEach(function (win) {
+    $('.close', win).addEventListener('click', function () { win.hidden = true; });
+    win.addEventListener('pointerdown', function () { front(win); });
+    var bar = $('.titlebar', win), drag = null;
+    bar.addEventListener('pointerdown', function (e) {
+      if (e.target.closest('.close') || window.innerWidth <= 760) return;
+      var r = win.getBoundingClientRect(); drag = { dx: e.clientX - r.left, dy: e.clientY - r.top };
+      bar.setPointerCapture(e.pointerId);
+    });
+    bar.addEventListener('pointermove', function (e) {
+      if (!drag) return;
+      var x = Math.min(Math.max(e.clientX - drag.dx, 80 - win.offsetWidth), window.innerWidth - 80);
+      var y = Math.min(Math.max(e.clientY - drag.dy, 44), window.innerHeight - 44);
+      win.style.left = x + 'px'; win.style.top = y + 'px';
+    });
+    var end = function () { drag = null; };
+    bar.addEventListener('pointerup', end); bar.addEventListener('pointercancel', end);
+  });
+  document.addEventListener('keydown', function (e) {
+    if (e.key !== 'Escape') return;
+    var top = $$('.window').filter(function (w) { return !w.hidden; }).sort(function (a, b) { return (+b.style.zIndex || 0) - (+a.style.zIndex || 0); })[0];
+    if (top) top.hidden = true;
+  });
+  $('#btn-closeall').addEventListener('click', function () { $$('.window').forEach(function (w) { w.hidden = true; }); });
+
+  /* ---------- Widgets ---------- */
+  $$('.fold').forEach(function (b) {
+    b.addEventListener('click', function () {
+      var folded = b.closest('.widget').classList.toggle('folded');
+      b.textContent = folded ? '+' : '−'; b.setAttribute('aria-expanded', String(!folded));
+    });
+  });
+  $('#btn-widgets').addEventListener('click', function () {
+    var w = $('#widgets'); w.hidden = !w.hidden; this.textContent = w.hidden ? 'Show widgets' : 'Hide widgets';
+  });
+  var quotes = [
+    ['Remember you must live.', 'Memento Vivere'],
+    ['Death is not the enemy of a good life. Forgetting death is.', 'What Mexico taught me'],
+    ['Nothing added beyond agave and time.', 'Padrecito']
+  ], qi = 0;
+  $('#next-quote').addEventListener('click', function () {
+    qi = (qi + 1) % quotes.length; $('#q-text').textContent = quotes[qi][0]; $('#q-src').textContent = quotes[qi][1];
+  });
+})();
+</script>
+</body>
+</html>
