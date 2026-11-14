@@ -159,6 +159,16 @@ a { color: var(--accent); }
 
 .content ol, .content ul.list { margin: 0 0 12px; padding-left: 22px; font-size: 16.5px; line-height: 1.6; max-width: 62ch; }
 .content li + li { margin-top: 4px; }
+.content .portrait { float: right; width: 160px; max-width: 40%; height: auto; border-radius: 12px; margin: 0 0 12px 20px; box-shadow: 0 6px 16px rgba(6, 16, 28, 0.3); }
+.ritual-video { display: block; clear: both; width: min(270px, 100%); aspect-ratio: 9 / 16; border-radius: 12px; background: #000; margin: 6px 0 10px; }
+.gb { list-style: none; margin: 0 0 10px; padding: 0; display: flex; flex-direction: column; gap: 8px; }
+.gb li { background: var(--win); border: 1px solid var(--line); border-radius: 4px; padding: 8px 10px; font-family: var(--hand); font-size: 19px; line-height: 1.2; }
+.gb .by { display: block; font-family: var(--sans); font-size: 12px; color: var(--muted); margin-top: 4px; }
+.gbform { display: flex; flex-direction: column; gap: 10px; max-width: 420px; }
+.gbform label { display: flex; flex-direction: column; gap: 4px; font-size: 13px; font-weight: 600; color: var(--muted); }
+.gbform input, .gbform textarea { font: inherit; font-size: 16px; color: var(--ink); background: var(--win); border: 1px solid var(--line); border-radius: 8px; padding: 8px 10px; }
+.gbform textarea { min-height: 96px; resize: vertical; }
+.gbform .trap { position: absolute; left: -9999px; }
 .btn-small { padding: 4px 12px; border-radius: 99px; background: var(--accent-soft); font-size: 13px; font-weight: 600; }
 .btn-small:hover { background: var(--accent); color: var(--win); }
 .content .ramon-big { float: right; width: 120px; max-width: 30%; height: auto; margin: 0 0 10px 18px; border-radius: 50%; background: #e6ecf1; }
@@ -310,6 +320,14 @@ a { color: var(--accent); }
       <div class="w-body"><ul class="meet" id="meet-list"></ul></div>
     </section>
 
+    <section class="widget" id="w-gb" hidden>
+      <div class="w-head"><h2 data-t="w-gb">Guestbook</h2></div>
+      <div class="w-body">
+        <ul class="gb" id="gb-list"></ul>
+        <button class="btn-small" type="button" data-open="guestbook" id="gb-sign" data-t="gbsign" hidden>Sign my guestbook</button>
+      </div>
+    </section>
+
     <section class="widget quote">
       <div class="w-head"><h2 data-t="w-quote">Quote</h2><button class="more" type="button" id="next-quote" aria-label="Next quote">↻</button><button class="fold" type="button" aria-label="Fold Quote" aria-expanded="true">−</button></div>
       <div class="w-body">
@@ -323,7 +341,8 @@ a { color: var(--accent); }
 <section class="window" id="win-about" hidden aria-labelledby="t-about">
   <div class="titlebar"><button class="close" type="button" aria-label="Close">×</button><span class="title" id="t-about" data-t="about">About me</span></div>
   <div class="content" data-tb="about">
-    <h1>Hola, I'm HP.</h1>
+    <img class="portrait" src="hp-eder.webp" width="640" height="795" alt="HP Eder">
+<h1>Hola, I'm HP.</h1>
     <p class="hand">Some people call me El Padre. Online I go by Mezquila.</p>
     <p>I was born in Rauris, in Salzburg's Alps. At a German university I met Adriana, who comes from Jalisco, and fell in love twice: with her, and with the way her country lives.</p>
     <p>In 2014 that love story became a tequila. Padre Azul is still what I spend most of my days on. I'm the co-founder, not the CEO, which means I get to stay close to the bars, the people and the stories.</p>
@@ -409,6 +428,8 @@ a { color: var(--accent); }
 <h1>The skull ritual</h1>
 <p class="hand">Face it, then live.</p>
 <ol><li>Open the bottle. The skull on top is called Ramon.</li><li>Let him remind you what this moment is worth.</li><li>Pour.</li><li>When you finish your glass, hand Ramon to the person next to you. It is a promise of eternal friendship. You can't give it back.</li></ol>
+<video class="ritual-video" controls playsinline preload="metadata" src="https://www.dropbox.com/scl/fi/jodjj6yxvgxnmijhf7su5/PA_INTL_02_Ritual_Ramon_EN_9x16.mp4?rlkey=l99x0z9oftc78flguh23xck63&amp;raw=1"></video>
+<p><a href="https://www.dropbox.com/scl/fi/jodjj6yxvgxnmijhf7su5/PA_INTL_02_Ritual_Ramon_EN_9x16.mp4?rlkey=l99x0z9oftc78flguh23xck63&amp;dl=0" target="_blank" rel="noopener">Watch the ritual film</a></p>
 <p>Ramon reminds us that time is a scarce resource, and that we should spend it with friends and family.</p>
   </div>
 </section>
@@ -424,13 +445,14 @@ a { color: var(--accent); }
 <h2>What I speak about</h2>
 <ul class="list"><li>Memento Vivere: why a skull sits on top of a luxury bottle.</li><li>Austria meets Mexico: building one brand across two cultures.</li><li>Running a company from a second brain: AI and shared knowledge in a small team.</li></ul>
 <h2>Images</h2>
-<p><a href="bottle.webp" target="_blank" rel="noopener">Padre Azul Tequila Joven, bottle</a><br><a href="ramon.webp" target="_blank" rel="noopener">Ramon, the icon</a><br>More images on request.</p>
+<p><a href="bottle.webp" target="_blank" rel="noopener">Padre Azul Tequila Joven, bottle</a><br><a href="hp-eder.jpg" target="_blank" rel="noopener">HP Eder, portrait</a><br><a href="ramon.webp" target="_blank" rel="noopener">Ramon, the icon</a><br>More images on request.</p>
 <h2>Contact</h2>
 <p>For interviews and speaking requests, message me on <a href="https://www.linkedin.com/in/hpeder/" target="_blank" rel="noopener">LinkedIn</a>.</p>
   </div>
 </section>
 
 <template data-lang="de" data-for="about">
+<img class="portrait" src="hp-eder.webp" width="640" height="795" alt="HP Eder">
 <h1>Hola, ich bin HP.</h1>
 <p class="hand">Manche nennen mich El Padre. Online heiße ich Mezquila.</p>
 <p>Ich bin in Rauris geboren, in den Salzburger Alpen. An einer deutschen Universität habe ich Adriana kennengelernt, die aus Jalisco stammt, und mich zweimal verliebt: in sie und in die Art, wie ihr Land lebt.</p>
@@ -486,7 +508,7 @@ a { color: var(--accent); }
 <h2>Worüber ich spreche</h2>
 <ul class="list"><li>Memento Vivere: warum auf einer Luxusflasche ein Totenkopf sitzt.</li><li>Österreich trifft Mexiko: eine Marke zwischen zwei Kulturen aufbauen.</li><li>Ein Unternehmen aus einem zweiten Gehirn führen: KI und geteiltes Wissen in einem kleinen Team.</li></ul>
 <h2>Bilder</h2>
-<p><a href="bottle.webp" target="_blank" rel="noopener">Padre Azul Tequila Joven, Flasche</a><br><a href="ramon.webp" target="_blank" rel="noopener">Ramon, das Icon</a><br>Weitere Bilder auf Anfrage.</p>
+<p><a href="bottle.webp" target="_blank" rel="noopener">Padre Azul Tequila Joven, Flasche</a><br><a href="hp-eder.jpg" target="_blank" rel="noopener">HP Eder, Porträt</a><br><a href="ramon.webp" target="_blank" rel="noopener">Ramon, das Icon</a><br>Weitere Bilder auf Anfrage.</p>
 <h2>Kontakt</h2>
 <p>Für Interviews und Vortragsanfragen schreib mir auf <a href="https://www.linkedin.com/in/hpeder/" target="_blank" rel="noopener">LinkedIn</a>.</p>
 </template>
@@ -495,9 +517,12 @@ a { color: var(--accent); }
 <h1>Das Skull-Ritual</h1>
 <p class="hand">Stell dich ihm, dann lebe.</p>
 <ol><li>Öffne die Flasche. Der Totenkopf obenauf heißt Ramon.</li><li>Lass dich von ihm daran erinnern, was dieser Moment wert ist.</li><li>Schenk ein.</li><li>Wenn dein Glas leer ist, gib Ramon der Person neben dir. Das ist ein Versprechen ewiger Freundschaft. Zurückgeben geht nicht.</li></ol>
+<video class="ritual-video" controls playsinline preload="metadata" src="https://www.dropbox.com/scl/fi/jodjj6yxvgxnmijhf7su5/PA_INTL_02_Ritual_Ramon_EN_9x16.mp4?rlkey=l99x0z9oftc78flguh23xck63&amp;raw=1"></video>
+<p><a href="https://www.dropbox.com/scl/fi/jodjj6yxvgxnmijhf7su5/PA_INTL_02_Ritual_Ramon_EN_9x16.mp4?rlkey=l99x0z9oftc78flguh23xck63&amp;dl=0" target="_blank" rel="noopener">Den Ritual-Film ansehen</a></p>
 <p>Ramon erinnert uns daran, dass Zeit ein knappes Gut ist und dass wir sie mit Freunden und Familie verbringen sollten.</p>
 </template>
 <template data-lang="es" data-for="about">
+<img class="portrait" src="hp-eder.webp" width="640" height="795" alt="HP Eder">
 <h1>Hola, soy HP.</h1>
 <p class="hand">Algunos me llaman El Padre. En internet soy Mezquila.</p>
 <p>Nací en Rauris, en los Alpes de Salzburgo. En una universidad alemana conocí a Adriana, que es de Jalisco, y me enamoré dos veces: de ella y de la forma en que vive su país.</p>
@@ -553,7 +578,7 @@ a { color: var(--accent); }
 <h2>De qué hablo</h2>
 <ul class="list"><li>Memento Vivere: por qué hay una calavera sobre una botella de lujo.</li><li>Austria se encuentra con México: construir una marca entre dos culturas.</li><li>Dirigir una empresa desde un segundo cerebro: IA y conocimiento compartido en un equipo pequeño.</li></ul>
 <h2>Imágenes</h2>
-<p><a href="bottle.webp" target="_blank" rel="noopener">Padre Azul Tequila Joven, botella</a><br><a href="ramon.webp" target="_blank" rel="noopener">Ramon, el icono</a><br>Más imágenes a petición.</p>
+<p><a href="bottle.webp" target="_blank" rel="noopener">Padre Azul Tequila Joven, botella</a><br><a href="hp-eder.jpg" target="_blank" rel="noopener">HP Eder, retrato</a><br><a href="ramon.webp" target="_blank" rel="noopener">Ramon, el icono</a><br>Más imágenes a petición.</p>
 <h2>Contacto</h2>
 <p>Para entrevistas y charlas, escríbeme por <a href="https://www.linkedin.com/in/hpeder/" target="_blank" rel="noopener">LinkedIn</a>.</p>
 </template>
@@ -562,8 +587,26 @@ a { color: var(--accent); }
 <h1>El ritual de la calavera</h1>
 <p class="hand">Enfréntala, luego vive.</p>
 <ol><li>Abre la botella. La calavera de arriba se llama Ramon.</li><li>Deja que te recuerde cuánto vale este momento.</li><li>Sirve.</li><li>Cuando termines tu copa, entrégale a Ramon a la persona que tienes al lado. Es una promesa de amistad eterna. No se puede devolver.</li></ol>
+<video class="ritual-video" controls playsinline preload="metadata" src="https://www.dropbox.com/scl/fi/jodjj6yxvgxnmijhf7su5/PA_INTL_02_Ritual_Ramon_EN_9x16.mp4?rlkey=l99x0z9oftc78flguh23xck63&amp;raw=1"></video>
+<p><a href="https://www.dropbox.com/scl/fi/jodjj6yxvgxnmijhf7su5/PA_INTL_02_Ritual_Ramon_EN_9x16.mp4?rlkey=l99x0z9oftc78flguh23xck63&amp;dl=0" target="_blank" rel="noopener">Ver el video del ritual</a></p>
 <p>Ramon nos recuerda que el tiempo es un recurso escaso y que hay que pasarlo con amigos y familia.</p>
 </template>
+
+<section class="window" id="win-guestbook" hidden aria-labelledby="t-guestbook">
+  <div class="titlebar"><button class="close" type="button" aria-label="Close">×</button><span class="title" id="t-guestbook" data-t="w-gb">Guestbook</span></div>
+  <div class="content">
+    <h1 data-t="gbh1">Sign my guestbook</h1>
+    <p data-t="gbintro">Leave a few words. I read every entry before it appears on the desk.</p>
+    <form class="gbform" id="gb-form" novalidate>
+      <label><span data-t="gbname">Your name</span><input id="gb-name" name="name" maxlength="60" required autocomplete="name"></label>
+      <label><span data-t="gbplace">Where you are</span><input id="gb-place" name="place" maxlength="60" autocomplete="address-level2"></label>
+      <label><span data-t="gbmsg">Your message</span><textarea id="gb-msg" name="message" maxlength="280" required></textarea></label>
+      <input class="trap" id="gb-trap" name="_gotcha" tabindex="-1" autocomplete="off" aria-hidden="true">
+      <div><button class="btn-small" type="submit" id="gb-send" data-t="gbsend">Send</button></div>
+      <p class="note" id="gb-status" role="status" hidden></p>
+    </form>
+  </div>
+</section>
 
 <section class="window" id="win-post" hidden aria-labelledby="t-post">
   <div class="titlebar"><button class="close" type="button" aria-label="Close">×</button><span class="title" id="t-post">Essay</span></div>
@@ -577,7 +620,7 @@ a { color: var(--accent); }
   /* ---------- Languages ---------- */
   var lang = 'en', LOCALE = { en: 'en-GB', de: 'de-AT', es: 'es-MX' };
   var STR = {
-    de: { about: 'Über mich', wall: 'Hintergrund', closeall: 'Fenster schließen', essays: 'Essays', brain: 'Zweites Gehirn', quotes: 'Zitate', now: 'Jetzt',
+    de: { 'w-gb': 'Gästebuch', gbsign: 'Ins Gästebuch schreiben', gbh1: 'Schreib in mein Gästebuch', gbintro: 'Hinterlass ein paar Worte. Ich lese jeden Eintrag, bevor er auf dem Schreibtisch erscheint.', gbname: 'Dein Name', gbplace: 'Wo du bist', gbmsg: 'Deine Nachricht', gbsend: 'Senden', gbok: 'Danke! Dein Eintrag ist bei mir angekommen.', gberr: 'Das hat nicht geklappt. Bitte versuch es später noch einmal.', gbneed: 'Bitte Name und Nachricht ausfüllen.', about: 'Über mich', wall: 'Hintergrund', closeall: 'Fenster schließen', essays: 'Essays', brain: 'Zweites Gehirn', quotes: 'Zitate', now: 'Jetzt',
       ritual: 'Skull-Ritual', press: 'Presse & Vorträge', 'w-writing': 'Texte', allessays: 'alle Essays', open: 'öffnen →', more: 'mehr', 'w-quote': 'Zitat',
       bio: 'El Padre. Mitgründer von Padre Azul. Geboren in Rauris in den Salzburger Alpen. Macht Tequila in Jalisco. Memento Vivere: Denk daran, du lebst jetzt.',
       brandp: 'Der Tequila, der aus einer Liebesgeschichte entstand. Gegründet 2014, gemacht in Jalisco, vertrieben aus Wattens in Tirol.',
@@ -585,7 +628,7 @@ a { color: var(--accent); }
       enote: 'Noch ist nichts veröffentlicht. Das sind die Texte, die gerade auf dem Schreibtisch liegen.',
       'w-news': 'Der Brief', newsp: 'Ein Brief von El Padre, einmal im Monat.', subscribe: 'Abonnieren', 'w-meet': 'Wo du mich triffst',
       draft: 'Entwurf', city: 'Wien', hide: 'Widgets ausblenden', show: 'Widgets einblenden', loading: 'Lädt …', loaderr: 'Dieser Essay konnte nicht geladen werden. Bitte versuch es gleich noch einmal.', copied: 'Kopiert' },
-    es: { about: 'Sobre mí', wall: 'Fondo', closeall: 'Cerrar ventanas', essays: 'Ensayos', brain: 'Segundo cerebro', quotes: 'Frases', now: 'Ahora',
+    es: { 'w-gb': 'Libro de visitas', gbsign: 'Firmar el libro', gbh1: 'Firma mi libro de visitas', gbintro: 'Deja unas palabras. Leo cada mensaje antes de que aparezca en el escritorio.', gbname: 'Tu nombre', gbplace: 'Dónde estás', gbmsg: 'Tu mensaje', gbsend: 'Enviar', gbok: '¡Gracias! Tu mensaje me llegó.', gberr: 'No funcionó. Inténtalo de nuevo más tarde.', gbneed: 'Escribe tu nombre y tu mensaje.', about: 'Sobre mí', wall: 'Fondo', closeall: 'Cerrar ventanas', essays: 'Ensayos', brain: 'Segundo cerebro', quotes: 'Frases', now: 'Ahora',
       ritual: 'Ritual de la calavera', press: 'Prensa y charlas', 'w-writing': 'Escritos', allessays: 'todos', open: 'abrir →', more: 'más', 'w-quote': 'Frase',
       bio: 'El Padre. Cofundador de Padre Azul. Nacido en Rauris, en los Alpes de Salzburgo. Hace tequila en Jalisco. Memento Vivere: recuerda, vive ahora.',
       brandp: 'El tequila que nació de una historia de amor. Fundado en 2014, hecho en Jalisco, vendido desde Wattens, Austria.',
@@ -867,6 +910,37 @@ a { color: var(--accent); }
     $('#w-meet').hidden = !next.length;
   }
   fetch('events.json', { cache: 'no-cache' }).then(function (r) { return r.ok ? r.json() : []; }).then(function (l) { events = Array.isArray(l) ? l : []; renderEvents(); }).catch(function () {});
+
+  /* ---------- Guestbook: entries live in guestbook.json; new ones are sent to GUESTBOOK_FORM and added by hand ---------- */
+  var GUESTBOOK_FORM = '';
+  var guests = [];
+  function renderGuests() {
+    var list = $('#gb-list'); list.textContent = '';
+    guests.slice(0, 3).forEach(function (g) {
+      if (!g || !g.message) return;
+      var li = el('li', '', '“' + g.message + '”'); li.appendChild(el('span', 'by', '— ' + (g.name || '') + (g.place ? ', ' + g.place : ''))); list.appendChild(li);
+    });
+    $('#gb-sign').hidden = !GUESTBOOK_FORM;
+    $('#w-gb').hidden = !GUESTBOOK_FORM && !list.children.length;
+  }
+  fetch('guestbook.json', { cache: 'no-cache' }).then(function (r) { return r.ok ? r.json() : []; }).then(function (l) { guests = Array.isArray(l) ? l : []; renderGuests(); }).catch(function () {});
+  $('#gb-form').addEventListener('submit', function (e) {
+    e.preventDefault();
+    var status = $('#gb-status'), say = function (key, en) { status.textContent = T(key, en); status.hidden = false; };
+    var name = $('#gb-name').value.trim(), msg = $('#gb-msg').value.trim();
+    if (!name || !msg) return say('gbneed', 'Please fill in your name and a message.');
+    if ($('#gb-trap').value || !GUESTBOOK_FORM) return;
+    $('#gb-send').disabled = true;
+    fetch(GUESTBOOK_FORM, { method: 'POST', headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify({ name: name, place: $('#gb-place').value.trim(), message: msg }) })
+      .then(function (r) { if (!r.ok) throw new Error(r.status); $('#gb-form').reset(); say('gbok', 'Thank you! Your entry has reached me.'); })
+      .catch(function () { say('gberr', 'That did not work. Please try again later.'); })
+      .then(function () { $('#gb-send').disabled = false; });
+  });
+
+  /* ---------- Visitor statistics: paste the GoatCounter site code here (no cookies) ---------- */
+  var GOATCOUNTER = '';
+  if (GOATCOUNTER) { var gc = document.createElement('script'); gc.async = true; gc.src = 'https://gc.zgo.at/count.js'; gc.setAttribute('data-goatcounter', 'https://' + GOATCOUNTER + '.goatcounter.com/count'); document.head.appendChild(gc); }
 
   /* ---------- Copy buttons ---------- */
   document.addEventListener('click', function (e) {

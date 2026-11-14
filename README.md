@@ -39,6 +39,11 @@ A draft shows as a title with a "draft" tag and cannot be opened. Supported Mark
   Past dates hide themselves; the widget only shows when something is upcoming.
 - **Newsletter:** in `index.html`, set `NEWSLETTER_URL` to the address of the sign-up page. The widget appears once it is set.
 - **Languages:** English text is written directly in the page. German and Spanish live in the `STR` list in the script (short labels) and in the `<template data-lang="de|es">` blocks (whole windows). Change all three when you change a text.
+- **Guestbook:** shown entries live in `guestbook.json`, newest first, for example
+  `[{"name": "Anna", "place": "Vienna", "message": "Salud!"}]`. To let visitors write, set `GUESTBOOK_FORM` in `index.html` to the address of a form service (for example a Formspree form). Entries arrive by email and are added to `guestbook.json` by hand, so nothing appears unread.
+- **Visitor statistics:** set `GOATCOUNTER` in `index.html` to the GoatCounter site code. It uses no cookies.
+- **Ritual video:** streamed from a Dropbox share link inside the Skull ritual window. If that link is ever removed, the video stops playing.
+- **Portrait:** `hp-eder.webp` (shown on the page) and `hp-eder.jpg` (full size, for press).
 - **Share image:** `og.png` is the picture shown when the link is posted on LinkedIn or WhatsApp.
 
 ## Domain
