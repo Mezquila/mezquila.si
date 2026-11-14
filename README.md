@@ -6,10 +6,32 @@ tags: [website]
 
 # mezquila.si
 
-Personal homepage of HP Eder. One page, no build step.
+Personal homepage of HP Eder. One page, no build step for the page itself.
 
 - `index.html` is the whole site (styles and script are inline).
 - `bottle.webp` and `ramon.webp` are the two images.
-- The custom domain mezquila.si is not connected yet. Add a `CNAME` file containing `mezquila.si` once the domain is registered.
+- `posts/` holds the essays, one Markdown file each.
+- `build.py` rebuilds `posts/index.json`, the list the site reads.
 
-To change the site, edit `index.html`, commit and push to `main`. GitHub Pages publishes it within a minute or two.
+## Writing an essay
+
+1. Create `posts/my-title.md`. The file name becomes the address (`#my-title`), so use lowercase letters, digits and hyphens.
+2. Start it with this block, then write the text below in Markdown:
+
+   ```
+   ---
+   title: "My title"
+   created: 2026-11-14T19:30:00+01:00
+   summary: "One sentence shown in the list."
+   status: draft
+   ---
+   ```
+
+3. To publish, set `status: published` and add `date: 2026-11-20`.
+4. Run `python3 build.py`, then commit and push to `main`. GitHub Pages publishes within a minute or two.
+
+A draft shows as a title with a "draft" tag and cannot be opened. Supported Markdown: headings, bold, italic, links, lists, quotes, images and dividers. Put images in the repository and link them by file name.
+
+## Domain
+
+The custom domain mezquila.si is not connected yet. Add a `CNAME` file containing `mezquila.si` once its DNS points to GitHub Pages.

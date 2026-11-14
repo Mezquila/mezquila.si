@@ -152,6 +152,17 @@ a { color: var(--accent); }
 .qlist blockquote { margin: 0; padding-left: 14px; border-left: 2px solid var(--accent); font-family: var(--serif); font-style: italic; font-size: 20px; line-height: 1.35; }
 .qlist cite { display: block; font-family: var(--sans); font-style: normal; font-size: 13px; color: var(--muted); margin-top: 4px; }
 
+.posts button, .essays h3 button { font: inherit; color: var(--accent); text-align: left; padding: 0; }
+.posts button:hover, .essays h3 button:hover { text-decoration: underline; }
+#win-post { width: min(680px, calc(100vw - 32px)); }
+.post .meta { color: var(--muted); font-size: 14px; margin: -4px 0 16px; }
+.post h2 { border-top: 0; padding-top: 0; }
+.post h3 { font-family: var(--serif); font-weight: 600; font-size: 18px; margin: 18px 0 8px; }
+.post ul, .post ol { margin: 0 0 12px; padding-left: 22px; font-size: 16.5px; line-height: 1.6; max-width: 62ch; }
+.post blockquote { margin: 0 0 14px; padding-left: 14px; border-left: 2px solid var(--accent); font-family: var(--serif); font-style: italic; font-size: 19px; line-height: 1.4; }
+.post blockquote p { margin: 0; font-size: inherit; line-height: inherit; }
+.post img { height: auto; border-radius: 8px; margin: 4px 0 12px; }
+.post hr { border: 0; border-top: 1px solid var(--line); margin: 18px 0; }
 @media (max-width: 760px) {
   .desk { grid-template-columns: minmax(0, 1fr); gap: 18px; padding-block: 58px 28px; }
   .icons { grid-template-columns: repeat(3, minmax(0, 1fr)); justify-items: center; gap: 8px; }
@@ -228,7 +239,7 @@ a { color: var(--accent); }
     <section class="widget">
       <div class="w-head"><h2>Writing</h2><button class="more" type="button" data-open="essays">all essays</button><button class="fold" type="button" aria-label="Fold Writing" aria-expanded="true">−</button></div>
       <div class="w-body">
-        <ul class="posts">
+        <ul class="posts" id="post-list">
           <li><span class="t">Memento Vivere</span><span class="tag">draft</span></li>
           <li><span class="t">Two hundred hands</span><span class="tag">draft</span></li>
           <li><span class="t">Austria meets Mexico</span><span class="tag">draft</span></li>
@@ -286,14 +297,14 @@ a { color: var(--accent); }
   <div class="titlebar"><button class="close" type="button" aria-label="Close">×</button><span class="title" id="t-essays">Essays</span></div>
   <div class="content">
     <h1>Essays</h1>
-    <ul class="essays">
+    <ul class="essays" id="essay-list">
       <li><div class="row"><h3>Memento Vivere</h3><span class="tag">draft</span></div><p>What Mexico taught an Austrian about death, time and a good life.</p></li>
       <li><div class="row"><h3>Two hundred hands</h3><span class="tag">draft</span></div><p>Why a bottle made by people beats one made by a machine.</p></li>
       <li><div class="row"><h3>Austria meets Mexico</h3><span class="tag">draft</span></div><p>How a love story turned into a company.</p></li>
       <li><div class="row"><h3>Running a tequila brand from a second brain</h3><span class="tag">draft</span></div><p>Every meeting, every market and every decision in one vault, and what changed when the whole team could ask it questions.</p></li>
       <li><div class="row"><h3>Co-founder, not CEO</h3><span class="tag">draft</span></div><p>On handing over the title and keeping the work I love.</p></li>
     </ul>
-    <p class="note">Nothing is published yet. These are the pieces on the desk right now.</p>
+    <p class="note" id="essay-note">Nothing is published yet. These are the pieces on the desk right now.</p>
   </div>
 </section>
 
@@ -349,6 +360,11 @@ a { color: var(--accent); }
     <p>At work I'm teaching the team to use the second brain the way I do, so that the knowledge of the company stops living in my head.</p>
     <p class="note">A now page says what has my attention at the moment. I update it when that changes.</p>
   </div>
+</section>
+
+<section class="window" id="win-post" hidden aria-labelledby="t-post">
+  <div class="titlebar"><button class="close" type="button" aria-label="Close">×</button><span class="title" id="t-post">Essay</span></div>
+  <div class="content post" id="post-body"></div>
 </section>
 
 <script>
@@ -520,6 +536,75 @@ a { color: var(--accent); }
     if (top) top.hidden = true;
   });
   $('#btn-closeall').addEventListener('click', function () { $$('.window').forEach(function (w) { w.hidden = true; }); });
+
+  /* ---------- Essays: Markdown files in posts/, listed in posts/index.json ---------- */
+  /*MD-START*/
+  function esc(t) { return String(t).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;'); }
+  function safeUrl(u) { return /^https?:\/\//i.test(u) || /^[\w\-.\/%]+$/.test(u); }
+  function inline(t) {
+    t = esc(t).replace(/\[\[(?:[^\]|]+\|)?([^\]]+)\]\]/g, '$1');
+    t = t.replace(/!\[([^\]]*)\]\(([^)\s]+)\)/g, function (m, alt, u) { return safeUrl(u) ? '<img src="' + u + '" alt="' + alt + '">' : m; });
+    t = t.replace(/\[([^\]]+)\]\(([^)\s]+)\)/g, function (m, label, u) { return safeUrl(u) ? '<a href="' + u + '" target="_blank" rel="noopener">' + label + '</a>' : m; });
+    return t.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>').replace(/(^|[^*])\*([^*\s][^*]*)\*/g, '$1<em>$2</em>').replace(/(^|[\s(])_([^_\s][^_]*)_/g, '$1<em>$2</em>');
+  }
+  function md(text) {
+    text = text.replace(/\r\n?/g, '\n').replace(/^---\s*\n[\s\S]*?\n---\s*(\n|$)/, '');
+    return text.split(/\n\s*\n/).map(function (block) {
+      var lines = block.split('\n').map(function (l) { return l.replace(/\s+$/, ''); }).filter(function (l) { return l.trim(); });
+      if (!lines.length) return '';
+      var every = function (re) { return lines.every(function (l) { return re.test(l); }); };
+      var h = /^(#{1,4})\s+(.*)$/.exec(lines[0]);
+      if (h && lines.length === 1) { var lv = h[1].length < 3 ? 2 : 3; return '<h' + lv + '>' + inline(h[2]) + '</h' + lv + '>'; }
+      if (lines.length === 1 && /^(-{3,}|\*{3,})$/.test(lines[0])) return '<hr>';
+      if (every(/^>\s?/)) return '<blockquote><p>' + lines.map(function (l) { return inline(l.replace(/^>\s?/, '')); }).join('<br>') + '</p></blockquote>';
+      if (every(/^[-*]\s+/)) return '<ul>' + lines.map(function (l) { return '<li>' + inline(l.replace(/^[-*]\s+/, '')) + '</li>'; }).join('') + '</ul>';
+      if (every(/^\d+[.)]\s+/)) return '<ol>' + lines.map(function (l) { return '<li>' + inline(l.replace(/^\d+[.)]\s+/, '')) + '</li>'; }).join('') + '</ol>';
+      return '<p>' + lines.map(inline).join(' ') + '</p>';
+    }).join('\n');
+  }
+  /*MD-END*/
+  var posts = [];
+  function niceDate(d, short) {
+    try { return new Date(d + 'T12:00:00').toLocaleDateString('en-GB', short ? { day: 'numeric', month: 'short' } : { day: 'numeric', month: 'long', year: 'numeric' }); }
+    catch (e) { return d; }
+  }
+  function el(tag, cls, text) { var n = document.createElement(tag); if (cls) n.className = cls; if (text != null) n.textContent = text; return n; }
+  function titleNode(p, cls) {
+    if (p.draft) return el('span', cls, p.title);
+    var wrap = el('span', cls), b = el('button', '', p.title); b.type = 'button'; b.setAttribute('data-post', p.slug); wrap.appendChild(b); return wrap;
+  }
+  function renderLists() {
+    var w = $('#post-list'), e = $('#essay-list'); w.textContent = ''; e.textContent = '';
+    posts.slice(0, 5).forEach(function (p) {
+      var li = el('li'); li.appendChild(titleNode(p, 't')); li.appendChild(el('span', 'tag', p.draft ? 'draft' : niceDate(p.date, true))); w.appendChild(li);
+    });
+    posts.forEach(function (p) {
+      var li = el('li'), row = el('div', 'row'), h = el('h3');
+      if (p.draft) h.textContent = p.title; else { var b = el('button', '', p.title); b.type = 'button'; b.setAttribute('data-post', p.slug); h.appendChild(b); }
+      row.appendChild(h); row.appendChild(el('span', 'tag', p.draft ? 'draft' : niceDate(p.date)));
+      li.appendChild(row); if (p.summary) li.appendChild(el('p', '', p.summary)); e.appendChild(li);
+    });
+    $('#essay-note').hidden = posts.some(function (p) { return !p.draft; });
+  }
+  function findPost(slug) { return posts.filter(function (p) { return p.slug === slug && !p.draft; })[0]; }
+  function setHash(h) { try { history.replaceState(null, '', h ? '#' + h : location.pathname + location.search); } catch (e) {} }
+  function openPost(slug) {
+    var p = findPost(slug); if (!p) return;
+    var head = '<h1>' + esc(p.title) + '</h1><p class="meta">' + esc(niceDate(p.date)) + '</p>', body = $('#post-body');
+    $('#t-post').textContent = p.title; body.innerHTML = head + '<p>Loading…</p>'; body.scrollTop = 0;
+    open('post'); setHash(slug);
+    fetch('posts/' + slug + '.md', { cache: 'no-cache' })
+      .then(function (r) { if (!r.ok) throw new Error(r.status); return r.text(); })
+      .then(function (t) { body.innerHTML = head + md(t); })
+      .catch(function () { body.innerHTML = head + '<p>This essay could not be loaded. Please try again in a moment.</p>'; });
+  }
+  document.addEventListener('click', function (e) { var b = e.target.closest('[data-post]'); if (b) openPost(b.getAttribute('data-post')); });
+  $('#win-post .close').addEventListener('click', function () { setHash(''); });
+  window.addEventListener('hashchange', function () { openPost(location.hash.slice(1)); });
+  fetch('posts/index.json', { cache: 'no-cache' })
+    .then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); })
+    .then(function (list) { posts = list; renderLists(); openPost(location.hash.slice(1)); })
+    .catch(function () { /* keep the list written into the page */ });
 
   /* ---------- Widgets ---------- */
   $$('.fold').forEach(function (b) {
