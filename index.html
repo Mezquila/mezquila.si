@@ -53,6 +53,7 @@
 * { box-sizing: border-box; }
 html, body { min-height: 100%; }
 body { background: var(--bg); color: var(--ink); font-family: var(--sans); font-size: 16px; line-height: 1.5; }
+#photo { position: fixed; inset: 0; z-index: 0; background: var(--bg) url("wall.jpg") center / cover no-repeat; }
 #wall { position: fixed; inset: 0; width: 100%; height: 100%; z-index: 0; display: block; }
 button { font: inherit; color: inherit; background: none; border: 0; cursor: pointer; }
 a { color: var(--accent); }
@@ -170,6 +171,19 @@ a { color: var(--accent); }
 .gbform input, .gbform textarea { font: inherit; font-size: 16px; color: var(--ink); background: var(--win); border: 1px solid var(--line); border-radius: 8px; padding: 8px 10px; }
 .gbform textarea { min-height: 96px; resize: vertical; }
 .gbform .trap { position: absolute; left: -9999px; }
+.widget { position: relative; }
+.widget.closed { display: none; }
+.w-head h2 { margin-right: auto; }
+.wclose { flex: none; width: 24px; height: 24px; border-radius: 6px; color: var(--muted); font-size: 17px; line-height: 1; }
+.wclose:hover { background: var(--accent-soft); color: var(--ink); }
+.widget > .wclose { position: absolute; top: 8px; right: 8px; }
+#w-bio .me { padding-right: 20px; }
+#w-reset { align-self: flex-start; background: var(--card); box-shadow: var(--shadow); }
+@media (min-width: 761px) {
+  .widget { cursor: grab; user-select: none; -webkit-user-select: none; }
+  .widget.dragging { cursor: grabbing; box-shadow: 0 16px 40px rgba(6, 16, 28, 0.45); }
+  .widget a, .widget button { cursor: pointer; }
+}
 .btn-small { padding: 4px 12px; border-radius: 99px; background: var(--accent-soft); font-size: 13px; font-weight: 600; }
 .btn-small:hover { background: var(--accent); color: var(--win); }
 .content .ramon-big { float: right; width: 120px; max-width: 30%; height: auto; margin: 0 0 10px 18px; border-radius: 50%; background: #e6ecf1; }
@@ -209,6 +223,7 @@ a { color: var(--accent); }
 
 </head>
 <body>
+<div id="photo" aria-hidden="true" hidden></div>
 <canvas id="wall" aria-hidden="true"></canvas>
 
 <header class="bar">
@@ -258,7 +273,8 @@ a { color: var(--accent); }
   </nav>
 
   <aside class="widgets" id="widgets">
-    <section class="widget">
+    <button class="btn-small" type="button" id="w-reset" data-t="resetw" hidden>Reset widgets</button>
+    <section class="widget" id="w-bio">
       <div class="me">
         <img class="mono" src="ramon.webp" width="240" height="240" alt="Ramon, the Padre Azul icon logo">
         <div>
@@ -274,7 +290,7 @@ a { color: var(--accent); }
       </div>
     </section>
 
-    <section class="widget">
+    <section class="widget" id="w-writing">
       <div class="w-head"><h2 data-t="w-writing">Writing</h2><button class="more" type="button" data-open="essays" data-t="allessays">all essays</button><button class="fold" type="button" aria-label="Fold Writing" aria-expanded="true">−</button></div>
       <div class="w-body">
         <ul class="posts" id="post-list">
@@ -286,7 +302,7 @@ a { color: var(--accent); }
       </div>
     </section>
 
-    <section class="widget">
+    <section class="widget" id="w-padre">
       <div class="w-head"><h2>Padre Azul</h2><button class="more" type="button" data-open="padre" data-t="open">open →</button><button class="fold" type="button" aria-label="Fold Padre Azul" aria-expanded="true">−</button></div>
       <div class="w-body brand">
         <img src="bottle.webp" width="326" height="900" alt="Padre Azul Tequila Joven bottle with the black skull stopper and Memento Vivere on the shoulder">
@@ -297,7 +313,7 @@ a { color: var(--accent); }
       </div>
     </section>
 
-    <section class="widget">
+    <section class="widget" id="w-now">
       <div class="w-head"><h2 data-t="now">Now</h2><button class="more" type="button" data-open="now" data-t="more">more</button><button class="fold" type="button" aria-label="Fold Now" aria-expanded="true">−</button></div>
       <div class="w-body">
         <ul class="now">
@@ -329,7 +345,7 @@ a { color: var(--accent); }
       </div>
     </section>
 
-    <section class="widget quote">
+    <section class="widget quote" id="w-quote">
       <div class="w-head"><h2 data-t="w-quote">Quote</h2><button class="more" type="button" id="next-quote" aria-label="Next quote">↻</button><button class="fold" type="button" aria-label="Fold Quote" aria-expanded="true">−</button></div>
       <div class="w-body">
         <blockquote id="q-text">Remember you must live.</blockquote>
@@ -618,7 +634,7 @@ a { color: var(--accent); }
   /* ---------- Languages ---------- */
   var lang = 'en', LOCALE = { en: 'en-GB', de: 'de-AT', es: 'es-MX' };
   var STR = {
-    de: { 'w-gb': 'Gästebuch', gbsign: 'Ins Gästebuch schreiben', gbh1: 'Schreib in mein Gästebuch', gbintro: 'Hinterlass ein paar Worte. Ich lese jeden Eintrag, bevor er auf dem Schreibtisch erscheint.', gbname: 'Dein Name', gbplace: 'Wo du bist', gbmsg: 'Deine Nachricht', gbsend: 'Senden', gbok: 'Danke! Dein Eintrag ist bei mir angekommen.', gberr: 'Das hat nicht geklappt. Bitte versuch es später noch einmal.', gbneed: 'Bitte Name und Nachricht ausfüllen.', about: 'Über mich', wall: 'Hintergrund', closeall: 'Fenster schließen', essays: 'Essays', brain: 'Zweites Gehirn', quotes: 'Zitate', now: 'Jetzt',
+    de: { resetw: 'Widgets zurücksetzen', 'w-gb': 'Gästebuch', gbsign: 'Ins Gästebuch schreiben', gbh1: 'Schreib in mein Gästebuch', gbintro: 'Hinterlass ein paar Worte. Ich lese jeden Eintrag, bevor er auf dem Schreibtisch erscheint.', gbname: 'Dein Name', gbplace: 'Wo du bist', gbmsg: 'Deine Nachricht', gbsend: 'Senden', gbok: 'Danke! Dein Eintrag ist bei mir angekommen.', gberr: 'Das hat nicht geklappt. Bitte versuch es später noch einmal.', gbneed: 'Bitte Name und Nachricht ausfüllen.', about: 'Über mich', wall: 'Hintergrund', closeall: 'Fenster schließen', essays: 'Essays', brain: 'Zweites Gehirn', quotes: 'Zitate', now: 'Jetzt',
       ritual: 'Skull-Ritual', press: 'Presse & Vorträge', 'w-writing': 'Texte', allessays: 'alle Essays', open: 'öffnen →', more: 'mehr', 'w-quote': 'Zitat',
       bio: 'El Padre. Mitgründer von Padre Azul. Geboren in Rauris in den Salzburger Alpen. Macht Tequila in Jalisco. Memento Vivere: Denk daran, du lebst jetzt.',
       brandp: 'Der Tequila, der aus einer Liebesgeschichte entstand. Gegründet 2014, gemacht in Jalisco, vertrieben aus Wattens in Tirol.',
@@ -626,7 +642,7 @@ a { color: var(--accent); }
       enote: 'Noch ist nichts veröffentlicht. Das sind die Texte, die gerade auf dem Schreibtisch liegen.',
       'w-news': 'Der Brief', newsp: 'Ein Brief von El Padre, einmal im Monat.', subscribe: 'Abonnieren', 'w-meet': 'Wo du mich triffst',
       draft: 'Entwurf', city: 'Wien', hide: 'Widgets ausblenden', show: 'Widgets einblenden', loading: 'Lädt …', loaderr: 'Dieser Essay konnte nicht geladen werden. Bitte versuch es gleich noch einmal.', copied: 'Kopiert' },
-    es: { 'w-gb': 'Libro de visitas', gbsign: 'Firmar el libro', gbh1: 'Firma mi libro de visitas', gbintro: 'Deja unas palabras. Leo cada mensaje antes de que aparezca en el escritorio.', gbname: 'Tu nombre', gbplace: 'Dónde estás', gbmsg: 'Tu mensaje', gbsend: 'Enviar', gbok: '¡Gracias! Tu mensaje me llegó.', gberr: 'No funcionó. Inténtalo de nuevo más tarde.', gbneed: 'Escribe tu nombre y tu mensaje.', about: 'Sobre mí', wall: 'Fondo', closeall: 'Cerrar ventanas', essays: 'Ensayos', brain: 'Segundo cerebro', quotes: 'Frases', now: 'Ahora',
+    es: { resetw: 'Restablecer widgets', 'w-gb': 'Libro de visitas', gbsign: 'Firmar el libro', gbh1: 'Firma mi libro de visitas', gbintro: 'Deja unas palabras. Leo cada mensaje antes de que aparezca en el escritorio.', gbname: 'Tu nombre', gbplace: 'Dónde estás', gbmsg: 'Tu mensaje', gbsend: 'Enviar', gbok: '¡Gracias! Tu mensaje me llegó.', gberr: 'No funcionó. Inténtalo de nuevo más tarde.', gbneed: 'Escribe tu nombre y tu mensaje.', about: 'Sobre mí', wall: 'Fondo', closeall: 'Cerrar ventanas', essays: 'Ensayos', brain: 'Segundo cerebro', quotes: 'Frases', now: 'Ahora',
       ritual: 'Ritual de la calavera', press: 'Prensa y charlas', 'w-writing': 'Escritos', allessays: 'todos', open: 'abrir →', more: 'más', 'w-quote': 'Frase',
       bio: 'El Padre. Cofundador de Padre Azul. Nacido en Rauris, en los Alpes de Salzburgo. Hace tequila en Jalisco. Memento Vivere: recuerda, vive ahora.',
       brandp: 'El tequila que nació de una historia de amor. Fundado en 2014, hecho en Jalisco, vendido desde Wattens, Austria.',
@@ -651,11 +667,11 @@ a { color: var(--accent); }
     night:   { sky: ['#060b17', '#0d1830', '#1a2c4c', '#2b4365'], orb: '#eef3ff', glow: 'rgba(190,210,255,0.35)', orbY: 0.22,
                hills: ['#1c2c48', '#16233a', '#101b2d'], field: ['#16303a', '#080f17'], leaf: ['#3c6f80', '#285565', '#1b3f4f'], stars: 140 }
   };
-  var order = ['rauris', 'dusk', 'morning', 'night'];
+  var order = ['photo', 'rauris', 'dusk', 'morning', 'night'];
   var darkPref = document.documentElement.getAttribute('data-theme') === 'dark' ||
     (document.documentElement.getAttribute('data-theme') !== 'light' && window.matchMedia && matchMedia('(prefers-color-scheme: dark)').matches);
-  var scene = store('mezquila-wall-2');
-  if (!scenes[scene]) scene = 'rauris';
+  var scene = store('mezquila-wall-3');
+  if (order.indexOf(scene) < 0) scene = 'photo';
 
   /* Rauris: snow-capped Hohe Tauern peaks behind the agave field */
   function alps(c, w, h, p, rand) {
@@ -705,7 +721,8 @@ a { color: var(--accent); }
   }
 
   function paint() {
-    var cv = $('#wall'), p = scenes[scene];
+    var cv = $('#wall'), isPhoto = scene === 'photo'; $('#photo').hidden = !isPhoto; cv.hidden = isPhoto; if (isPhoto) return;
+    var p = scenes[scene];
     var w = window.innerWidth, h = window.innerHeight, dpr = Math.min(window.devicePixelRatio || 1, 2);
     cv.width = Math.round(w * dpr); cv.height = Math.round(h * dpr);
     var c = cv.getContext('2d'); c.setTransform(dpr, 0, 0, dpr, 0, 0);
@@ -754,7 +771,7 @@ a { color: var(--accent); }
   paint();
   var rt; window.addEventListener('resize', function () { clearTimeout(rt); rt = setTimeout(paint, 120); });
   $('#btn-wall').addEventListener('click', function () {
-    scene = order[(order.indexOf(scene) + 1) % order.length]; store('mezquila-wall-2', scene); paint();
+    scene = order[(order.indexOf(scene) + 1) % order.length]; store('mezquila-wall-3', scene); paint();
   });
 
   /* ---------- Clock (Vienna time) ---------- */
@@ -948,6 +965,48 @@ a { color: var(--accent); }
     var select = function () { var r = document.createRange(); r.selectNodeContents(src); var sel = getSelection(); sel.removeAllRanges(); sel.addRange(r); };
     try { navigator.clipboard.writeText(src.textContent).then(done, select); } catch (err) { select(); }
   });
+
+  /* ---------- Movable widgets: drag to place, x to close, remembered in this browser ---------- */
+  var desk = $('.desk'), wstate = { pos: {}, closed: [] };
+  try { var savedW = JSON.parse(store('mezquila-widgets') || 'null'); if (savedW && savedW.pos && Array.isArray(savedW.closed)) wstate = savedW; } catch (e) {}
+  function saveW() { store('mezquila-widgets', JSON.stringify(wstate)); $('#w-reset').hidden = !(wstate.closed.length || Object.keys(wstate.pos).length); }
+  function placeW(w) {
+    var p = wstate.pos[w.id];
+    if (!p || window.innerWidth <= 760) { w.style.position = ''; w.style.left = ''; w.style.top = ''; w.style.width = ''; return; }
+    var x = Math.min(Math.max(p[0], 0), desk.clientWidth - 120), y = Math.min(Math.max(p[1], 44), Math.max(desk.offsetHeight, window.innerHeight) - 80);
+    w.style.position = 'absolute'; w.style.width = '320px'; w.style.left = x + 'px'; w.style.top = y + 'px';
+  }
+  $$('.widget').forEach(function (w) {
+    var x = document.createElement('button'); x.type = 'button'; x.className = 'wclose'; x.textContent = '×'; x.setAttribute('aria-label', 'Close widget');
+    (w.querySelector('.w-head') || w).appendChild(x);
+    x.addEventListener('click', function () { w.classList.add('closed'); if (wstate.closed.indexOf(w.id) < 0) wstate.closed.push(w.id); saveW(); });
+    if (wstate.closed.indexOf(w.id) >= 0) w.classList.add('closed');
+    placeW(w);
+    var d = null;
+    w.addEventListener('pointerdown', function (e) {
+      if (e.button || e.pointerType === 'touch' || window.innerWidth <= 760 || e.target.closest('button, a, input, textarea, video')) return;
+      var r = w.getBoundingClientRect(); d = { dx: e.clientX - r.left, dy: e.clientY - r.top, sx: e.clientX, sy: e.clientY, moved: false };
+      w.setPointerCapture(e.pointerId);
+    });
+    w.addEventListener('pointermove', function (e) {
+      if (!d) return;
+      if (!d.moved) {
+        if (Math.abs(e.clientX - d.sx) + Math.abs(e.clientY - d.sy) < 5) return;
+        d.moved = true; w.classList.add('dragging'); $$('.widget').forEach(function (o) { o.style.zIndex = ''; }); w.style.zIndex = 6;
+      }
+      var dr = desk.getBoundingClientRect();
+      wstate.pos[w.id] = [Math.round(e.clientX - d.dx - dr.left), Math.round(e.clientY - d.dy - dr.top)]; placeW(w); e.preventDefault();
+    });
+    var endW = function () { if (d && d.moved) { w.classList.toggle('dragging', false); saveW(); } d = null; };
+    w.addEventListener('pointerup', endW); w.addEventListener('pointercancel', endW);
+  });
+  $('#w-reset').addEventListener('click', function () {
+    wstate = { pos: {}, closed: [] };
+    $$('.widget').forEach(function (w) { w.classList.toggle('closed', false); w.style.zIndex = ''; placeW(w); });
+    saveW();
+  });
+  window.addEventListener('resize', function () { $$('.widget').forEach(placeW); });
+  saveW();
 
   /* ---------- Apply a language ---------- */
   function applyLang(l) {
