@@ -912,7 +912,7 @@ a { color: var(--accent); }
   fetch('events.json', { cache: 'no-cache' }).then(function (r) { return r.ok ? r.json() : []; }).then(function (l) { events = Array.isArray(l) ? l : []; renderEvents(); }).catch(function () {});
 
   /* ---------- Guestbook: entries live in guestbook.json; new ones are sent to GUESTBOOK_FORM and added by hand ---------- */
-  var GUESTBOOK_FORM = '';
+  var GUESTBOOK_FORM = 'https://formspree.io/f/mzerdqka';
   var guests = [];
   function renderGuests() {
     var list = $('#gb-list'); list.textContent = '';
