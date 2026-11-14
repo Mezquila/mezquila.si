@@ -10,6 +10,6 @@ Personal homepage of HP Eder. One page, no build step.
 
 - `index.html` is the whole site (styles and script are inline).
 - `bottle.webp` and `ramon.webp` are the two images.
-- `CNAME` tells GitHub Pages the domain.
+- The custom domain mezquila.si is not connected yet. Add a `CNAME` file containing `mezquila.si` once the domain is registered.
 
 To change the site, edit `index.html`, commit and push to `main`. GitHub Pages publishes it within a minute or two.
