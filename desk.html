@@ -1,0 +1,1129 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Mezquila</title>
+<meta name="description" content="The desk of HP Eder, El Padre. Co-founder of Padre Azul Tequila. Memento Vivere: remember you must live.">
+<meta property="og:title" content="Mezquila">
+<meta property="og:description" content="The desk of HP Eder, El Padre. Co-founder of Padre Azul Tequila. Memento Vivere: remember you must live.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://mezquila.si/">
+<meta property="og:image" content="https://mezquila.si/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" type="image/webp" href="ramon.webp">
+<style>body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,600;1,6..72,400&family=Source+Sans+3:wght@400;600;700&display=swap">
+<style>
+/* Layout: a desk. Painted agave-field wallpaper, menu bar on top, app icons on the left that open windows, a column of paper widgets on the right. */
+:root {
+  --bg: #3a5673;
+  --card: rgba(246, 249, 251, 0.88);
+  --win: #fafcfd;
+  --bar: rgba(244, 248, 251, 0.74);
+  --ink: #1b2a3a;
+  --muted: #536476;
+  --accent: #1a5ea6;
+  --accent-soft: rgba(26, 94, 166, 0.12);
+  --line: rgba(27, 42, 58, 0.14);
+  --on-wall: #ffffff;
+  --wall-shadow: rgba(6, 16, 28, 0.75);
+  --icon-face: #f4f8fb;
+  --icon-ink: #1a4f8a;
+  --shadow: 0 8px 24px rgba(6, 16, 28, 0.22);
+  --hand: "Caveat", "Bradley Hand", cursive;
+  --serif: "Newsreader", Georgia, "Times New Roman", serif;
+  --sans: "Source Sans 3", "Helvetica Neue", Arial, sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0d1622; --card: rgba(17, 26, 37, 0.84); --win: #131d29; --bar: rgba(12, 19, 28, 0.72);
+    --ink: #e7eef4; --muted: #a2b2c1; --accent: #86bbf0; --accent-soft: rgba(134, 187, 240, 0.14);
+    --line: rgba(231, 238, 244, 0.16); --icon-face: #1b2a3b; --icon-ink: #9cc8f3;
+    --shadow: 0 8px 24px rgba(0, 0, 0, 0.5); color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0d1622; --card: rgba(17, 26, 37, 0.84); --win: #131d29; --bar: rgba(12, 19, 28, 0.72);
+  --ink: #e7eef4; --muted: #a2b2c1; --accent: #86bbf0; --accent-soft: rgba(134, 187, 240, 0.14);
+  --line: rgba(231, 238, 244, 0.16); --icon-face: #1b2a3b; --icon-ink: #9cc8f3;
+  --shadow: 0 8px 24px rgba(0, 0, 0, 0.5); color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+html, body { min-height: 100%; }
+body { background: var(--bg); color: var(--ink); font-family: var(--sans); font-size: 16px; line-height: 1.5; }
+#photo { position: fixed; inset: 0; z-index: 0; background: var(--bg) url("wall.jpg") center / cover no-repeat; }
+#wall { position: fixed; inset: 0; width: 100%; height: 100%; z-index: 0; display: block; }
+button { font: inherit; color: inherit; background: none; border: 0; cursor: pointer; }
+a { color: var(--accent); }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 4px; }
+
+/* Menu bar */
+.bar {
+  position: fixed; inset: 0 0 auto 0; z-index: 50;
+  display: flex; align-items: center; gap: 4px;
+  padding-top: env(safe-area-inset-top, 0px);
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  min-height: 40px;
+  background: var(--bar); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+  border-bottom: 1px solid var(--line); font-size: 14px;
+}
+.bar .name { font-weight: 700; margin-right: 10px; letter-spacing: 0.01em; }
+.bar button { padding: 6px 9px; border-radius: 6px; }
+.bar button:hover { background: var(--accent-soft); }
+.bar .langs { margin-left: auto; display: flex; }
+.bar .langs button[aria-pressed="true"] { background: var(--accent-soft); font-weight: 700; }
+.bar .clock { margin-left: 6px; color: var(--muted); font-variant-numeric: tabular-nums; white-space: nowrap; }
+
+/* Desk */
+.desk {
+  position: relative; z-index: 1;
+  display: grid; grid-template-columns: minmax(0, 1fr) 320px; gap: 24px; align-items: start;
+  padding-block: 64px 40px;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+.icons { display: grid; grid-template-columns: 96px 96px; gap: 14px 6px; justify-content: start; }
+.icon { display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 4px 2px; border-radius: 12px; width: 96px; }
+.icon .label { color: var(--ink); background: var(--card); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); padding: 3px 9px; border-radius: 10px; font-size: 13px; font-weight: 600; line-height: 1.25; text-align: center; box-shadow: 0 2px 8px rgba(6, 16, 28, 0.18); max-width: 100%; }
+.icon-defs { position: absolute; width: 0; height: 0; overflow: hidden; }
+.icon .ic { display: block; width: 64px; height: 64px; transition: transform 0.18s ease; }
+.icon:hover .ic, .icon:focus-visible .ic { transform: translateY(-3px) scale(1.06); }
+.icon:active .ic { transform: scale(0.96); }
+@media (prefers-reduced-motion: reduce) { .icon .ic { transition: none; } .icon:hover .ic, .icon:focus-visible .ic, .icon:active .ic { transform: none; } }
+
+.widgets { display: flex; flex-direction: column; gap: 12px; min-width: 0; }
+.widget { background: var(--card); border-radius: 16px; box-shadow: var(--shadow); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); padding: 14px 16px 16px; }
+.w-head { display: flex; align-items: center; gap: 8px; }
+.w-head h2 { margin: 0; font-size: 11.5px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); font-weight: 700; }
+.w-head .more { margin-left: auto; font-size: 13px; color: var(--accent); padding: 2px 4px; }
+.w-head .fold { width: 24px; height: 24px; border-radius: 6px; color: var(--muted); line-height: 1; }
+.w-head .more + .fold { margin-left: 0; }
+.w-head .fold:only-of-type { margin-left: auto; }
+.w-head .fold:hover, .w-head .more:hover { background: var(--accent-soft); }
+.w-body { margin-top: 10px; }
+.widget.folded .w-body { display: none; }
+
+.me { display: flex; gap: 12px; align-items: flex-start; }
+.me .mono { flex: none; width: 60px; height: 60px; border-radius: 50%; background: #e6ecf1; object-fit: cover; box-shadow: 0 2px 8px rgba(6, 16, 28, 0.3); }
+.me p { margin: 0; font-family: var(--hand); font-size: 21px; line-height: 1.22; color: var(--ink); }
+.social { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--line); }
+.social a { display: inline-flex; align-items: center; gap: 6px; padding: 5px 10px; border-radius: 99px; background: var(--accent-soft); color: var(--ink); font-size: 13.5px; font-weight: 600; text-decoration: none; }
+.social a:hover { background: var(--accent); color: var(--win); }
+.social svg { width: 16px; height: 16px; flex: none; }
+.who { font-weight: 700; font-size: 15px; margin: 0 0 8px; }
+
+.posts { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 9px; }
+.posts li { display: flex; gap: 8px; align-items: baseline; justify-content: space-between; }
+.posts .t { font-family: var(--serif); font-size: 16.5px; line-height: 1.3; min-width: 0; }
+.tag { flex: none; font-size: 10.5px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); border: 1px solid var(--line); border-radius: 99px; padding: 1px 7px; }
+
+.brand { display: flex; gap: 14px; align-items: center; }
+.brand img { flex: none; width: 72px; height: auto; filter: drop-shadow(0 4px 8px rgba(6, 16, 28, 0.35)); }
+.content .bottle { float: right; width: 150px; max-width: 38%; height: auto; margin: 0 0 12px 20px; filter: drop-shadow(0 8px 14px rgba(6, 16, 28, 0.35)); }
+.brand p { margin: 0 0 6px; font-size: 14.5px; }
+.now { margin: 0; padding-left: 18px; font-size: 14.5px; display: flex; flex-direction: column; gap: 5px; }
+.quote blockquote { margin: 0; font-family: var(--serif); font-style: italic; font-size: 19px; line-height: 1.3; text-wrap: balance; }
+.quote cite { display: block; margin-top: 6px; font-style: normal; font-size: 13px; color: var(--muted); }
+
+/* Windows */
+.window {
+  position: fixed; z-index: 20; left: 140px; top: 90px;
+  width: min(560px, calc(100vw - 32px)); max-height: min(620px, calc(100vh - 120px));
+  display: flex; flex-direction: column;
+  background: var(--win); border: 1px solid var(--line); border-radius: 12px; box-shadow: 0 18px 50px rgba(6, 16, 28, 0.45); overflow: hidden;
+}
+.titlebar { display: flex; align-items: center; gap: 8px; padding: 8px 10px; border-bottom: 1px solid var(--line); cursor: grab; user-select: none; touch-action: none; }
+.titlebar .close { width: 26px; height: 26px; border-radius: 50%; background: var(--accent-soft); color: var(--ink); font-size: 16px; line-height: 1; }
+.titlebar .close:hover { background: var(--accent); color: var(--win); }
+.titlebar .title { flex: 1; text-align: center; font-size: 13.5px; font-weight: 600; color: var(--muted); padding-right: 26px; }
+.content { padding: 22px 26px 28px; overflow-y: auto; }
+.content h1 { font-family: var(--serif); font-weight: 600; font-size: 30px; line-height: 1.15; margin: 0 0 12px; text-wrap: balance; }
+.content h2 { clear: both; font-family: var(--serif); font-weight: 600; font-size: 21px; line-height: 1.2; margin: 22px 0 10px; padding-top: 16px; border-top: 1px solid var(--line); }
+.content p { margin: 0 0 12px; font-size: 16.5px; line-height: 1.6; max-width: 62ch; }
+.content .hand { font-family: var(--hand); font-size: 24px; line-height: 1.2; color: var(--accent); }
+.content .note { font-size: 14px; color: var(--muted); border-top: 1px solid var(--line); padding-top: 12px; margin-top: 18px; }
+.essays { list-style: none; margin: 0; padding: 0; }
+.essays li { padding: 13px 0; border-bottom: 1px solid var(--line); }
+.essays li:last-child { border-bottom: 0; }
+.essays .row { display: flex; gap: 10px; align-items: baseline; justify-content: space-between; }
+.essays h3 { margin: 0; font-family: var(--serif); font-weight: 600; font-size: 19px; line-height: 1.25; }
+.essays p { margin: 4px 0 0; font-size: 15px; color: var(--muted); }
+.qlist { display: flex; flex-direction: column; gap: 18px; }
+.qlist blockquote { margin: 0; padding-left: 14px; border-left: 2px solid var(--accent); font-family: var(--serif); font-style: italic; font-size: 20px; line-height: 1.35; }
+.qlist cite { display: block; font-family: var(--sans); font-style: normal; font-size: 13px; color: var(--muted); margin-top: 4px; }
+
+.content ol, .content ul.list { margin: 0 0 12px; padding-left: 22px; font-size: 16.5px; line-height: 1.6; max-width: 62ch; }
+.content li + li { margin-top: 4px; }
+.content .portrait { float: right; width: 160px; max-width: 40%; height: auto; border-radius: 12px; margin: 0 0 12px 20px; box-shadow: 0 6px 16px rgba(6, 16, 28, 0.3); }
+.ritual-video { display: block; clear: both; width: 100%; aspect-ratio: 16 / 9; border-radius: 12px; background: #000; margin: 6px 0 10px; }
+.gb { list-style: none; margin: 0 0 10px; padding: 0; display: flex; flex-direction: column; gap: 8px; }
+.gb li { background: var(--win); border: 1px solid var(--line); border-radius: 4px; padding: 8px 10px; font-family: var(--hand); font-size: 19px; line-height: 1.2; }
+.gb .by { display: block; font-family: var(--sans); font-size: 12px; color: var(--muted); margin-top: 4px; }
+.gbform { display: flex; flex-direction: column; gap: 10px; max-width: 420px; }
+.gbform label { display: flex; flex-direction: column; gap: 4px; font-size: 13px; font-weight: 600; color: var(--muted); }
+.gbform input, .gbform textarea { font: inherit; font-size: 16px; color: var(--ink); background: var(--win); border: 1px solid var(--line); border-radius: 8px; padding: 8px 10px; }
+.gbform textarea { min-height: 96px; resize: vertical; }
+.gbform .trap { position: absolute; left: -9999px; }
+.widget { position: relative; }
+.widget.closed { display: none; }
+.w-head h2 { margin-right: auto; }
+.wclose { flex: none; width: 24px; height: 24px; border-radius: 6px; color: var(--muted); font-size: 17px; line-height: 1; }
+.wclose:hover { background: var(--accent-soft); color: var(--ink); }
+.widget > .wclose { position: absolute; top: 8px; right: 8px; }
+#w-bio .me { padding-right: 20px; }
+#w-reset { align-self: flex-start; background: var(--card); box-shadow: var(--shadow); }
+@media (min-width: 761px) {
+  .widget { cursor: grab; user-select: none; -webkit-user-select: none; }
+  .widget.dragging { cursor: grabbing; box-shadow: 0 16px 40px rgba(6, 16, 28, 0.45); }
+  .widget a, .widget button { cursor: pointer; }
+}
+.btn-small { padding: 4px 12px; border-radius: 99px; background: var(--accent-soft); font-size: 13px; font-weight: 600; }
+.btn-small:hover { background: var(--accent); color: var(--win); }
+.content .ramon-big { float: right; width: 120px; max-width: 30%; height: auto; margin: 0 0 10px 18px; border-radius: 50%; background: #e6ecf1; }
+.news p { margin: 0 0 10px; font-size: 14.5px; }
+.news a { display: inline-block; padding: 6px 14px; border-radius: 99px; background: var(--accent); color: var(--win); font-weight: 600; font-size: 14px; text-decoration: none; }
+.meet { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 8px; font-size: 14.5px; }
+.meet .d { display: block; font-size: 12px; color: var(--muted); font-variant-numeric: tabular-nums; }
+.posts button, .essays h3 button { font: inherit; color: var(--accent); text-align: left; padding: 0; }
+.posts button:hover, .essays h3 button:hover { text-decoration: underline; }
+#win-post { width: min(680px, calc(100vw - 32px)); }
+.post .meta { color: var(--muted); font-size: 14px; margin: -4px 0 16px; }
+.post h2 { border-top: 0; padding-top: 0; }
+.post h3 { font-family: var(--serif); font-weight: 600; font-size: 18px; margin: 18px 0 8px; }
+.post ul, .post ol { margin: 0 0 12px; padding-left: 22px; font-size: 16.5px; line-height: 1.6; max-width: 62ch; }
+.post blockquote { margin: 0 0 14px; padding-left: 14px; border-left: 2px solid var(--accent); font-family: var(--serif); font-style: italic; font-size: 19px; line-height: 1.4; }
+.post blockquote p { margin: 0; font-size: inherit; line-height: inherit; }
+.post img { height: auto; border-radius: 8px; margin: 4px 0 12px; }
+.post hr { border: 0; border-top: 1px solid var(--line); margin: 18px 0; }
+@media (max-width: 760px) {
+  .desk { grid-template-columns: minmax(0, 1fr); gap: 18px; padding-block: 58px 28px; }
+  .icons { grid-template-columns: repeat(4, minmax(0, 1fr)); justify-items: center; gap: 6px 2px; }
+  .icon { width: 100%; max-width: 96px; }
+  .icon .label { font-size: 11.5px; line-height: 1.2; padding: 2px 6px; }
+  .icon .ic { width: 56px; height: 56px; }
+  .bar { font-size: 13px; }
+  .bar button { padding: 6px 6px; }
+  .bar .hide-s { display: none; }
+  .window { left: 16px !important; right: 16px; top: 56px !important; width: auto; max-height: calc(100vh - 80px); }
+  .titlebar { cursor: default; }
+  .content { padding: 18px 18px 24px; }
+  .content h1 { font-size: 26px; }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .window:not([hidden]) { animation: pop 0.16s ease-out; }
+  @keyframes pop { from { transform: scale(0.97); opacity: 0.6; } to { transform: none; opacity: 1; } }
+}
+</style>
+
+</head>
+<body>
+<div id="photo" aria-hidden="true" hidden></div>
+<canvas id="wall" aria-hidden="true"></canvas>
+
+<header class="bar">
+  <span class="name">Mezquila</span>
+  <button type="button" data-open="about" class="hide-s" data-t="about">About</button>
+  <button type="button" id="btn-wall" data-t="wall">Wallpaper</button>
+  <button type="button" id="btn-widgets" class="hide-s">Hide widgets</button>
+  <button type="button" id="btn-closeall" class="hide-s" data-t="closeall">Close windows</button>
+  <span class="langs" role="group" aria-label="Language"><button type="button" data-lang-btn="en" aria-pressed="true">EN</button><button type="button" data-lang-btn="de" aria-pressed="false">DE</button><button type="button" data-lang-btn="es" aria-pressed="false">ES</button></span>
+  <span class="clock" id="clock">Vienna --:--</span>
+</header>
+
+<main class="desk">
+  <nav class="icons" aria-label="Desk">
+    <svg class="icon-defs" width="0" height="0" aria-hidden="true" focusable="false"><defs>
+<filter id="ic-blur" x="-50%" y="-200%" width="200%" height="500%"><feGaussianBlur stdDeviation="1.6"/></filter>
+<linearGradient id="ic-card" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#e3e9ef"/></linearGradient>
+<linearGradient id="ic-blue" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#5aa2f0"/><stop offset="1" stop-color="#1f5fb8"/></linearGradient>
+<radialGradient id="ic-peach" cx="0.4" cy="0.35" r="0.75"><stop offset="0" stop-color="#ffe2c6"/><stop offset="1" stop-color="#f3b58a"/></radialGradient>
+<linearGradient id="ic-teal" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#3cc3b0"/><stop offset="1" stop-color="#11806f"/></linearGradient>
+<linearGradient id="ic-paper" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#fffaf0"/><stop offset="1" stop-color="#e6dccb"/></linearGradient>
+<linearGradient id="ic-pencil" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffd85a"/><stop offset="1" stop-color="#f0a81c"/></linearGradient>
+<linearGradient id="ic-glass" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#2a6fd0"/><stop offset="0.45" stop-color="#4c97f2"/><stop offset="1" stop-color="#173f8a"/></linearGradient>
+<linearGradient id="ic-chrome" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#8f9aa6"/><stop offset="0.4" stop-color="#eef2f6"/><stop offset="1" stop-color="#7b8692"/></linearGradient>
+<radialGradient id="ic-black" cx="0.35" cy="0.3" r="0.8"><stop offset="0" stop-color="#6b727c"/><stop offset="0.55" stop-color="#262a30"/><stop offset="1" stop-color="#0d0f12"/></radialGradient>
+<linearGradient id="ic-brain" x1="10" y1="12" x2="54" y2="52" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#ffc2d4"/><stop offset="1" stop-color="#e2628d"/></linearGradient>
+<linearGradient id="ic-yellow" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffd46b"/><stop offset="1" stop-color="#f59a23"/></linearGradient>
+<linearGradient id="ic-gold" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ffe08a"/><stop offset="0.5" stop-color="#d8a23a"/><stop offset="1" stop-color="#9c6b16"/></linearGradient>
+<radialGradient id="ic-face" cx="0.45" cy="0.4" r="0.7"><stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#e9edf1"/></radialGradient>
+<linearGradient id="ic-red" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ff7a6b"/><stop offset="1" stop-color="#d93a2b"/></linearGradient>
+<linearGradient id="ic-ivory" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#ddd5c6"/><stop offset="0.42" stop-color="#fffdf8"/><stop offset="1" stop-color="#cfc6b5"/></linearGradient>
+<radialGradient id="ic-goldskull" cx="0.38" cy="0.3" r="0.8"><stop offset="0" stop-color="#fff1b8"/><stop offset="0.5" stop-color="#d4a53c"/><stop offset="1" stop-color="#7d5a14"/></radialGradient>
+</defs></svg>
+    <button class="icon" type="button" data-open="about">
+      <svg class="ic" viewBox="0 0 64 64" aria-hidden="true"><ellipse cx="32" cy="58.5" rx="17" ry="3" fill="#06101c" opacity=".32" filter="url(#ic-blur)"/><g transform="rotate(-7 32 33)">
+<rect x="7" y="13" width="50" height="38" rx="8" fill="url(#ic-card)" stroke="#c9d3dd" stroke-width="1"/>
+<path d="M15 13h34a8 8 0 0 1 8 8v3H7v-3a8 8 0 0 1 8-8z" fill="url(#ic-blue)"/>
+<rect x="12" y="16" width="20" height="2.4" rx="1.2" fill="#ffffff" opacity=".55"/>
+<circle cx="21" cy="36" r="8.5" fill="url(#ic-peach)"/>
+<circle cx="21" cy="33.5" r="3.6" fill="#8a5a3c"/>
+<path d="M14.6 41.5a7.6 6 0 0 1 12.8 0a8.5 8.5 0 0 1-12.8 0z" fill="#1f5fb8"/>
+<rect x="34" y="30" width="17" height="3.2" rx="1.6" fill="#bcc7d2"/>
+<rect x="34" y="36" width="12" height="3.2" rx="1.6" fill="#d3dbe3"/>
+<rect x="34" y="42" width="15" height="3.2" rx="1.6" fill="#d3dbe3"/>
+</g></svg>
+      <span class="label" data-t="about">About me</span>
+    </button>
+    <button class="icon" type="button" data-open="essays">
+      <svg class="ic" viewBox="0 0 64 64" aria-hidden="true"><ellipse cx="32" cy="58.5" rx="17" ry="3" fill="#06101c" opacity=".32" filter="url(#ic-blur)"/><rect x="44" y="9" width="7" height="44" rx="3" fill="url(#ic-paper)"/>
+<path d="M45 13h5M45 18h5M45 23h5M45 28h5M45 33h5M45 38h5M45 43h5M45 48h5" stroke="#d6cab5" stroke-width=".8"/>
+<rect x="12" y="7" width="36" height="48" rx="6" fill="url(#ic-teal)"/>
+<rect x="14" y="9" width="4" height="44" rx="2" fill="#0b5f53" opacity=".35"/>
+<rect x="23" y="15" width="18" height="9" rx="2.5" fill="#ffffff" opacity=".92"/>
+<rect x="26" y="18.5" width="12" height="2" rx="1" fill="#7fb9b0"/>
+<rect x="40" y="7" width="3.2" height="48" fill="#ff7a59"/>
+<rect x="18" y="10" width="20" height="2.2" rx="1.1" fill="#ffffff" opacity=".55"/>
+<g transform="rotate(-38 40 46)">
+<rect x="22" y="42" width="30" height="7.5" rx="1.5" fill="url(#ic-pencil)"/>
+<rect x="22" y="42" width="30" height="2.2" rx="1" fill="#fff" opacity=".45"/>
+<rect x="17" y="42" width="6" height="7.5" rx="2" fill="#f28aa0"/>
+<rect x="21.5" y="42" width="2.4" height="7.5" fill="#c7ccd2"/>
+<path d="M52 42l8 3.75-8 3.75z" fill="#f3d9b1"/>
+<path d="M57.2 44.4l2.8 1.35-2.8 1.35z" fill="#3a3f46"/>
+</g></svg>
+      <span class="label" data-t="essays">Essays</span>
+    </button>
+    <button class="icon" type="button" data-open="padre">
+      <svg class="ic" viewBox="0 0 64 64" aria-hidden="true"><ellipse cx="32" cy="58.5" rx="17" ry="3" fill="#06101c" opacity=".32" filter="url(#ic-blur)"/><rect x="27" y="18" width="10" height="9" rx="1.5" fill="url(#ic-chrome)"/>
+<path d="M17 34c0-6 5-8.5 15-8.5s15 2.5 15 8.5v17a6 6 0 0 1-6 6H23a6 6 0 0 1-6-6z" fill="url(#ic-ivory)" stroke="#c9bfad" stroke-width=".8"/>
+<path d="M17.6 33.2q14.4-4.4 28.8 0" fill="none" stroke="#c9bfad" stroke-width=".9"/>
+<g fill="none" stroke="#b9ae98" stroke-width="1" stroke-dasharray="1.6 1.6"><path d="M19.4 35v18"/><path d="M44.6 35v18"/></g>
+<g fill="none" stroke="#c99a35" stroke-width="1.1" stroke-linecap="round" opacity=".85">
+<path d="M24 40.6l-2.6-4.2"/><path d="M24 41.4l-3.8-2.4"/><path d="M24 42.4l-4.2-.6"/><path d="M24 43.2l-3.6 1.2"/>
+<path d="M40 40.6l2.6-4.2"/><path d="M40 41.4l3.8-2.4"/><path d="M40 42.4l4.2-.6"/><path d="M40 43.2l3.6 1.2"/>
+</g>
+<rect x="24.5" y="39.6" width="15" height="4.2" rx="1" fill="url(#ic-gold)"/>
+<circle cx="32" cy="48.2" r="1.9" fill="#1b1b1b"/>
+<rect x="27" y="51.6" width="10" height="1.2" rx=".6" fill="#8a7a5c" opacity=".6"/>
+<rect x="20.6" y="28.5" width="2.8" height="8" rx="1.4" fill="#fff" opacity=".8"/>
+<rect x="26.4" y="15.6" width="11.2" height="4.2" rx="2" fill="url(#ic-gold)"/>
+<circle cx="32" cy="8.8" r="7.4" fill="url(#ic-goldskull)"/>
+<rect x="27.4" y="11.4" width="9.2" height="5.2" rx="2" fill="url(#ic-goldskull)"/>
+<ellipse cx="29.1" cy="9.4" rx="1.9" ry="2.1" fill="#4a3308"/>
+<ellipse cx="34.9" cy="9.4" rx="1.9" ry="2.1" fill="#4a3308"/>
+<path d="M32 11.6l-1 1.8h2z" fill="#4a3308"/>
+<g stroke="#4a3308" stroke-width=".7"><path d="M30.2 14.3v2M32 14.3v2M33.8 14.3v2"/></g>
+<ellipse cx="29.6" cy="4.6" rx="2.6" ry="1.3" fill="#fff" opacity=".6"/></svg>
+      <span class="label">Padre Azul</span>
+    </button>
+    <button class="icon" type="button" data-open="brain">
+      <svg class="ic" viewBox="0 0 64 64" aria-hidden="true"><ellipse cx="32" cy="58.5" rx="17" ry="3" fill="#06101c" opacity=".32" filter="url(#ic-blur)"/><g fill="url(#ic-brain)">
+<circle cx="23" cy="24" r="11"/><circle cx="36" cy="21" r="11.5"/><circle cx="44" cy="32" r="10"/>
+<circle cx="20" cy="36" r="10"/><circle cx="31" cy="38" r="11"/><circle cx="42" cy="42" r="7"/>
+</g>
+<rect x="28" y="46" width="7" height="9" rx="3.5" fill="#d9577f"/>
+<g fill="none" stroke="#b83f68" stroke-width="2" stroke-linecap="round" opacity=".55">
+<path d="M32 13c-2 6 2 10 0 16s2 10 0 16"/>
+<path d="M18 24c3-3 7-2 8 1"/><path d="M15 35c4 1 6 4 6 7"/><path d="M39 17c-1 4 1 6 4 7"/>
+<path d="M38 31c3 2 6 1 8-2"/><path d="M36 40c2 1 5 0 6-2"/><path d="M24 31c2 1 4 3 3 6"/>
+</g>
+<ellipse cx="25" cy="17.5" rx="5" ry="2.4" fill="#ffffff" opacity=".55" transform="rotate(-20 25 17.5)"/></svg>
+      <span class="label" data-t="brain">Second brain</span>
+    </button>
+    <button class="icon" type="button" data-open="quotes">
+      <svg class="ic" viewBox="0 0 64 64" aria-hidden="true"><ellipse cx="32" cy="58.5" rx="17" ry="3" fill="#06101c" opacity=".32" filter="url(#ic-blur)"/><path d="M19 9h26a12 12 0 0 1 12 12v12a12 12 0 0 1-12 12H28l-12 9 2-9.5A12 12 0 0 1 7 33V21A12 12 0 0 1 19 9z" fill="url(#ic-yellow)"/>
+<path d="M19 12h26a9 9 0 0 1 8.6 6.4" fill="none" stroke="#fff" stroke-width="2.6" stroke-linecap="round" opacity=".55"/>
+<g fill="#ffffff">
+<circle cx="24.5" cy="30" r="5.2"/><path d="M19.6 30c0-6 3-10.5 8.2-12l1 2.6c-3.2 1.4-4.6 4-4.4 7.4z"/>
+<circle cx="39.5" cy="30" r="5.2"/><path d="M34.6 30c0-6 3-10.5 8.2-12l1 2.6c-3.2 1.4-4.6 4-4.4 7.4z"/>
+</g></svg>
+      <span class="label" data-t="quotes">Quotes</span>
+    </button>
+    <button class="icon" type="button" data-open="now">
+      <svg class="ic" viewBox="0 0 64 64" aria-hidden="true"><ellipse cx="32" cy="58.5" rx="17" ry="3" fill="#06101c" opacity=".32" filter="url(#ic-blur)"/><circle cx="32" cy="31" r="24" fill="url(#ic-gold)"/>
+<circle cx="32" cy="31" r="19" fill="url(#ic-face)"/>
+<circle cx="32" cy="31" r="19" fill="none" stroke="#9c6b16" stroke-width="1" opacity=".5"/>
+<g fill="#7a8794"><rect x="31" y="14" width="2" height="4" rx="1"/><rect x="31" y="44" width="2" height="4" rx="1"/><rect x="15" y="30" width="4" height="2" rx="1"/><rect x="45" y="30" width="4" height="2" rx="1"/></g>
+<g transform="rotate(35 32 31)">
+<path d="M32 15l5 16h-10z" fill="url(#ic-red)"/>
+<path d="M27 31h10l-5 16z" fill="#c7d0d9"/>
+</g>
+<circle cx="32" cy="31" r="3" fill="#3a3f46"/><circle cx="31.2" cy="30.2" r="1" fill="#fff" opacity=".7"/>
+<path d="M14 24a19 19 0 0 1 14-11" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" opacity=".6"/></svg>
+      <span class="label" data-t="now">Now</span>
+    </button>
+    <button class="icon" type="button" data-open="ritual">
+      <svg class="ic" viewBox="0 0 64 64" aria-hidden="true"><ellipse cx="32" cy="58.5" rx="17" ry="3" fill="#06101c" opacity=".32" filter="url(#ic-blur)"/><circle cx="32" cy="26" r="19" fill="url(#ic-black)"/>
+<rect x="21" y="34" width="22" height="20" rx="7" fill="url(#ic-black)"/>
+<ellipse cx="24.5" cy="28" rx="5.6" ry="6.3" fill="#000"/>
+<ellipse cx="39.5" cy="28" rx="5.6" ry="6.3" fill="#000"/>
+<ellipse cx="24.5" cy="26" rx="1.6" ry="1.2" fill="#5aa2f0" opacity=".9"/>
+<ellipse cx="39.5" cy="26" rx="1.6" ry="1.2" fill="#5aa2f0" opacity=".9"/>
+<path d="M32 34l-3 5h6z" fill="#000"/>
+<g stroke="#000" stroke-width="1.6"><path d="M27 44v9M32 44v9M37 44v9"/><path d="M23 47h18"/></g>
+<ellipse cx="25" cy="13" rx="7" ry="3" fill="#ffffff" opacity=".55" transform="rotate(-18 25 13)"/></svg>
+      <span class="label" data-t="ritual">Skull ritual</span>
+    </button>
+    <button class="icon" type="button" data-open="press">
+      <svg class="ic" viewBox="0 0 64 64" aria-hidden="true"><ellipse cx="32" cy="58.5" rx="17" ry="3" fill="#06101c" opacity=".32" filter="url(#ic-blur)"/><path d="M16 27a16 16 0 0 0 32 0" fill="none" stroke="#5f6c78" stroke-width="3.4" stroke-linecap="round"/>
+<rect x="30" y="42" width="4" height="10" fill="#5f6c78"/>
+<ellipse cx="32" cy="53.5" rx="12" ry="3.6" fill="#3f4a55"/>
+<ellipse cx="32" cy="52.6" rx="12" ry="3" fill="#56636f"/>
+<rect x="21.5" y="5" width="21" height="31" rx="10.5" fill="url(#ic-chrome)"/>
+<g stroke="#7b8692" stroke-width="1" opacity=".55"><path d="M23 11h18M22 15h20M22 19h20M22 23h20"/></g>
+<rect x="21.5" y="25" width="21" height="4" fill="#d6a63c"/>
+<rect x="21.5" y="25" width="21" height="1.4" fill="#fff" opacity=".45"/>
+<rect x="25" y="8" width="3.2" height="13" rx="1.6" fill="#fff" opacity=".75"/></svg>
+      <span class="label" data-t="press">Press &amp; speaking</span>
+    </button>
+  </nav>
+
+  <aside class="widgets" id="widgets">
+    <button class="btn-small" type="button" id="w-reset" data-t="resetw" hidden>Reset widgets</button>
+    <section class="widget" id="w-bio">
+      <div class="me">
+        <img class="mono" src="ramon.webp" width="240" height="240" alt="Ramon, the Padre Azul icon logo">
+        <div>
+          <p class="who">Hans-Peter Eder</p>
+          <p data-t="bio">El Padre. Co-Founder of Padre Azul. Born in Salzburg's Alps in Rauris, Austria. Making Tequila in Jalisco. Memento Vivere: remember you must live.</p>
+        </div>
+      </div>
+      <div class="social">
+        <a href="https://www.instagram.com/mezquila/" target="_blank" rel="noopener" aria-label="Instagram: @mezquila" title="Instagram"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="5" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="3.6" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="16.6" cy="7.4" r="1.2" fill="currentColor"/></svg><span>Instagram</span></a>
+        <a href="https://www.linkedin.com/in/hpeder/" target="_blank" rel="noopener" aria-label="LinkedIn: HP Eder" title="LinkedIn"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="6.5" cy="6.5" r="1.9" fill="currentColor"/><rect x="5" y="10" width="3" height="9" fill="currentColor"/><path d="M11 10h2.9v1.4c.6-1 1.7-1.7 3.2-1.7 2.5 0 3.4 1.6 3.4 4.2V19h-3v-4.6c0-1.2-.4-2-1.5-2s-2 .8-2 2.1V19h-3z" fill="currentColor"/></svg><span>LinkedIn</span></a>
+        <a href="https://x.com/HPEder888" target="_blank" rel="noopener" aria-label="X: @HPEder888" title="X"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4.5l14 15M19 4.5l-14 15" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg><span>X</span></a>
+        <a href="https://www.facebook.com/profile.php?id=100091928179963" target="_blank" rel="noopener" aria-label="Facebook: HP Eder" title="Facebook"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M13.5 21v-7.5h2.6l.4-3h-3V8.6c0-.9.3-1.5 1.6-1.5h1.5V4.4c-.3 0-1.2-.1-2.2-.1-2.2 0-3.7 1.300-3.700 3.800v2.400H8v3h2.700V21z" fill="currentColor"/></svg><span>Facebook</span></a>
+      </div>
+    </section>
+
+    <section class="widget" id="w-writing">
+      <div class="w-head"><h2 data-t="w-writing">Writing</h2><button class="more" type="button" data-open="essays" data-t="allessays">all essays</button><button class="fold" type="button" aria-label="Fold Writing" aria-expanded="true">−</button></div>
+      <div class="w-body">
+        <ul class="posts" id="post-list">
+          <li><span class="t">Memento Vivere</span><span class="tag">draft</span></li>
+          <li><span class="t">Two hundred hands</span><span class="tag">draft</span></li>
+          <li><span class="t">Austria meets Mexico</span><span class="tag">draft</span></li>
+          <li><span class="t">Running a tequila brand from a second brain</span><span class="tag">draft</span></li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="widget" id="w-padre">
+      <div class="w-head"><h2>Padre Azul</h2><button class="more" type="button" data-open="padre" data-t="open">open →</button><button class="fold" type="button" aria-label="Fold Padre Azul" aria-expanded="true">−</button></div>
+      <div class="w-body brand">
+        <img src="bottle.webp" width="326" height="900" alt="Padre Azul Tequila Joven bottle with the black skull stopper and Memento Vivere on the shoulder">
+        <div>
+          <p data-t="brandp">The tequila that came out of a love story. Founded in 2014, made in Jalisco, sold from Wattens, Austria.</p>
+          <a href="https://www.padreazul.com" target="_blank" rel="noopener">padreazul.com</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="widget" id="w-now">
+      <div class="w-head"><h2 data-t="now">Now</h2><button class="more" type="button" data-open="now" data-t="more">more</button><button class="fold" type="button" aria-label="Fold Now" aria-expanded="true">−</button></div>
+      <div class="w-body">
+        <ul class="now">
+          <li data-t="n1">Back in Austria after a week in Mexico City.</li>
+          <li data-t="n2">Writing the first essays for this desk.</li>
+          <li data-t="n3">Teaching the team to work with the second brain.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="widget news" id="w-news" hidden>
+      <div class="w-head"><h2 data-t="w-news">The letter</h2></div>
+      <div class="w-body">
+        <p data-t="newsp">A letter from El Padre, once a month.</p>
+        <a id="news-link" href="#" target="_blank" rel="noopener" data-t="subscribe">Subscribe</a>
+      </div>
+    </section>
+
+    <section class="widget" id="w-meet" hidden>
+      <div class="w-head"><h2 data-t="w-meet">Where to meet me</h2></div>
+      <div class="w-body"><ul class="meet" id="meet-list"></ul></div>
+    </section>
+
+    <section class="widget" id="w-gb" hidden>
+      <div class="w-head"><h2 data-t="w-gb">Guestbook</h2></div>
+      <div class="w-body">
+        <ul class="gb" id="gb-list"></ul>
+        <button class="btn-small" type="button" data-open="guestbook" id="gb-sign" data-t="gbsign" hidden>Sign my guestbook</button>
+      </div>
+    </section>
+
+    <section class="widget quote" id="w-quote">
+      <div class="w-head"><h2 data-t="w-quote">Quote</h2><button class="more" type="button" id="next-quote" aria-label="Next quote">↻</button><button class="fold" type="button" aria-label="Fold Quote" aria-expanded="true">−</button></div>
+      <div class="w-body">
+        <blockquote id="q-text">Remember you must live.</blockquote>
+        <cite id="q-src">Memento Vivere</cite>
+      </div>
+    </section>
+  </aside>
+</main>
+
+<section class="window" id="win-about" hidden aria-labelledby="t-about">
+  <div class="titlebar"><button class="close" type="button" aria-label="Close">×</button><span class="title" id="t-about" data-t="about">About me</span></div>
+  <div class="content" data-tb="about">
+    <img class="portrait" src="hp-eder.webp" width="640" height="795" alt="HP Eder">
+<h1>Hola, I'm HP.</h1>
+    <p class="hand">Some people call me El Padre. Online I go by Mezquila.</p>
+    <p>I was born in Rauris, in Salzburg's Alps. At a German university I met Adriana, who comes from Jalisco, and fell in love twice: with her, and with the way her country lives.</p>
+    <p>In 2014 that love story became a tequila. Padre Azul is still what I spend most of my days on. I'm the co-founder, not the CEO, which means I get to stay close to the bars, the people and the stories.</p>
+    <p>Mexico taught me something Europe had forgotten: death is not the enemy of a good life, forgetting death is. The old masters said memento mori. We turned it around. Memento Vivere, remember you must live.</p>
+    <p>This desk is where I keep what I'm writing, what I'm building and what I'm thinking about. Click around.</p>
+    <p class="note">Find me on <a href="https://www.instagram.com/mezquila/" target="_blank" rel="noopener">Instagram</a>, <a href="https://www.linkedin.com/in/hpeder/" target="_blank" rel="noopener">LinkedIn</a>, <a href="https://x.com/HPEder888" target="_blank" rel="noopener">X</a> and <a href="https://www.facebook.com/profile.php?id=100091928179963" target="_blank" rel="noopener">Facebook</a>.</p>
+  </div>
+</section>
+
+<section class="window" id="win-essays" hidden aria-labelledby="t-essays">
+  <div class="titlebar"><button class="close" type="button" aria-label="Close">×</button><span class="title" id="t-essays" data-t="essays">Essays</span></div>
+  <div class="content">
+    <h1 data-t="essays">Essays</h1>
+    <ul class="essays" id="essay-list">
+      <li><div class="row"><h3>Memento Vivere</h3><span class="tag">draft</span></div><p>What Mexico taught an Austrian about death, time and a good life.</p></li>
+      <li><div class="row"><h3>Two hundred hands</h3><span class="tag">draft</span></div><p>Why a bottle made by people beats one made by a machine.</p></li>
+      <li><div class="row"><h3>Austria meets Mexico</h3><span class="tag">draft</span></div><p>How a love story turned into a company.</p></li>
+      <li><div class="row"><h3>Running a tequila brand from a second brain</h3><span class="tag">draft</span></div><p>Every meeting, every market and every decision in one vault, and what changed when the whole team could ask it questions.</p></li>
+      <li><div class="row"><h3>Co-founder, not CEO</h3><span class="tag">draft</span></div><p>On handing over the title and keeping the work I love.</p></li>
+    </ul>
+    <p class="note" id="essay-note" data-t="enote">Nothing is published yet. These are the pieces on the desk right now.</p>
+  </div>
+</section>
+
+<section class="window" id="win-padre" hidden aria-labelledby="t-padre">
+  <div class="titlebar"><button class="close" type="button" aria-label="Close">×</button><span class="title" id="t-padre">Padre Azul</span></div>
+  <div class="content" data-tb="padre">
+    <img class="bottle" src="bottle.webp" width="326" height="900" alt="Padre Azul Tequila Joven bottle with the black skull stopper and Memento Vivere on the shoulder">
+    <h1>Padre Azul</h1>
+    <p class="hand">Austria meets Mexico.</p>
+    <p>Padre Azul is a tequila from Jalisco, born in 2014 from the connection between an Austrian and a Mexican family. Every bottle passes through two hundred hands before it reaches yours.</p>
+    <p>The skull on top is called Ramon. He is the face and the spokesperson of the brand, and he is there for a reason: he reminds you that time is short, so share it well.</p>
+    <p>The family also includes Padrecito, the younger and more playful one.</p>
+    <h2>The Padre Manifesto, in short</h2>
+    <p>People ask me why there is a skull on our bottle. I think the better question is why every other bottle in this industry pretends you will live forever.</p>
+    <p>Mexico taught me that death is not the enemy of a good life. Forgetting death is. The old masters said memento mori, remember you must die. We turned it around. Memento Vivere: remember you must live.</p>
+    <p>So the skull is a handshake. You face it, you pour, and you pass it to the person across the table. That is the ritual.</p>
+    <p>An agave needs eight to ten years to mature, and our Añejo rests eighteen months in oak. Time is the most expensive ingredient we use, and the most expensive thing you will ever spend. Spend it well, with people who matter.</p>
+    <p class="hand">Remember you must live.</p>
+    <p><a href="https://www.padreazul.com" target="_blank" rel="noopener">Visit padreazul.com</a></p>
+  </div>
+</section>
+
+<section class="window" id="win-brain" hidden aria-labelledby="t-brain">
+  <div class="titlebar"><button class="close" type="button" aria-label="Close">×</button><span class="title" id="t-brain" data-t="brain">Second brain</span></div>
+  <div class="content" data-tb="brain">
+    <h1>My second brain</h1>
+    <p>I run my working life out of one Obsidian vault with Claude sitting on top of it.</p>
+    <p>Every morning at 09:07 Vienna time, yesterday's meeting transcripts land in a folder called <em>raw</em>. One command turns them into wiki pages about the people, the markets and the decisions, and files the originals where they belong.</p>
+    <p>One page is called <em>hot</em>. It holds what is active right now, and it is the first thing I read each day.</p>
+    <p>I'll share the setup, the skills and the mistakes here as I go.</p>
+  </div>
+</section>
+
+<section class="window" id="win-quotes" hidden aria-labelledby="t-quotes">
+  <div class="titlebar"><button class="close" type="button" aria-label="Close">×</button><span class="title" id="t-quotes" data-t="quotes">Quotes</span></div>
+  <div class="content" data-tb="quotes">
+    <h1>Lines I live by</h1>
+    <div class="qlist">
+      <blockquote>Remember you must live.<cite>Memento Vivere</cite></blockquote>
+      <blockquote>Death is not the enemy of a good life. Forgetting death is.<cite>What Mexico taught me</cite></blockquote>
+      <blockquote>Nothing added beyond agave and time.<cite>Padrecito</cite></blockquote>
+    </div>
+  </div>
+</section>
+
+<section class="window" id="win-now" hidden aria-labelledby="t-now">
+  <div class="titlebar"><button class="close" type="button" aria-label="Close">×</button><span class="title" id="t-now" data-t="now">Now</span></div>
+  <div class="content" data-tb="now">
+    <h1>What I'm doing now</h1>
+    <p class="hand">November 2026, Austria</p>
+    <p>I'm just back from a week in Mexico City.</p>
+    <p>I'm writing the first essays for this desk, so the Essays folder stops saying draft.</p>
+    <p>At work I'm teaching the team to use the second brain the way I do, so that the knowledge of the company stops living in my head.</p>
+    <p class="note">A now page says what has my attention at the moment. I update it when that changes.</p>
+  </div>
+</section>
+
+<section class="window" id="win-ritual" hidden aria-labelledby="t-ritual">
+  <div class="titlebar"><button class="close" type="button" aria-label="Close">×</button><span class="title" id="t-ritual" data-t="ritual">Skull ritual</span></div>
+  <div class="content" data-tb="ritual">
+<img class="ramon-big" src="ramon.webp" width="240" height="240" alt="Ramon">
+<h1>The skull ritual</h1>
+<p class="hand">Face it, then live.</p>
+<ol><li>Open the bottle. The skull on top is called Ramon.</li><li>Let him remind you what this moment is worth.</li><li>Pour.</li><li>When you finish your glass, hand Ramon to the person next to you. It is a promise of eternal friendship. You can't give it back.</li></ol>
+<video class="ritual-video" controls playsinline preload="none" poster="ritual.jpg" src="ritual.mp4"></video>
+<p>Ramon reminds us that time is a scarce resource, and that we should spend it with friends and family.</p>
+  </div>
+</section>
+
+<section class="window" id="win-press" hidden aria-labelledby="t-press">
+  <div class="titlebar"><button class="close" type="button" aria-label="Close">×</button><span class="title" id="t-press" data-t="press">Press &amp; speaking</span></div>
+  <div class="content" data-tb="press">
+<h1>Press &amp; speaking</h1>
+<p>For journalists, podcast hosts and event organisers.</p>
+<h2>Short bio</h2>
+<p id="bio-short">Hans-Peter (HP) Eder is the co-founder of Padre Azul, the tequila born in 2014 from an Austrian-Mexican love story. Born in Rauris in Salzburg's Alps, he makes tequila in Jalisco and is known as El Padre. He writes and speaks about Memento Vivere: remember you must live.</p>
+<p><button class="btn-small" type="button" data-copy="bio-short">Copy bio</button></p>
+<h2>What I speak about</h2>
+<ul class="list"><li>Memento Vivere: why a skull sits on top of a luxury bottle.</li><li>Austria meets Mexico: building one brand across two cultures.</li><li>Running a company from a second brain: AI and shared knowledge in a small team.</li></ul>
+<h2>Images</h2>
+<p><a href="bottle.webp" target="_blank" rel="noopener">Padre Azul Tequila Joven, bottle</a><br><a href="hp-eder.jpg" target="_blank" rel="noopener">HP Eder, portrait</a><br><a href="ramon.webp" target="_blank" rel="noopener">Ramon, the icon</a><br>More images on request.</p>
+<h2>Contact</h2>
+<p>For interviews and speaking requests, message me on <a href="https://www.linkedin.com/in/hpeder/" target="_blank" rel="noopener">LinkedIn</a>.</p>
+  </div>
+</section>
+
+<template data-lang="de" data-for="about">
+<img class="portrait" src="hp-eder.webp" width="640" height="795" alt="HP Eder">
+<h1>Hola, ich bin HP.</h1>
+<p class="hand">Manche nennen mich El Padre. Online heiße ich Mezquila.</p>
+<p>Ich bin in Rauris geboren, in den Salzburger Alpen. An einer deutschen Universität habe ich Adriana kennengelernt, die aus Jalisco stammt, und mich zweimal verliebt: in sie und in die Art, wie ihr Land lebt.</p>
+<p>2014 wurde aus dieser Liebesgeschichte ein Tequila. Padre Azul ist bis heute das, womit ich die meisten meiner Tage verbringe. Ich bin Mitgründer, nicht CEO. So bleibe ich nah an den Bars, den Menschen und den Geschichten.</p>
+<p>Mexiko hat mich etwas gelehrt, das Europa vergessen hatte: Der Tod ist nicht der Feind eines guten Lebens. Ihn zu vergessen ist es. Die alten Meister sagten memento mori. Wir haben es umgedreht. Memento Vivere: Denk daran, du lebst jetzt.</p>
+<p>Auf diesem Schreibtisch liegt, woran ich schreibe, was ich baue und worüber ich nachdenke. Klick dich durch.</p>
+<p class="note">Du findest mich auf <a href="https://www.instagram.com/mezquila/" target="_blank" rel="noopener">Instagram</a>, <a href="https://www.linkedin.com/in/hpeder/" target="_blank" rel="noopener">LinkedIn</a>, <a href="https://x.com/HPEder888" target="_blank" rel="noopener">X</a> und <a href="https://www.facebook.com/profile.php?id=100091928179963" target="_blank" rel="noopener">Facebook</a>.</p>
+</template>
+<template data-lang="de" data-for="padre">
+<img class="bottle" src="bottle.webp" width="326" height="900" alt="Padre Azul Tequila Joven">
+<h1>Padre Azul</h1>
+<p class="hand">Österreich trifft Mexiko.</p>
+<p>Padre Azul ist ein Tequila aus Jalisco, entstanden 2014 aus der Verbindung einer österreichischen und einer mexikanischen Familie. Jede Flasche geht durch zweihundert Hände, bevor sie in deinen ankommt.</p>
+<p>Der Totenkopf obenauf heißt Ramon. Er ist das Gesicht und der Sprecher der Marke, und er sitzt dort aus gutem Grund: Er erinnert dich daran, dass Zeit knapp ist. Teile sie gut.</p>
+<p>Zur Familie gehört auch Padrecito, der Jüngere und Verspieltere.</p>
+<h2>Das Padre-Manifest in Kürze</h2>
+<p>Man fragt mich, warum auf unserer Flasche ein Totenkopf sitzt. Ich finde die bessere Frage: Warum tut jede andere Flasche dieser Branche so, als würdest du ewig leben?</p>
+<p>Mexiko hat mich gelehrt, dass der Tod nicht der Feind eines guten Lebens ist. Ihn zu vergessen ist es. Die alten Meister sagten memento mori, bedenke, dass du sterben musst. Wir haben es umgedreht. Memento Vivere: Denk daran, du lebst jetzt.</p>
+<p>Der Totenkopf ist deshalb ein Handschlag. Du stellst dich ihm, du schenkst ein, und du reichst ihn der Person gegenüber. Das ist das Ritual.</p>
+<p>Eine Agave braucht acht bis zehn Jahre, um zu reifen, und unser Añejo ruht achtzehn Monate im Eichenfass. Zeit ist die teuerste Zutat, die wir verwenden, und das Teuerste, was du je ausgeben wirst. Gib sie gut aus, mit Menschen, die zählen.</p>
+<p class="hand">Denk daran: du lebst jetzt.</p>
+<p><a href="https://www.padreazul.com" target="_blank" rel="noopener">padreazul.com besuchen</a></p>
+</template>
+<template data-lang="de" data-for="brain">
+<h1>Mein zweites Gehirn</h1>
+<p>Mein Arbeitsleben läuft über einen einzigen Obsidian-Vault, mit Claude obendrauf.</p>
+<p>Jeden Morgen um 09:07 Wiener Zeit landen die Meeting-Transkripte vom Vortag in einem Ordner namens <em>raw</em>. Ein Befehl macht daraus Wiki-Seiten über die Menschen, die Märkte und die Entscheidungen und legt die Originale dort ab, wo sie hingehören.</p>
+<p>Eine Seite heißt <em>hot</em>. Dort steht, was gerade aktiv ist, und sie ist das Erste, was ich jeden Tag lese.</p>
+<p>Den Aufbau, die Skills und die Fehler teile ich hier nach und nach.</p>
+</template>
+<template data-lang="de" data-for="quotes">
+<h1>Sätze, nach denen ich lebe</h1>
+<div class="qlist">
+<blockquote>Denk daran: du lebst jetzt.<cite>Memento Vivere</cite></blockquote>
+<blockquote>Der Tod ist nicht der Feind eines guten Lebens. Ihn zu vergessen ist es.<cite>Was Mexiko mich gelehrt hat</cite></blockquote>
+<blockquote>Nothing added beyond agave and time.<cite>Padrecito</cite></blockquote>
+</div>
+</template>
+<template data-lang="de" data-for="now">
+<h1>Was ich gerade mache</h1>
+<p class="hand">November 2026, Österreich</p>
+<p>Ich bin gerade von einer Woche in Mexiko-Stadt zurück.</p>
+<p>Ich schreibe die ersten Essays für diesen Schreibtisch, damit im Ordner Essays nicht mehr überall Entwurf steht.</p>
+<p>In der Firma bringe ich dem Team bei, das zweite Gehirn so zu nutzen wie ich, damit das Wissen des Unternehmens nicht länger nur in meinem Kopf lebt.</p>
+<p class="note">Eine Now-Seite zeigt, was gerade meine Aufmerksamkeit hat. Ich aktualisiere sie, wenn sich das ändert.</p>
+</template>
+<template data-lang="de" data-for="press">
+<h1>Presse &amp; Vorträge</h1>
+<p>Für Redaktionen, Podcasts und Veranstalter.</p>
+<h2>Kurzbiografie</h2>
+<p id="bio-short">Hans-Peter (HP) Eder ist Mitgründer von Padre Azul, dem Tequila, der 2014 aus einer österreichisch-mexikanischen Liebesgeschichte entstand. Geboren in Rauris in den Salzburger Alpen, macht er Tequila in Jalisco und ist als El Padre bekannt. Er schreibt und spricht über Memento Vivere: Denk daran, du lebst jetzt.</p>
+<p><button class="btn-small" type="button" data-copy="bio-short">Bio kopieren</button></p>
+<h2>Worüber ich spreche</h2>
+<ul class="list"><li>Memento Vivere: warum auf einer Luxusflasche ein Totenkopf sitzt.</li><li>Österreich trifft Mexiko: eine Marke zwischen zwei Kulturen aufbauen.</li><li>Ein Unternehmen aus einem zweiten Gehirn führen: KI und geteiltes Wissen in einem kleinen Team.</li></ul>
+<h2>Bilder</h2>
+<p><a href="bottle.webp" target="_blank" rel="noopener">Padre Azul Tequila Joven, Flasche</a><br><a href="hp-eder.jpg" target="_blank" rel="noopener">HP Eder, Porträt</a><br><a href="ramon.webp" target="_blank" rel="noopener">Ramon, das Icon</a><br>Weitere Bilder auf Anfrage.</p>
+<h2>Kontakt</h2>
+<p>Für Interviews und Vortragsanfragen schreib mir auf <a href="https://www.linkedin.com/in/hpeder/" target="_blank" rel="noopener">LinkedIn</a>.</p>
+</template>
+<template data-lang="de" data-for="ritual">
+<img class="ramon-big" src="ramon.webp" width="240" height="240" alt="Ramon">
+<h1>Das Skull-Ritual</h1>
+<p class="hand">Stell dich ihm, dann lebe.</p>
+<ol><li>Öffne die Flasche. Der Totenkopf obenauf heißt Ramon.</li><li>Lass dich von ihm daran erinnern, was dieser Moment wert ist.</li><li>Schenk ein.</li><li>Wenn dein Glas leer ist, gib Ramon der Person neben dir. Das ist ein Versprechen ewiger Freundschaft. Zurückgeben geht nicht.</li></ol>
+<video class="ritual-video" controls playsinline preload="none" poster="ritual.jpg" src="ritual.mp4"></video>
+<p>Ramon erinnert uns daran, dass Zeit ein knappes Gut ist und dass wir sie mit Freunden und Familie verbringen sollten.</p>
+</template>
+<template data-lang="es" data-for="about">
+<img class="portrait" src="hp-eder.webp" width="640" height="795" alt="HP Eder">
+<h1>Hola, soy HP.</h1>
+<p class="hand">Algunos me llaman El Padre. En internet soy Mezquila.</p>
+<p>Nací en Rauris, en los Alpes de Salzburgo. En una universidad alemana conocí a Adriana, que es de Jalisco, y me enamoré dos veces: de ella y de la forma en que vive su país.</p>
+<p>En 2014 esa historia de amor se convirtió en un tequila. Padre Azul sigue siendo a lo que dedico la mayor parte de mis días. Soy cofundador, no CEO, y eso me permite estar cerca de los bares, de la gente y de las historias.</p>
+<p>México me enseñó algo que Europa había olvidado: la muerte no es enemiga de una buena vida; olvidarla sí lo es. Los antiguos maestros decían memento mori. Nosotros le dimos la vuelta. Memento Vivere: recuerda, vive ahora.</p>
+<p>En este escritorio guardo lo que escribo, lo que construyo y lo que pienso. Explora.</p>
+<p class="note">Encuéntrame en <a href="https://www.instagram.com/mezquila/" target="_blank" rel="noopener">Instagram</a>, <a href="https://www.linkedin.com/in/hpeder/" target="_blank" rel="noopener">LinkedIn</a>, <a href="https://x.com/HPEder888" target="_blank" rel="noopener">X</a> y <a href="https://www.facebook.com/profile.php?id=100091928179963" target="_blank" rel="noopener">Facebook</a>.</p>
+</template>
+<template data-lang="es" data-for="padre">
+<img class="bottle" src="bottle.webp" width="326" height="900" alt="Padre Azul Tequila Joven">
+<h1>Padre Azul</h1>
+<p class="hand">Austria se encuentra con México.</p>
+<p>Padre Azul es un tequila de Jalisco, nacido en 2014 de la unión entre una familia austriaca y una mexicana. Cada botella pasa por doscientas manos antes de llegar a las tuyas.</p>
+<p>La calavera de arriba se llama Ramon. Es el rostro y el portavoz de la marca, y está ahí por una razón: te recuerda que el tiempo es corto, así que compártelo bien.</p>
+<p>La familia también incluye a Padrecito, el más joven y juguetón.</p>
+<h2>El Manifiesto Padre, en breve</h2>
+<p>Me preguntan por qué hay una calavera en nuestra botella. Creo que la mejor pregunta es por qué todas las demás botellas de esta industria fingen que vas a vivir para siempre.</p>
+<p>México me enseñó que la muerte no es enemiga de una buena vida; olvidarla sí lo es. Los antiguos maestros decían memento mori, recuerda que morirás. Nosotros le dimos la vuelta. Memento Vivere: recuerda, vive ahora.</p>
+<p>Por eso la calavera es un apretón de manos. La enfrentas, sirves y se la pasas a la persona que tienes enfrente. Ese es el ritual.</p>
+<p>Un agave necesita de ocho a diez años para madurar, y nuestro Añejo reposa dieciocho meses en roble. El tiempo es el ingrediente más caro que usamos y lo más caro que vas a gastar en tu vida. Gástalo bien, con la gente que importa.</p>
+<p class="hand">Recuerda: vive ahora.</p>
+<p><a href="https://www.padreazul.com" target="_blank" rel="noopener">Visita padreazul.com</a></p>
+</template>
+<template data-lang="es" data-for="brain">
+<h1>Mi segundo cerebro</h1>
+<p>Llevo mi vida de trabajo desde una sola bóveda de Obsidian, con Claude encima.</p>
+<p>Cada mañana a las 09:07, hora de Viena, las transcripciones de las reuniones del día anterior llegan a una carpeta llamada <em>raw</em>. Un comando las convierte en páginas wiki sobre las personas, los mercados y las decisiones, y archiva los originales donde corresponde.</p>
+<p>Una página se llama <em>hot</em>. Contiene lo que está activo ahora mismo y es lo primero que leo cada día.</p>
+<p>Iré compartiendo aquí la configuración, las skills y los errores.</p>
+</template>
+<template data-lang="es" data-for="quotes">
+<h1>Frases que me guían</h1>
+<div class="qlist">
+<blockquote>Recuerda: vive ahora.<cite>Memento Vivere</cite></blockquote>
+<blockquote>La muerte no es enemiga de una buena vida. Olvidarla sí lo es.<cite>Lo que México me enseñó</cite></blockquote>
+<blockquote>Nothing added beyond agave and time.<cite>Padrecito</cite></blockquote>
+</div>
+</template>
+<template data-lang="es" data-for="now">
+<h1>En qué ando ahora</h1>
+<p class="hand">Noviembre de 2026, Austria</p>
+<p>Acabo de volver de una semana en Ciudad de México.</p>
+<p>Estoy escribiendo los primeros ensayos para este escritorio, para que la carpeta Ensayos deje de decir borrador.</p>
+<p>En el trabajo le enseño al equipo a usar el segundo cerebro como yo, para que el conocimiento de la empresa deje de vivir en mi cabeza.</p>
+<p class="note">Una página «now» cuenta qué tiene mi atención en este momento. La actualizo cuando eso cambia.</p>
+</template>
+<template data-lang="es" data-for="press">
+<h1>Prensa y charlas</h1>
+<p>Para periodistas, podcasts y organizadores de eventos.</p>
+<h2>Biografía breve</h2>
+<p id="bio-short">Hans-Peter (HP) Eder es cofundador de Padre Azul, el tequila que nació en 2014 de una historia de amor entre Austria y México. Nacido en Rauris, en los Alpes de Salzburgo, hace tequila en Jalisco y lo conocen como El Padre. Escribe y habla sobre Memento Vivere: recuerda, vive ahora.</p>
+<p><button class="btn-small" type="button" data-copy="bio-short">Copiar bio</button></p>
+<h2>De qué hablo</h2>
+<ul class="list"><li>Memento Vivere: por qué hay una calavera sobre una botella de lujo.</li><li>Austria se encuentra con México: construir una marca entre dos culturas.</li><li>Dirigir una empresa desde un segundo cerebro: IA y conocimiento compartido en un equipo pequeño.</li></ul>
+<h2>Imágenes</h2>
+<p><a href="bottle.webp" target="_blank" rel="noopener">Padre Azul Tequila Joven, botella</a><br><a href="hp-eder.jpg" target="_blank" rel="noopener">HP Eder, retrato</a><br><a href="ramon.webp" target="_blank" rel="noopener">Ramon, el icono</a><br>Más imágenes a petición.</p>
+<h2>Contacto</h2>
+<p>Para entrevistas y charlas, escríbeme por <a href="https://www.linkedin.com/in/hpeder/" target="_blank" rel="noopener">LinkedIn</a>.</p>
+</template>
+<template data-lang="es" data-for="ritual">
+<img class="ramon-big" src="ramon.webp" width="240" height="240" alt="Ramon">
+<h1>El ritual de la calavera</h1>
+<p class="hand">Enfréntala, luego vive.</p>
+<ol><li>Abre la botella. La calavera de arriba se llama Ramon.</li><li>Deja que te recuerde cuánto vale este momento.</li><li>Sirve.</li><li>Cuando termines tu copa, entrégale a Ramon a la persona que tienes al lado. Es una promesa de amistad eterna. No se puede devolver.</li></ol>
+<video class="ritual-video" controls playsinline preload="none" poster="ritual.jpg" src="ritual.mp4"></video>
+<p>Ramon nos recuerda que el tiempo es un recurso escaso y que hay que pasarlo con amigos y familia.</p>
+</template>
+
+<section class="window" id="win-guestbook" hidden aria-labelledby="t-guestbook">
+  <div class="titlebar"><button class="close" type="button" aria-label="Close">×</button><span class="title" id="t-guestbook" data-t="w-gb">Guestbook</span></div>
+  <div class="content">
+    <h1 data-t="gbh1">Sign my guestbook</h1>
+    <p data-t="gbintro">Leave a few words. I read every entry before it appears on the desk.</p>
+    <form class="gbform" id="gb-form" novalidate>
+      <label><span data-t="gbname">Your name</span><input id="gb-name" name="name" maxlength="60" required autocomplete="name"></label>
+      <label><span data-t="gbplace">Where you are</span><input id="gb-place" name="place" maxlength="60" autocomplete="address-level2"></label>
+      <label><span data-t="gbmsg">Your message</span><textarea id="gb-msg" name="message" maxlength="280" required></textarea></label>
+      <input class="trap" id="gb-trap" name="_gotcha" tabindex="-1" autocomplete="off" aria-hidden="true">
+      <div><button class="btn-small" type="submit" id="gb-send" data-t="gbsend">Send</button></div>
+      <p class="note" id="gb-status" role="status" hidden></p>
+    </form>
+  </div>
+</section>
+
+<section class="window" id="win-post" hidden aria-labelledby="t-post">
+  <div class="titlebar"><button class="close" type="button" aria-label="Close">×</button><span class="title" id="t-post">Essay</span></div>
+  <div class="content post" id="post-body"></div>
+</section>
+
+<script>
+(function () {
+  var $ = function (s, r) { return (r || document).querySelector(s); };
+  var $$ = function (s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)); };
+  /* ---------- Languages ---------- */
+  var lang = 'en', LOCALE = { en: 'en-GB', de: 'de-AT', es: 'es-MX' };
+  var STR = {
+    de: { resetw: 'Widgets zurücksetzen', 'w-gb': 'Gästebuch', gbsign: 'Ins Gästebuch schreiben', gbh1: 'Schreib in mein Gästebuch', gbintro: 'Hinterlass ein paar Worte. Ich lese jeden Eintrag, bevor er auf dem Schreibtisch erscheint.', gbname: 'Dein Name', gbplace: 'Wo du bist', gbmsg: 'Deine Nachricht', gbsend: 'Senden', gbok: 'Danke! Dein Eintrag ist bei mir angekommen.', gberr: 'Das hat nicht geklappt. Bitte versuch es später noch einmal.', gbneed: 'Bitte Name und Nachricht ausfüllen.', about: 'Über mich', wall: 'Hintergrund', closeall: 'Fenster schließen', essays: 'Essays', brain: 'Zweites Gehirn', quotes: 'Zitate', now: 'Jetzt',
+      ritual: 'Skull-Ritual', press: 'Presse & Vorträge', 'w-writing': 'Texte', allessays: 'alle Essays', open: 'öffnen →', more: 'mehr', 'w-quote': 'Zitat',
+      bio: 'El Padre. Mitgründer von Padre Azul. Geboren in Rauris in den Salzburger Alpen. Macht Tequila in Jalisco. Memento Vivere: Denk daran, du lebst jetzt.',
+      brandp: 'Der Tequila, der aus einer Liebesgeschichte entstand. Gegründet 2014, gemacht in Jalisco, vertrieben aus Wattens in Tirol.',
+      n1: 'Zurück in Österreich nach einer Woche in Mexiko-Stadt.', n2: 'Ich schreibe die ersten Essays für diesen Schreibtisch.', n3: 'Ich bringe dem Team bei, mit dem zweiten Gehirn zu arbeiten.',
+      enote: 'Noch ist nichts veröffentlicht. Das sind die Texte, die gerade auf dem Schreibtisch liegen.',
+      'w-news': 'Der Brief', newsp: 'Ein Brief von El Padre, einmal im Monat.', subscribe: 'Abonnieren', 'w-meet': 'Wo du mich triffst',
+      draft: 'Entwurf', city: 'Wien', hide: 'Widgets ausblenden', show: 'Widgets einblenden', loading: 'Lädt …', loaderr: 'Dieser Essay konnte nicht geladen werden. Bitte versuch es gleich noch einmal.', copied: 'Kopiert' },
+    es: { resetw: 'Restablecer widgets', 'w-gb': 'Libro de visitas', gbsign: 'Firmar el libro', gbh1: 'Firma mi libro de visitas', gbintro: 'Deja unas palabras. Leo cada mensaje antes de que aparezca en el escritorio.', gbname: 'Tu nombre', gbplace: 'Dónde estás', gbmsg: 'Tu mensaje', gbsend: 'Enviar', gbok: '¡Gracias! Tu mensaje me llegó.', gberr: 'No funcionó. Inténtalo de nuevo más tarde.', gbneed: 'Escribe tu nombre y tu mensaje.', about: 'Sobre mí', wall: 'Fondo', closeall: 'Cerrar ventanas', essays: 'Ensayos', brain: 'Segundo cerebro', quotes: 'Frases', now: 'Ahora',
+      ritual: 'Ritual de la calavera', press: 'Prensa y charlas', 'w-writing': 'Escritos', allessays: 'todos', open: 'abrir →', more: 'más', 'w-quote': 'Frase',
+      bio: 'El Padre. Cofundador de Padre Azul. Nacido en Rauris, en los Alpes de Salzburgo. Hace tequila en Jalisco. Memento Vivere: recuerda, vive ahora.',
+      brandp: 'El tequila que nació de una historia de amor. Fundado en 2014, hecho en Jalisco, vendido desde Wattens, Austria.',
+      n1: 'De vuelta en Austria tras una semana en Ciudad de México.', n2: 'Escribiendo los primeros ensayos para este escritorio.', n3: 'Enseñando al equipo a trabajar con el segundo cerebro.',
+      enote: 'Todavía no hay nada publicado. Estos son los textos que están ahora sobre el escritorio.',
+      'w-news': 'La carta', newsp: 'Una carta de El Padre, una vez al mes.', subscribe: 'Suscribirme', 'w-meet': 'Dónde encontrarme',
+      draft: 'borrador', city: 'Viena', hide: 'Ocultar widgets', show: 'Mostrar widgets', loading: 'Cargando…', loaderr: 'No se pudo cargar este ensayo. Inténtalo de nuevo en un momento.', copied: 'Copiado' }
+  };
+  function T(key, en) { return (STR[lang] && STR[lang][key]) || en; }
+
+  function store(k, v) { try { if (v === undefined) return localStorage.getItem(k); localStorage.setItem(k, v); } catch (e) { return null; } }
+
+  /* ---------- Wallpaper: a painted agave field ---------- */
+  var scenes = {
+    rauris:  { sky: ['#2f6fb0', '#6fa5d3', '#b9d6e6', '#eaf1ee'], orb: '#fffbe8', glow: 'rgba(255,248,215,0.55)', orbY: 0.17,
+               rock: ['#8497ad', '#5f748c'], snow: '#f7fafc', chapel: '#f3efe6', roof: '#6b3f2c',
+               hills: ['#6a9a68', '#4f8660', '#3d7358'], field: ['#4a8272', '#1f4746'], leaf: ['#74b0ac', '#4c8f94', '#34707c'], stars: 0 },
+    dusk:   { sky: ['#243a63', '#8a5a7c', '#e89a6a', '#f6cf9a'], orb: '#fff1cf', glow: 'rgba(255,214,150,0.55)', orbY: 0.47,
+               hills: ['#6d6f93', '#4c5f80', '#33506a'], field: ['#3f6a66', '#17313a'], leaf: ['#5f9aa0', '#3e7884', '#2b5c6c'], stars: 0 },
+    morning: { sky: ['#3f73a8', '#7fa9c9', '#c7dbe0', '#f0e3c8'], orb: '#fffbe8', glow: 'rgba(255,246,210,0.6)', orbY: 0.30,
+               hills: ['#7f9fb5', '#5f879b', '#467283'], field: ['#4f8478', '#234a4a'], leaf: ['#74b0ac', '#4c8f94', '#34707c'], stars: 0 },
+    night:   { sky: ['#060b17', '#0d1830', '#1a2c4c', '#2b4365'], orb: '#eef3ff', glow: 'rgba(190,210,255,0.35)', orbY: 0.22,
+               hills: ['#1c2c48', '#16233a', '#101b2d'], field: ['#16303a', '#080f17'], leaf: ['#3c6f80', '#285565', '#1b3f4f'], stars: 140 }
+  };
+  var order = ['photo', 'rauris', 'dusk', 'morning', 'night'];
+  var darkPref = document.documentElement.getAttribute('data-theme') === 'dark' ||
+    (document.documentElement.getAttribute('data-theme') !== 'light' && window.matchMedia && matchMedia('(prefers-color-scheme: dark)').matches);
+  var scene = store('mezquila-wall-3');
+  if (order.indexOf(scene) < 0) scene = 'photo';
+
+  /* Rauris: snow-capped Hohe Tauern peaks behind the agave field */
+  function alps(c, w, h, p, rand) {
+    [[0.60, 0.40, p.rock[0], 6], [0.62, 0.27, p.rock[1], 8]].forEach(function (L) {
+      var base = h * L[0], H = h * L[1], n = L[3], pts = [];
+      for (var k = 0; k <= 2 * n; k++) {
+        var x = (k / (2 * n)) * w * 1.2 - w * 0.1 + (rand() - 0.5) * w * 0.04;
+        var y = base - (k % 2 ? H * (0.6 + rand() * 0.4) : H * (0.12 + rand() * 0.2));
+        if (k) { var q = pts[pts.length - 1]; pts.push([(q[0] + x) / 2 + (rand() - 0.5) * 14, (q[1] + y) / 2 + (rand() - 0.5) * H * 0.1]); }
+        pts.push([x, y]);
+      }
+      c.fillStyle = L[2]; c.beginPath(); c.moveTo(pts[0][0], h);
+      pts.forEach(function (q) { c.lineTo(q[0], q[1]); });
+      c.lineTo(pts[pts.length - 1][0], h); c.closePath(); c.fill();
+      c.save(); c.clip();
+      var line = base - H * 0.5; c.fillStyle = p.snow; c.beginPath(); c.moveTo(-10, 0);
+      for (var sx = -10, up = 0; sx <= w + 30; sx += 22, up = 1 - up) c.lineTo(sx, line + (up ? -1 : 1) * H * (0.03 + rand() * 0.06));
+      c.lineTo(w + 30, 0); c.closePath(); c.fill(); c.restore();
+    });
+  }
+  /* A small alpine chapel on the meadow, looking down on the agaves */
+  function chapel(c, w, h, p) {
+    var u = Math.max(5, Math.min(w, h) * 0.011), x = w * 0.2, y = h * 0.672;
+    c.fillStyle = p.chapel; c.fillRect(x, y - u * 2.4, u * 4, u * 2.4); c.fillRect(x - u * 1.5, y - u * 4.6, u * 1.5, u * 4.6);
+    c.fillStyle = p.roof;
+    c.beginPath(); c.moveTo(x - u * 0.3, y - u * 2.4); c.lineTo(x + u * 2, y - u * 4.2); c.lineTo(x + u * 4.3, y - u * 2.4); c.closePath(); c.fill();
+    c.beginPath(); c.moveTo(x - u * 1.8, y - u * 4.6); c.lineTo(x - u * 0.75, y - u * 8.2); c.lineTo(x + u * 0.3, y - u * 4.6); c.closePath(); c.fill();
+  }
+
+  function rng(seed) { return function () { seed |= 0; seed = seed + 0x6D2B79F5 | 0; var t = Math.imul(seed ^ seed >>> 15, 1 | seed); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; }; }
+
+  function agave(c, x, y, s, cols, rand) {
+    var n = 7;
+    for (var i = -n; i <= n; i++) {
+      var a = -Math.PI / 2 + i * 0.19 + (rand() - 0.5) * 0.08;
+      var len = s * (1 - Math.abs(i) * 0.055) * (0.9 + rand() * 0.2);
+      var tx = x + Math.cos(a) * len, ty = y + Math.sin(a) * len;
+      var px = -Math.sin(a) * s * 0.1, py = Math.cos(a) * s * 0.1;
+      var mx = x + Math.cos(a) * len * 0.45, my = y + Math.sin(a) * len * 0.45;
+      c.fillStyle = cols[(i + n) % cols.length];
+      c.beginPath();
+      c.moveTo(x - px * 0.6, y - py * 0.6);
+      c.quadraticCurveTo(mx - px * 1.5, my - py * 1.5, tx, ty);
+      c.quadraticCurveTo(mx + px * 1.5, my + py * 1.5, x + px * 0.6, y + py * 0.6);
+      c.closePath(); c.fill();
+    }
+  }
+
+  function paint() {
+    var cv = $('#wall'), isPhoto = scene === 'photo'; $('#photo').hidden = !isPhoto; cv.hidden = isPhoto; if (isPhoto) return;
+    var p = scenes[scene];
+    var w = window.innerWidth, h = window.innerHeight, dpr = Math.min(window.devicePixelRatio || 1, 2);
+    cv.width = Math.round(w * dpr); cv.height = Math.round(h * dpr);
+    var c = cv.getContext('2d'); c.setTransform(dpr, 0, 0, dpr, 0, 0);
+    var rand = rng(2014);
+
+    var g = c.createLinearGradient(0, 0, 0, h * 0.7);
+    p.sky.forEach(function (col, i) { g.addColorStop(i / (p.sky.length - 1), col); });
+    c.fillStyle = g; c.fillRect(0, 0, w, h);
+
+    for (var s = 0; s < p.stars; s++) {
+      c.fillStyle = 'rgba(255,255,255,' + (0.3 + rand() * 0.6) + ')';
+      c.beginPath(); c.arc(rand() * w, rand() * h * 0.55, rand() * 1.2 + 0.3, 0, 7); c.fill();
+    }
+
+    var ox = w * 0.36, oy = h * p.orbY, or = Math.max(26, Math.min(w, h) * 0.055);
+    var gl = c.createRadialGradient(ox, oy, or * 0.6, ox, oy, or * 5);
+    gl.addColorStop(0, p.glow); gl.addColorStop(1, 'rgba(255,255,255,0)');
+    c.fillStyle = gl; c.fillRect(0, 0, w, h);
+    c.fillStyle = p.orb; c.beginPath(); c.arc(ox, oy, or, 0, 7); c.fill();
+    if (p.rock) alps(c, w, h, p, rand);
+
+    p.hills.forEach(function (col, i) {
+      var base = h * (0.52 + i * 0.065), amp = h * (0.07 - i * 0.015), ph = i * 2.1 + 0.7;
+      c.fillStyle = col; c.beginPath(); c.moveTo(0, h);
+      for (var x = 0; x <= w + 8; x += 8) {
+        var t = x / Math.max(w, 600);
+        c.lineTo(x, base - amp * (Math.sin(t * 3.1 + ph) * 0.6 + Math.sin(t * 7.3 + ph * 2) * 0.25 + Math.sin(t * 13 + ph) * 0.12));
+      }
+      c.lineTo(w, h); c.closePath(); c.fill();
+    });
+
+    var fy = h * 0.68, fg = c.createLinearGradient(0, fy, 0, h);
+    fg.addColorStop(0, p.field[0]); fg.addColorStop(1, p.field[1]);
+    c.fillStyle = fg; c.fillRect(0, fy, w, h - fy);
+    if (p.chapel) chapel(c, w, h, p);
+
+    var rows = 8;
+    for (var r = 0; r < rows; r++) {
+      var t = r / (rows - 1), y = h * (0.705 + 0.33 * Math.pow(t, 1.6));
+      var size = 9 + t * t * Math.min(w, 1400) * 0.075 + t * 14, gap = size * 1.75;
+      for (var x = -gap + (r % 2) * gap * 0.5; x < w + gap; x += gap) {
+        agave(c, x + (rand() - 0.5) * gap * 0.25, y, size, p.leaf, rand);
+      }
+    }
+  }
+  paint();
+  var rt; window.addEventListener('resize', function () { clearTimeout(rt); rt = setTimeout(paint, 120); });
+  $('#btn-wall').addEventListener('click', function () {
+    scene = order[(order.indexOf(scene) + 1) % order.length]; store('mezquila-wall-3', scene); paint();
+  });
+
+  /* ---------- Clock (Vienna time) ---------- */
+  function tick() {
+    try { $('#clock').textContent = T('city', 'Vienna') + ' ' + new Intl.DateTimeFormat('en-GB', { timeZone: 'Europe/Vienna', hour: '2-digit', minute: '2-digit' }).format(new Date()); }
+    catch (e) { $('#clock').textContent = ''; }
+  }
+  tick(); setInterval(tick, 20000);
+
+  /* ---------- Windows ---------- */
+  var z = 20, opened = 0;
+  function front(win) { win.style.zIndex = ++z; }
+  function open(id) {
+    var win = $('#win-' + id); if (!win) return;
+    if (win.hidden) {
+      var free = Math.max(0, window.innerWidth - 340 - 226 - 560);
+      win.style.left = (226 + free / 2 + (opened % 5) * 26) + 'px';
+      win.style.top = (72 + (opened % 5) * 26) + 'px';
+      opened++; win.hidden = false;
+    }
+    front(win); $('.close', win).focus({ preventScroll: true });
+  }
+  $$('[data-open]').forEach(function (b) { b.addEventListener('click', function () { open(b.getAttribute('data-open')); }); });
+  $$('.window').forEach(function (win) {
+    $('.close', win).addEventListener('click', function () { win.hidden = true; });
+    win.addEventListener('pointerdown', function () { front(win); });
+    var bar = $('.titlebar', win), drag = null;
+    bar.addEventListener('pointerdown', function (e) {
+      if (e.target.closest('.close') || window.innerWidth <= 760) return;
+      var r = win.getBoundingClientRect(); drag = { dx: e.clientX - r.left, dy: e.clientY - r.top };
+      bar.setPointerCapture(e.pointerId);
+    });
+    bar.addEventListener('pointermove', function (e) {
+      if (!drag) return;
+      var x = Math.min(Math.max(e.clientX - drag.dx, 80 - win.offsetWidth), window.innerWidth - 80);
+      var y = Math.min(Math.max(e.clientY - drag.dy, 44), window.innerHeight - 44);
+      win.style.left = x + 'px'; win.style.top = y + 'px';
+    });
+    var end = function () { drag = null; };
+    bar.addEventListener('pointerup', end); bar.addEventListener('pointercancel', end);
+  });
+  document.addEventListener('keydown', function (e) {
+    if (e.key !== 'Escape') return;
+    var top = $$('.window').filter(function (w) { return !w.hidden; }).sort(function (a, b) { return (+b.style.zIndex || 0) - (+a.style.zIndex || 0); })[0];
+    if (top) top.hidden = true;
+  });
+  $('#btn-closeall').addEventListener('click', function () { $$('.window').forEach(function (w) { w.hidden = true; }); });
+
+  /* ---------- Essays: Markdown files in posts/, listed in posts/index.json ---------- */
+  /*MD-START*/
+  function esc(t) { return String(t).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;'); }
+  function safeUrl(u) { return /^https?:\/\//i.test(u) || /^[\w\-.\/%]+$/.test(u); }
+  function inline(t) {
+    t = esc(t).replace(/\[\[(?:[^\]|]+\|)?([^\]]+)\]\]/g, '$1');
+    t = t.replace(/!\[([^\]]*)\]\(([^)\s]+)\)/g, function (m, alt, u) { return safeUrl(u) ? '<img src="' + u + '" alt="' + alt + '">' : m; });
+    t = t.replace(/\[([^\]]+)\]\(([^)\s]+)\)/g, function (m, label, u) { return safeUrl(u) ? '<a href="' + u + '" target="_blank" rel="noopener">' + label + '</a>' : m; });
+    return t.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>').replace(/(^|[^*])\*([^*\s][^*]*)\*/g, '$1<em>$2</em>').replace(/(^|[\s(])_([^_\s][^_]*)_/g, '$1<em>$2</em>');
+  }
+  function md(text) {
+    text = text.replace(/\r\n?/g, '\n').replace(/^---\s*\n[\s\S]*?\n---\s*(\n|$)/, '');
+    return text.split(/\n\s*\n/).map(function (block) {
+      var lines = block.split('\n').map(function (l) { return l.replace(/\s+$/, ''); }).filter(function (l) { return l.trim(); });
+      if (!lines.length) return '';
+      var every = function (re) { return lines.every(function (l) { return re.test(l); }); };
+      var h = /^(#{1,4})\s+(.*)$/.exec(lines[0]);
+      if (h && lines.length === 1) { var lv = h[1].length < 3 ? 2 : 3; return '<h' + lv + '>' + inline(h[2]) + '</h' + lv + '>'; }
+      if (lines.length === 1 && /^(-{3,}|\*{3,})$/.test(lines[0])) return '<hr>';
+      if (every(/^>\s?/)) return '<blockquote><p>' + lines.map(function (l) { return inline(l.replace(/^>\s?/, '')); }).join('<br>') + '</p></blockquote>';
+      if (every(/^[-*]\s+/)) return '<ul>' + lines.map(function (l) { return '<li>' + inline(l.replace(/^[-*]\s+/, '')) + '</li>'; }).join('') + '</ul>';
+      if (every(/^\d+[.)]\s+/)) return '<ol>' + lines.map(function (l) { return '<li>' + inline(l.replace(/^\d+[.)]\s+/, '')) + '</li>'; }).join('') + '</ol>';
+      return '<p>' + lines.map(inline).join(' ') + '</p>';
+    }).join('\n');
+  }
+  /*MD-END*/
+  var posts = [];
+  function niceDate(d, short) {
+    try { return new Date(d + 'T12:00:00').toLocaleDateString(LOCALE[lang] || 'en-GB', short ? { day: 'numeric', month: 'short' } : { day: 'numeric', month: 'long', year: 'numeric' }); }
+    catch (e) { return d; }
+  }
+  function el(tag, cls, text) { var n = document.createElement(tag); if (cls) n.className = cls; if (text != null) n.textContent = text; return n; }
+  function titleNode(p, cls) {
+    if (p.draft) return el('span', cls, p.title);
+    var wrap = el('span', cls), b = el('button', '', p.title); b.type = 'button'; b.setAttribute('data-post', p.slug); wrap.appendChild(b); return wrap;
+  }
+  function renderLists() {
+    var w = $('#post-list'), e = $('#essay-list'); w.textContent = ''; e.textContent = '';
+    posts.slice(0, 5).forEach(function (p) {
+      var li = el('li'); li.appendChild(titleNode(p, 't')); li.appendChild(el('span', 'tag', p.draft ? T('draft', 'draft') : niceDate(p.date, true))); w.appendChild(li);
+    });
+    posts.forEach(function (p) {
+      var li = el('li'), row = el('div', 'row'), h = el('h3');
+      if (p.draft) h.textContent = p.title; else { var b = el('button', '', p.title); b.type = 'button'; b.setAttribute('data-post', p.slug); h.appendChild(b); }
+      row.appendChild(h); row.appendChild(el('span', 'tag', p.draft ? T('draft', 'draft') : niceDate(p.date)));
+      li.appendChild(row); if (p.summary) li.appendChild(el('p', '', p.summary)); e.appendChild(li);
+    });
+    $('#essay-note').hidden = posts.some(function (p) { return !p.draft; });
+  }
+  function findPost(slug) { return posts.filter(function (p) { return p.slug === slug && !p.draft; })[0]; }
+  function setHash(h) { try { history.replaceState(null, '', h ? '#' + h : location.pathname + location.search); } catch (e) {} }
+  function openPost(slug) {
+    var p = findPost(slug); if (!p) return;
+    var head = '<h1>' + esc(p.title) + '</h1><p class="meta">' + esc(niceDate(p.date)) + '</p>', body = $('#post-body');
+    $('#t-post').textContent = p.title; body.innerHTML = head + '<p>' + T('loading', 'Loading…') + '</p>'; body.scrollTop = 0;
+    open('post'); setHash(slug);
+    fetch('posts/' + slug + '.md', { cache: 'no-cache' })
+      .then(function (r) { if (!r.ok) throw new Error(r.status); return r.text(); })
+      .then(function (t) { body.innerHTML = head + md(t); })
+      .catch(function () { body.innerHTML = head + '<p>' + T('loaderr', 'This essay could not be loaded. Please try again in a moment.') + '</p>'; });
+  }
+  document.addEventListener('click', function (e) { var b = e.target.closest('[data-post]'); if (b) openPost(b.getAttribute('data-post')); });
+  $('#win-post .close').addEventListener('click', function () { setHash(''); });
+  window.addEventListener('hashchange', function () { openPost(location.hash.slice(1)); });
+  fetch('posts/index.json', { cache: 'no-cache' })
+    .then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); })
+    .then(function (list) { posts = list; renderLists(); openPost(location.hash.slice(1)); })
+    .catch(function () { /* keep the list written into the page */ });
+
+  /* ---------- Widgets ---------- */
+  $$('.fold').forEach(function (b) {
+    b.addEventListener('click', function () {
+      var folded = b.closest('.widget').classList.toggle('folded');
+      b.textContent = folded ? '+' : '−'; b.setAttribute('aria-expanded', String(!folded));
+    });
+  });
+  $('#btn-widgets').addEventListener('click', function () {
+    var w = $('#widgets'); w.hidden = !w.hidden; widgetsLabel();
+  });
+  function widgetsLabel() { $('#btn-widgets').textContent = $('#widgets').hidden ? T('show', 'Show widgets') : T('hide', 'Hide widgets'); }
+  var QUOTES = {
+    en: [['Remember you must live.', 'Memento Vivere'], ['Death is not the enemy of a good life. Forgetting death is.', 'What Mexico taught me'], ['Nothing added beyond agave and time.', 'Padrecito']],
+    de: [['Denk daran: du lebst jetzt.', 'Memento Vivere'], ['Der Tod ist nicht der Feind eines guten Lebens. Ihn zu vergessen ist es.', 'Was Mexiko mich gelehrt hat'], ['Nothing added beyond agave and time.', 'Padrecito']],
+    es: [['Recuerda: vive ahora.', 'Memento Vivere'], ['La muerte no es enemiga de una buena vida. Olvidarla sí lo es.', 'Lo que México me enseñó'], ['Nothing added beyond agave and time.', 'Padrecito']]
+  }, qi = 0;
+  function showQuote() { var q = (QUOTES[lang] || QUOTES.en)[qi]; $('#q-text').textContent = q[0]; $('#q-src').textContent = q[1]; }
+  $('#next-quote').addEventListener('click', function () { qi = (qi + 1) % QUOTES.en.length; showQuote(); });
+
+  /* ---------- Newsletter: paste the sign-up page address here to show the widget ---------- */
+  var NEWSLETTER_URL = '';
+  if (NEWSLETTER_URL) { $('#news-link').href = NEWSLETTER_URL; $('#w-news').hidden = false; }
+
+  /* ---------- Where to meet me: upcoming entries from events.json ---------- */
+  var events = [];
+  function renderEvents() {
+    var today = new Date().toISOString().slice(0, 10), list = $('#meet-list'); list.textContent = '';
+    var next = events.filter(function (e) { return e && e.date >= today && e.title; }).sort(function (a, b) { return a.date < b.date ? -1 : 1; }).slice(0, 5);
+    next.forEach(function (e) {
+      var li = el('li'); li.appendChild(el('span', 'd', niceDate(e.date) + (e.place ? ' · ' + e.place : '')));
+      if (e.url && /^https?:\/\//i.test(e.url)) { var a = el('a', '', e.title); a.href = e.url; a.target = '_blank'; a.rel = 'noopener'; li.appendChild(a); } else li.appendChild(el('span', '', e.title));
+      list.appendChild(li);
+    });
+    $('#w-meet').hidden = !next.length;
+  }
+  fetch('events.json', { cache: 'no-cache' }).then(function (r) { return r.ok ? r.json() : []; }).then(function (l) { events = Array.isArray(l) ? l : []; renderEvents(); }).catch(function () {});
+
+  /* ---------- Guestbook: entries live in guestbook.json; new ones are sent to GUESTBOOK_FORM and added by hand ---------- */
+  var GUESTBOOK_FORM = 'https://formspree.io/f/mzerdqka';
+  var guests = [];
+  function renderGuests() {
+    var list = $('#gb-list'); list.textContent = '';
+    guests.slice(0, 3).forEach(function (g) {
+      if (!g || !g.message) return;
+      var li = el('li', '', '“' + g.message + '”'); li.appendChild(el('span', 'by', '— ' + (g.name || '') + (g.place ? ', ' + g.place : ''))); list.appendChild(li);
+    });
+    $('#gb-sign').hidden = !GUESTBOOK_FORM;
+    $('#w-gb').hidden = !GUESTBOOK_FORM && !list.children.length;
+  }
+  fetch('guestbook.json', { cache: 'no-cache' }).then(function (r) { return r.ok ? r.json() : []; }).then(function (l) { guests = Array.isArray(l) ? l : []; renderGuests(); }).catch(function () {});
+  $('#gb-form').addEventListener('submit', function (e) {
+    e.preventDefault();
+    var status = $('#gb-status'), say = function (key, en) { status.textContent = T(key, en); status.hidden = false; };
+    var name = $('#gb-name').value.trim(), msg = $('#gb-msg').value.trim();
+    if (!name || !msg) return say('gbneed', 'Please fill in your name and a message.');
+    if ($('#gb-trap').value || !GUESTBOOK_FORM) return;
+    $('#gb-send').disabled = true;
+    fetch(GUESTBOOK_FORM, { method: 'POST', headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify({ name: name, place: $('#gb-place').value.trim(), message: msg }) })
+      .then(function (r) { if (!r.ok) throw new Error(r.status); $('#gb-form').reset(); say('gbok', 'Thank you! Your entry has reached me.'); })
+      .catch(function () { say('gberr', 'That did not work. Please try again later.'); })
+      .then(function () { $('#gb-send').disabled = false; });
+  });
+
+  /* ---------- Visitor statistics: paste the GoatCounter site code here (no cookies) ---------- */
+  var GOATCOUNTER = 'mezquila';
+  if (GOATCOUNTER) { var gc = document.createElement('script'); gc.async = true; gc.src = 'https://gc.zgo.at/count.js'; gc.setAttribute('data-goatcounter', 'https://' + GOATCOUNTER + '.goatcounter.com/count'); document.head.appendChild(gc); }
+
+  /* ---------- Copy buttons ---------- */
+  document.addEventListener('click', function (e) {
+    var b = e.target.closest('[data-copy]'); if (!b) return;
+    var src = document.getElementById(b.getAttribute('data-copy')); if (!src) return;
+    var done = function () { var old = b.textContent; b.textContent = T('copied', 'Copied'); setTimeout(function () { b.textContent = old; }, 1500); };
+    var select = function () { var r = document.createRange(); r.selectNodeContents(src); var sel = getSelection(); sel.removeAllRanges(); sel.addRange(r); };
+    try { navigator.clipboard.writeText(src.textContent).then(done, select); } catch (err) { select(); }
+  });
+
+  /* ---------- Movable widgets: drag to place, x to close, remembered in this browser ---------- */
+  var desk = $('.desk'), wstate = { pos: {}, closed: [] };
+  try { var savedW = JSON.parse(store('mezquila-widgets') || 'null'); if (savedW && savedW.pos && Array.isArray(savedW.closed)) wstate = savedW; } catch (e) {}
+  function saveW() { store('mezquila-widgets', JSON.stringify(wstate)); $('#w-reset').hidden = !(wstate.closed.length || Object.keys(wstate.pos).length); }
+  function placeW(w) {
+    var p = wstate.pos[w.id];
+    if (!p || window.innerWidth <= 760) { w.style.position = ''; w.style.left = ''; w.style.top = ''; w.style.width = ''; return; }
+    var x = Math.min(Math.max(p[0], 0), desk.clientWidth - 120), y = Math.min(Math.max(p[1], 44), Math.max(desk.offsetHeight, window.innerHeight) - 80);
+    w.style.position = 'absolute'; w.style.width = '320px'; w.style.left = x + 'px'; w.style.top = y + 'px';
+  }
+  $$('.widget').forEach(function (w) {
+    var x = document.createElement('button'); x.type = 'button'; x.className = 'wclose'; x.textContent = '×'; x.setAttribute('aria-label', 'Close widget');
+    (w.querySelector('.w-head') || w).appendChild(x);
+    x.addEventListener('click', function () { w.classList.add('closed'); if (wstate.closed.indexOf(w.id) < 0) wstate.closed.push(w.id); saveW(); });
+    if (wstate.closed.indexOf(w.id) >= 0) w.classList.add('closed');
+    placeW(w);
+    var d = null;
+    w.addEventListener('pointerdown', function (e) {
+      if (e.button || e.pointerType === 'touch' || window.innerWidth <= 760 || e.target.closest('button, a, input, textarea, video')) return;
+      var r = w.getBoundingClientRect(); d = { dx: e.clientX - r.left, dy: e.clientY - r.top, sx: e.clientX, sy: e.clientY, moved: false };
+      w.setPointerCapture(e.pointerId);
+    });
+    w.addEventListener('pointermove', function (e) {
+      if (!d) return;
+      if (!d.moved) {
+        if (Math.abs(e.clientX - d.sx) + Math.abs(e.clientY - d.sy) < 5) return;
+        d.moved = true; w.classList.add('dragging'); $$('.widget').forEach(function (o) { o.style.zIndex = ''; }); w.style.zIndex = 6;
+      }
+      var dr = desk.getBoundingClientRect();
+      wstate.pos[w.id] = [Math.round(e.clientX - d.dx - dr.left), Math.round(e.clientY - d.dy - dr.top)]; placeW(w); e.preventDefault();
+    });
+    var endW = function () { if (d && d.moved) { w.classList.toggle('dragging', false); saveW(); } d = null; };
+    w.addEventListener('pointerup', endW); w.addEventListener('pointercancel', endW);
+  });
+  $('#w-reset').addEventListener('click', function () {
+    wstate = { pos: {}, closed: [] };
+    $$('.widget').forEach(function (w) { w.classList.toggle('closed', false); w.style.zIndex = ''; placeW(w); });
+    saveW();
+  });
+  window.addEventListener('resize', function () { $$('.widget').forEach(placeW); });
+  saveW();
+
+  /* ---------- Apply a language ---------- */
+  function applyLang(l) {
+    lang = (l === 'de' || l === 'es') ? l : 'en'; document.documentElement.lang = lang;
+    $$('[data-t]').forEach(function (n) { if (n._en == null) n._en = n.textContent; n.textContent = T(n.getAttribute('data-t'), n._en); });
+    $$('[data-tb]').forEach(function (n) {
+      if (n._en == null) n._en = n.innerHTML;
+      var t = lang === 'en' ? null : document.querySelector('template[data-lang="' + lang + '"][data-for="' + n.getAttribute('data-tb') + '"]');
+      n.innerHTML = t ? t.innerHTML : n._en;
+    });
+    $$('[data-lang-btn]').forEach(function (b) { b.setAttribute('aria-pressed', String(b.getAttribute('data-lang-btn') === lang)); });
+    widgetsLabel(); showQuote(); tick(); renderEvents(); if (posts.length) renderLists();
+  }
+  $$('[data-lang-btn]').forEach(function (b) { b.addEventListener('click', function () { applyLang(b.getAttribute('data-lang-btn')); store('mezquila-lang', lang); }); });
+  var firstLang = store('mezquila-lang') || (navigator.language || 'en').slice(0, 2).toLowerCase();
+  if (firstLang === 'de' || firstLang === 'es') applyLang(firstLang);
+})();
+</script>
+</body>
+</html>
